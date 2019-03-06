@@ -23,7 +23,7 @@
                   append-icon="null"
                   :menu-props="{ overflowY: false}"
                 >
-                  <template slot="item" slot-scope="{ index, item, parent }">
+                  <template slot="item" slot-scope="{ index, item }">
                     <v-list-tile-content>{{ item }}</v-list-tile-content>
                   </template>
                 </v-combobox>
@@ -93,7 +93,6 @@ export default {
     },
     search(val, prev) {
       console.log(val);
-
       this.shownHint = [];
       var search1 = val.toLowerCase();
       for (var i = 0; i < this.marks.length; i++) {

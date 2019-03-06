@@ -5,6 +5,7 @@ import MainPage from "Pages/Main/MainPage";
 import ArticlePage from "Components/ArticlePage";
 import ProfilePage from "Pages/Profile/ProfilePage";
 import RequestsPage from 'Pages/Requests/RequestsPage';
+import NewsPage from 'Pages/News/NewsPage';
 
 Vue.use(Router);
 
@@ -25,7 +26,7 @@ export default new Router({
       ]
     },
     {
-      path: "article/:articleId:query",
+      path: '/articles/:articleId',
       component: ArticlePage,
       name: "ArticlePage",
       props: true
@@ -39,6 +40,11 @@ export default new Router({
       path: "/requests",
       component: RequestsPage,
       name: "RequestsPage"
-    }
+    },
+    {
+      path: "/news",
+      component: NewsPage,
+      name: "NewsPage"
+    },
   ]
 });

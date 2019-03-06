@@ -9,6 +9,9 @@
         <v-btn class="ma-0 link text-capitalize" depressed>
             <router-link to="/profile" class="nostyle">Профиль</router-link>
         </v-btn>
+        <v-btn class="ma-0 link text-capitalize" depressed>
+            <router-link to="/news" class="nostyle">Новости</router-link>
+        </v-btn>
     </header>
 </template>
 <script>

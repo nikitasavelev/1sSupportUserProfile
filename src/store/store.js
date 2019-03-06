@@ -10,7 +10,8 @@ export default new Vuex.Store({
   },
   mutations: {
     setAuthorizationToken(state, token) {
-      state.authorizationToken = token
+      state.authorizationToken = token;
+      localStorage.token = token;
     },
     setSessionId(state, sessionId) {
       state.sessionId = sessionId

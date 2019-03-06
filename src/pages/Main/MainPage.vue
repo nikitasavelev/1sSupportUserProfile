@@ -5,6 +5,7 @@
     <not-found-message v-if="noDataInResponse"/>
     <search-result
       :searchResponse="searchRequestResponse"
+      :allCount="totalCount"
       :lastQuery="lastQuery"/>
     <modal-component/>
 
@@ -15,14 +16,14 @@
 import SearchInput from "Components/SearchInput";
 import SearchResult from "Components/SearchResult";
 import ModalComponent from "Components/ModalComponent";
-import NotFoundMessage from "Components/NotFoundMessage"
-import axios from 'axios'
+import NotFoundMessage from "Components/NotFoundMessage";
+import axios from "axios";
 
-import {ServerAPIUrls} from "Constants/SERVER_API_URLS.js";
+import { ServerAPIUrls } from "Constants/SERVER_API_URLS.js";
 
 export default {
   name: "MainPage",
-  components: { SearchInput, SearchResult, ModalComponent, NotFoundMessage},
+  components: { SearchInput, SearchResult, ModalComponent, NotFoundMessage },
   data() {
     return {
       // not necessary to have Token and SessionId as data here,
@@ -30,43 +31,48 @@ export default {
       token: "",
       sessionId: "",
       searchRequestResponse: [],
+      totalCount: 0,
       lastQuery: "",
       noDataInResponse: false,
       articlesMarks: []
-    }
+    };
   },
   methods: {
     getToken: async function() {
-      var response = await axios.post(ServerAPIUrls.LOGIN, {
+      let response = await axios.post(ServerAPIUrls.LOGIN, {
         inn: "000000000000",
         login: "test"
       });
-      return response.data.data.accessToken
+      return response.data.data.accessToken;
     },
     getArticles: async function(query, sessionId) {
       let axiosConfig = {
         method: "get",
-        url: ServerAPIUrls.GET_ARTICLES_PREVIEWS,
+        url: ServerAPIUrls.GET_SEARCH,
         headers: {
-          "Authorization": "Bearer " + this.token
+          Authorization: "Bearer " + this.token
         },
         params: {
-          "query": query
+          text: query
         }
-      }
-      var response = await axios(axiosConfig)
-      response.data.data.length == 0 ? this.noDataInResponse = true : this.noDataInResponse = false
-      console.log(response.data.data)
-      return response.data.data
+      };
+      var response = await axios(axiosConfig);
+      response.data.data.length == 0
+        ? (this.noDataInResponse = true)
+        : (this.noDataInResponse = false);
+      console.log(response.data.data);
+      return response.data.data;
     },
     searchHandler: async function(payload) {
-      this.lastQuery = payload
-      this.searchRequestResponse = await this.getArticles(payload, this.sessionId)
+      this.lastQuery = payload;
+      let data = await this.getArticles(payload, this.sessionId);
+      this.searchRequestResponse = data.previews;
+      this.totalCount = data.allCount;
     },
     getMarks: async function(token) {
       let axiosConfig = {
         method: "get",
-        url: ServerAPIUrls.GET_ARTICLES_MARKS,
+        url: ServerAPIUrls.GET_POPULAR_SEARCH,
         headers: {
           Authorization: "Bearer " + this.token
         },
@@ -74,19 +80,17 @@ export default {
           n: 1
         }
       };
-      console.log(axiosConfig)
+      console.log(axiosConfig);
       var response = await axios(axiosConfig);
       return response.data.data;
     }
   },
-  created() {
-    (async () => {
-      // not necessary to have Token and SessionId as data here,
-      // but it's easier to debug
-      this.token = await this.getToken()
-      this.$store.dispatch("updateAuthorizationToken", this.token)
-      this.articlesMarks = await this.getMarks(this.token);
-    })()
+  async created() {
+    // not necessary to have Token and SessionId as data here,
+    // but it's easier to debug
+    this.token = await this.getToken();
+    this.$store.dispatch("updateAuthorizationToken", this.token);
+    this.articlesMarks = await this.getMarks(this.token);
   }
 };
 </script>
