@@ -1,5 +1,6 @@
 <template>
   <v-app id="app" style="background-color:white">
+    <header-component></header-component>
     <keep-alive include="DefaultPage">
       <router-view/>
     </keep-alive>
@@ -9,10 +10,10 @@
 <script>
 import ModalComponent from "Components/ModalComponent";
 import Toolbar from "Components/Toolbar";
+import HeaderComponent from "Components/Header";
 export default {
   name: "App",
-  components: { ModalComponent, Toolbar }
-
+  components: { ModalComponent, Toolbar, HeaderComponent }
 };
 </script>
 
