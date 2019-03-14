@@ -8,6 +8,8 @@
 import axios from "axios";
 import { serverAPIUrls } from "Constants/SERVER_API_URLS.js";
 import RequestItem from "./RequestItem";
+import QuestionsService from "Services/QuestionsService.js";
+
 export default {
   name: "RequestsPage",
   props: {},
@@ -75,6 +77,8 @@ export default {
       /* request new data for shown requests */
     }
   },
-  mounted() {}
+  async mounted() {
+    await QuestionsService.getQuestions();
+  }
 };
 </script>

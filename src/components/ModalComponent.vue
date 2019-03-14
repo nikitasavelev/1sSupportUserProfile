@@ -108,141 +108,144 @@
 </template>
 
 <script>
-  import axios from 'axios';
-  import {serverAPIUrls} from "Constants/SERVER_API_URLS";
-  export default {
-    name: "ModalComponent",
-    props: {
-    },
-    data () {
+import axios from "axios";
+import { serverAPIUrls } from "Constants/SERVER_API_URLS";
+export default {
+  name: "ModalComponent",
+  props: {},
+  data() {
+    return {
+      dialog: false,
+      modlst: 1,
+      themes: ["Кажется, что-то пошло не так"],
+      errorMessages: "",
+      phone: null,
+      theme: null,
+      probl: null,
+      formHasErrors: false
+    };
+  },
+  computed: {
+    form() {
       return {
-        dialog: false,
-        modlst: 1,
-        themes: ['Кажется, что-то пошло не так'],
-        errorMessages: '',
-        phone: null,
-        theme: null,
-        probl: null,
-        formHasErrors: false
-      }
+        phone: this.phone,
+        theme: this.theme,
+        probl: this.probl
+      };
     },
-    computed: {
-      form () {
-        return {
-          phone: this.phone,
-          theme: this.theme,
-          probl: this.probl
-        }
-      },
-      token: function() {
-        return this.$store.state.authorizationToken
-      },
-      sessionId: function() {
-        return this.$store.state.sessionId
-      }
+    token: function() {
+      return this.$store.state.authorizationToken;
     },
-    watch: {
-      phone () {
-        this.errorMessages = ''
-      }
-    },
-    methods: {
-      opForm () {
-        this.modlst = 1
-        this.theme = null
-        this.probl = null
-      },
-      submit () {
-        this.formHasErrors = false
-        Object.keys(this.form).forEach(f => {
-          if (!this.form[f]) this.formHasErrors = true
-          this.$refs[f].validate(true)
-        })
-        if (this.formHasErrors == false) this.closeAndSend()
-      },
-      getMessageThemes: async function() {
-        let axiosConfig = {
-          method: "get",
-          url: serverAPIUrls.GET_SUPPORT_MESSAGES_TITLES,
-          headers: {
-            "Authorization": "Bearer " + this.token
-          }
-        }
-        var response = await axios(axiosConfig)
-        console.log(response)
-        return response.data.data
-      },
-      closeAndSend: async function() {
-        this.modlst = 2
-        let axiosConfig = {
-          method: "post",
-          url: serverAPIUrls.CREATE_SUPPORT_MESSAGES,
-          headers: {
-            "Authorization": "Bearer " + this.token
-          },
-          data: {
-            "contactdata": this.phone,
-            "text": this.probl,
-            "titleId": this.theme.id
-          }
-        }
-        var response = await axios(axiosConfig)
-        console.log(response)
-        // return response.data
-      }
-    },
-    watch: {
-      dialog: async function() {
-          this.themes = await this.getMessageThemes()
-      }
-    },
-    mounted() {
+    sessionId: function() {
+      return this.$store.state.sessionId;
     }
-  }
+  },
+  watch: {
+    phone() {
+      this.errorMessages = "";
+    }
+  },
+  methods: {
+    opForm() {
+      this.modlst = 1;
+      this.theme = null;
+      this.probl = null;
+    },
+    submit() {
+      this.formHasErrors = false;
+      Object.keys(this.form).forEach(f => {
+        if (!this.form[f]) this.formHasErrors = true;
+        this.$refs[f].validate(true);
+      });
+      if (this.formHasErrors == false) this.closeAndSend();
+    },
+    getMessageThemes: async function() {
+      let axiosConfig = {
+        method: "get",
+        url: serverAPIUrls.GET_SUPPORT_MESSAGES_TITLES,
+        headers: {
+          Authorization: "Bearer " + this.token
+        }
+      };
+      var response = await axios(axiosConfig);
+      console.log(response);
+      return response.data.data;
+    },
+    closeAndSend: async function() {
+      this.modlst = 2;
+      let axiosConfig = {
+        method: "post",
+        url: serverAPIUrls.SUPPORT_QUESTIONS,
+        headers: {
+          Authorization: "Bearer " + this.token
+        },
+        data: {
+          contactdata: this.phone,
+          text: this.probl,
+          titleId: this.theme.id
+        }
+      };
+      var response = await axios(axiosConfig);
+      console.log(response);
+      // return response.data
+    }
+  },
+  watch: {
+    dialog: async function() {
+      this.themes = await this.getMessageThemes();
+    }
+  },
+  mounted() {}
+};
 </script>
 
 <!-- "scoped" нужно что бы CSS действовало только на этот компонент -->
 <style scoped>
-  .v-btn-save {
-    bottom: 30px;
-    top: -35px;
-    right: 32px;
-    width: 620px;
-    color: white;
-    font-weight: bold;
-  }
-  .header-logo {
-    height: 80px;
-    margin-bottom: -50px;
-    background: rgb(175,175,175);
-    background: linear-gradient(180deg, rgba(213,213,225,1) 0%, rgba(228,228,235,1) 50%, rgba(255,255,255,1) 100%);
-    text-align: left;
-  }
-  .v-img-logo {
-    left: 40px;
-    top: 10px;
-    width: 80%;
-    height: auto;
-  }
-  .img-logo {
-    margin-left: 40px;
-    margin-top: 10px;
-    width: 140px;
-    height: auto;
-  }
-  .ic-btn {
-    margin-left: 465px;
-    margin-top: -20px;
-  }
-  p.p1 {
-    color: #003399;
-    font-size: 24px;
-  }
-  p.p2 {
-    color: #808080;
-    font-size: 20px;
-    padding-bottom: 2px;
-    margin-left: 20px;
-    margin-right: 20px;
-  }
+.v-btn-save {
+  bottom: 30px;
+  top: -35px;
+  right: 32px;
+  width: 620px;
+  color: white;
+  font-weight: bold;
+}
+.header-logo {
+  height: 80px;
+  margin-bottom: -50px;
+  background: rgb(175, 175, 175);
+  background: linear-gradient(
+    180deg,
+    rgba(213, 213, 225, 1) 0%,
+    rgba(228, 228, 235, 1) 50%,
+    rgba(255, 255, 255, 1) 100%
+  );
+  text-align: left;
+}
+.v-img-logo {
+  left: 40px;
+  top: 10px;
+  width: 80%;
+  height: auto;
+}
+.img-logo {
+  margin-left: 40px;
+  margin-top: 10px;
+  width: 140px;
+  height: auto;
+}
+.ic-btn {
+  margin-left: 465px;
+  margin-top: -20px;
+}
+p.p1 {
+  color: #003399;
+  font-size: 24px;
+}
+p.p2 {
+  color: #808080;
+  font-size: 20px;
+  padding-bottom: 2px;
+  margin-left: 20px;
+  margin-right: 20px;
+}
 </style>

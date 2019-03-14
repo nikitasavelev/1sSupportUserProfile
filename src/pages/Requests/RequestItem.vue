@@ -1,5 +1,5 @@
 <template>
-  <v-card max-width="600" class="request-item ma-2 border">
+  <v-card max-width="600" class="request-item ma-2 border" @click="showDescription">
       <v-card-title primary-title>
           <v-flex>
             <v-layout justify-space-around>
@@ -7,6 +7,9 @@
                 <span>Статус: {{request.status}} </span>
             </v-layout> 
             <v-divider></v-divider>
+            <v-container v-if="isLoaded  && isDescriptionShown" class="pb-0">
+              {{this.title}}
+            </v-container>
             <v-container align-center justify-space-around row fill-height class="pl-0 pb-0">
                 <v-btn class="ml-0 text-capitalize">Заявка {{request.id}}</v-btn>
                 <v-btn>{{request.date}}</v-btn>
@@ -27,6 +30,8 @@
 <script>
 import axios from "axios";
 import { serverAPIUrls } from "Constants/SERVER_API_URLS.js";
+import QuestionsService from "Services/QuestionsService.js";
+
 export default {
   name: "RequestItem",
   props: {
@@ -55,10 +60,22 @@ export default {
   },
   data() {
     return {
-      rating: 0
+      rating: 0,
+      title: "",
+      isLoaded: false,
+      isDescriptionShown: false
     };
   },
-  methods: {},
+  methods: {
+    async showDescription() {
+      if (!this.isLoaded) {
+        let question = await QuestionsService.getQuestion();
+        this.title = question.title;
+        this.isLoaded = true;
+      }
+      this.isDescriptionShown = !this.isDescriptionShown;
+    }
+  },
   mounted() {},
 
   beforeDestroy() {}

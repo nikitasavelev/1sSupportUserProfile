@@ -6,7 +6,7 @@ export const serverAPIUrls = Object.freeze({
   LOGIN: serverAPIDomain + "/tokens/login",
   LOGOUT: serverAPIDomain + "/tokens/logout",
   GET_SUPPORT_MESSAGES_TITLES: serverAPIDomain + "/support_questions/titles",
-  CREATE_SUPPORT_MESSAGES: serverAPIDomain + "/support_questions",
+  SUPPORT_QUESTIONS: serverAPIDomain + "/support_questions",
   GET_SEARCH: serverAPIDomain + "/search",
   GET_POPULAR_SEARCH: serverAPIDomain + "/search/popular",
   GET_ARTICLE: serverAPIDomain + "/articles",
