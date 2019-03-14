@@ -84,7 +84,7 @@
 <script>
 import axios from 'axios';
 import ModalComponent from "./ModalComponent";
-import {ServerAPIUrls} from "Constants/SERVER_API_URLS";
+import {serverAPIUrls} from "Constants/SERVER_API_URLS";
 export default {
   name: "ArticlePage",
   components: { ModalComponent },
@@ -123,7 +123,7 @@ export default {
       console.log(localStorage.token)
       let axiosConfig = {
         method: "get",
-        url: ServerAPIUrls.GET_ARTICLE + "/" + id,
+        url: serverAPIUrls.GET_ARTICLE + "/" + id,
         headers: {
           "Authorization": "Bearer " + this.token
         }
@@ -138,7 +138,7 @@ export default {
       {
         let axiosConfig = {
           method: "post",
-          url: ServerAPIUrls.SET_ARTICLES_MARKS,
+          url: serverAPIUrls.SET_ARTICLES_MARKS,
           headers: {
             "Authorization": "Bearer " + this.token
           },

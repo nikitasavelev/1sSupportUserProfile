@@ -26,7 +26,7 @@
 
 <script>
 import axios from "axios";
-import { ServerAPIUrls } from "Constants/SERVER_API_URLS.js";
+import { serverAPIUrls } from "Constants/SERVER_API_URLS.js";
 export default {
   name: "RequestItem",
   props: {

@@ -6,7 +6,7 @@
 </template>
 <script>
 import axios from "axios";
-import { ServerAPIUrls } from "Constants/SERVER_API_URLS.js";
+import { serverAPIUrls } from "Constants/SERVER_API_URLS.js";
 import RequestItem from "./RequestItem";
 export default {
   name: "RequestsPage",

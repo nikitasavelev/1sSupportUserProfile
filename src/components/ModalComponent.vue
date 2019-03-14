@@ -109,7 +109,7 @@
 
 <script>
   import axios from 'axios';
-  import {ServerAPIUrls} from "Constants/SERVER_API_URLS";
+  import {serverAPIUrls} from "Constants/SERVER_API_URLS";
   export default {
     name: "ModalComponent",
     props: {
@@ -163,7 +163,7 @@
       getMessageThemes: async function() {
         let axiosConfig = {
           method: "get",
-          url: ServerAPIUrls.GET_SUPPORT_MESSAGES_TITLES,
+          url: serverAPIUrls.GET_SUPPORT_MESSAGES_TITLES,
           headers: {
             "Authorization": "Bearer " + this.token
           }
@@ -176,7 +176,7 @@
         this.modlst = 2
         let axiosConfig = {
           method: "post",
-          url: ServerAPIUrls.CREATE_SUPPORT_MESSAGES,
+          url: serverAPIUrls.CREATE_SUPPORT_MESSAGES,
           headers: {
             "Authorization": "Bearer " + this.token
           },

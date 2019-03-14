@@ -19,7 +19,7 @@ import ModalComponent from "Components/ModalComponent";
 import NotFoundMessage from "Components/NotFoundMessage";
 import axios from "axios";
 
-import { ServerAPIUrls } from "Constants/SERVER_API_URLS.js";
+import { serverAPIUrls } from "Constants/SERVER_API_URLS.js";
 
 export default {
   name: "MainPage",
@@ -39,7 +39,7 @@ export default {
   },
   methods: {
     getToken: async function() {
-      let response = await axios.post(ServerAPIUrls.LOGIN, {
+      let response = await axios.post(serverAPIUrls.LOGIN, {
         inn: "000000000000",
         login: "test"
       });
@@ -48,7 +48,7 @@ export default {
     getArticles: async function(query, sessionId) {
       let axiosConfig = {
         method: "get",
-        url: ServerAPIUrls.GET_SEARCH,
+        url: serverAPIUrls.GET_SEARCH,
         headers: {
           Authorization: "Bearer " + this.token
         },
@@ -72,7 +72,7 @@ export default {
     getMarks: async function(token) {
       let axiosConfig = {
         method: "get",
-        url: ServerAPIUrls.GET_POPULAR_SEARCH,
+        url: serverAPIUrls.GET_POPULAR_SEARCH,
         headers: {
           Authorization: "Bearer " + this.token
         },
