@@ -22,7 +22,6 @@ export default {
   async mounted() {
     this.news = await NewsService.getNews();
     this.areNewsLoaded = true;
-    console.log(this.news);
   }
 };
 </script>

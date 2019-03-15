@@ -5,7 +5,7 @@ import { defaultRequestOptions } from "Constants/DEFAULT_REQUEST_OPTIONS.js";
 class QuestionsService {
   async getTitles() {
     const requestOptions = defaultRequestOptions;
-    requestOptions.headers.Authorization = "Bearer " + Store.state.authorizationToken;
+    requestOptions.headers.Authorization = "Bearer " + Store.getters.getAuthorizationToken;
     return fetch(serverAPIUrls.GET_SUPPORT_MESSAGES_TITLES, requestOptions)
       .then(res => res.json())
       .then(res => {
@@ -15,7 +15,7 @@ class QuestionsService {
 
   async getQuestion(questionId = 1) {
     const requestOptions = defaultRequestOptions;
-    requestOptions.headers.Authorization = "Bearer " + Store.state.authorizationToken;
+    requestOptions.headers.Authorization = "Bearer " + Store.getters.getAuthorizationToken;
     return fetch(`${serverAPIUrls.SUPPORT_QUESTIONS}/${questionId}`, requestOptions)
       .then(res => res.json())
       .then(res => {
@@ -25,7 +25,7 @@ class QuestionsService {
 
   async getQuestions() {
     const requestOptions = defaultRequestOptions;
-    requestOptions.headers.Authorization = "Bearer " + Store.state.authorizationToken;
+    requestOptions.headers.Authorization = "Bearer " + Store.getters.getAuthorizationToken;
     return fetch(serverAPIUrls.SUPPORT_QUESTIONS, requestOptions)
       .then(res => res.json())
       .then(res => {
