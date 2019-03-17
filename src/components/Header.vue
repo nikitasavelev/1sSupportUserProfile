@@ -1,17 +1,28 @@
 <template>
-    <header class="header pl-2">
-        <v-btn class="ma-0 link text-capitalize" depressed>
-             <router-link to="/" class="nostyle">Поиск</router-link>
-        </v-btn>
-        <v-btn class="ma-0 link text-capitalize" depressed>
-            <router-link to="/requests" class="nostyle">Заявки</router-link>
-        </v-btn>
-        <v-btn class="ma-0 link text-capitalize" depressed>
-            <router-link to="/profile" class="nostyle">Профиль</router-link>
-        </v-btn>
-        <v-btn class="ma-0 link text-capitalize" depressed>
-            <router-link to="/news" class="nostyle">Новости</router-link>
-        </v-btn>
+    <header class="header pl-2">       
+        <router-link to="/">
+            <v-btn class="ma-0 link text-capitalize nostyle" depressed>
+              Поиск
+            </v-btn>
+          </router-link>       
+        
+        <router-link to="/requests">
+            <v-btn class="ma-0 link text-capitalize nostyle" depressed>
+              Заявки
+            </v-btn>   
+        </router-link> 
+      
+        <router-link to="/profile">
+            <v-btn class="ma-0 link text-capitalize nostyle" depressed>
+              Профиль 
+            </v-btn>
+        </router-link>        
+      
+        <router-link to="/news">
+            <v-btn class="ma-0 link text-capitalize nostyle" depressed>
+              Новости
+            </v-btn>
+        </router-link>        
     </header>
 </template>
 <script>
@@ -25,13 +36,13 @@ export default {
   background-color: #ccc;
 }
 /*this selector is only for specificity*/
-header.header > .link.ma-0 {
+header.header .link.ma-0 {
   background-color: #ccc;
   border: 0;
 }
-.nostyle{
-    text-decoration: none;
-    color: inherit;
-    font-size: 1.5rem;
+.nostyle {
+  text-decoration: none;
+  color: inherit;
+  font-size: 1.5rem;
 }
 </style>
