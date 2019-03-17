@@ -11,5 +11,6 @@ export const serverAPIUrls = Object.freeze({
   GET_POPULAR_SEARCH: serverAPIDomain + "/search/popular",
   GET_ARTICLE: serverAPIDomain + "/articles",
   SET_ARTICLES_MARKS: serverAPIDomain + "/articles/marks",
-  GET_NEWS: serverAPIDomain + "/news"
+  GET_NEWS: serverAPIDomain + "/news",
+  GET_USER_INFO: serverAPIDomain + "/users",
 });
