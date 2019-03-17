@@ -80,7 +80,6 @@ export default {
           n: 1
         }
       };
-      console.log(axiosConfig);
       var response = await axios(axiosConfig);
       return response.data.data;
     }

@@ -20,7 +20,7 @@ export default {
   name: "SupportAgents",
   props: {
     agents: [],
-    role: ""
+    role: "",
   }
 };
 </script>

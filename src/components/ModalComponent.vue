@@ -37,9 +37,7 @@
                     v-model="theme"
                     color="#003399"
                     :append-icon="null"
-                    :items="themes"
-                    :item-text="text"
-                    :item-value="id"
+                    :items="themes"                    
                     label="Тема обращения"
                     ref="theme"
                     return-object
@@ -122,7 +120,7 @@ export default {
       phone: null,
       theme: null,
       probl: null,
-      formHasErrors: false
+      formHasErrors: false,
     };
   },
   computed: {

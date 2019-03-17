@@ -84,15 +84,10 @@ export default {
   },
   watch: {
     searchString(val, prev) {
-      console.log(val);
-      // if ("text" in val) {
-      //   this.$emit("search", val.text);
-      // } else {
       this.$emit("search", val);
-      //}
     },
     search(val, prev) {
-      console.log(val);
+      val = val || "";
       this.shownHint = [];
       var search1 = val.toLowerCase();
       for (var i = 0; i < this.marks.length; i++) {
