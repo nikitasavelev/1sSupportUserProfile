@@ -78,7 +78,8 @@ export default {
     }
   },
   async mounted() {
-    await QuestionsService.getQuestions();
+    const a = await QuestionsService.getQuestions();
+    console.log(a);
   }
 };
 </script>
