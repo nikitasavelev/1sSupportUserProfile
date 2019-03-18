@@ -9,7 +9,7 @@ export const defaultRequestOptions = Object.freeze({
 });
 
 /**
- * 
+ *
  * @param {string} url url to fetch
  * @param {object} requestOptions object with options for request
  * @param {function} modifyDataCallback if data needs to be modified after getting response
@@ -20,7 +20,7 @@ export async function requestToAPI(url, requestOptions = defaultRequestOptions, 
     .then(res => res.json())
     .then(res => {
       if (modifyDataCallback instanceof Function) {
-        modifyDataCallback(res.data);
+        res.data = modifyDataCallback(res.data);
       }
       return res.data;
     });

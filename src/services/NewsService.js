@@ -8,6 +8,7 @@ class NewsService {
       data.forEach(news => {
         news.createdDate = formatDate(news.createdDate);
       });
+      return data;
     });
   }
 }

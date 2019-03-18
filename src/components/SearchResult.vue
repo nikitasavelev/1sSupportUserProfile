@@ -6,22 +6,22 @@
 
         <v-card flat max-width="90%">
           <v-list three-line>
-            <item v-if="searchResponse != false" v-for="(item) in this.searchResponse" :key="item.id">
+            <v-layout v-if="searchResponse != false" v-for="(item) in this.searchResponse" :key="item.id">
               <v-list-tile-content>
                 <router-link class="article-title"  :to="{ name: 'ArticlePage', params: {articleId: item.articleId}  }">
                   <v-list-tile-title v-html="item.title"></v-list-tile-title>
                 </router-link>
                 <v-list-tile-sub-title class="article-preview">{{ item.text}}</v-list-tile-sub-title>
               </v-list-tile-content>
-            </item>
-            <item v-if="searchResponse.length == 0" v-for="(item) in items" :key="item.title">
+            </v-layout>
+            <v-layout v-if="searchResponse.length == 0" v-for="(item) in items" :key="item.title">
               <v-list-tile-content>
                 <router-link class="article-title"  :to="{ name: 'ArticlePage' }">
                   <v-list-tile-title v-html="item.title"></v-list-tile-title>
                 </router-link>
                 <v-list-tile-sub-title class="article-preview" v-html="item.subtitle"></v-list-tile-sub-title>
               </v-list-tile-content>
-            </item>
+            </v-layout>
           </v-list>
         </v-card>
 
@@ -45,7 +45,7 @@ export default {
       required: false,
       type: Array
     },
-    allCount:{
+    allCount: {
       required: false,
       type: 0
     }

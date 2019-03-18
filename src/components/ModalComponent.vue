@@ -141,6 +141,9 @@ export default {
   watch: {
     phone() {
       this.errorMessages = "";
+    },
+    dialog: async function() {
+      this.themes = await this.getMessageThemes();
     }
   },
   methods: {
@@ -184,13 +187,7 @@ export default {
         }
       };
       var response = await axios(axiosConfig);
-      console.log(response);
       // return response.data
-    }
-  },
-  watch: {
-    dialog: async function() {
-      this.themes = await this.getMessageThemes();
     }
   },
   mounted() {}
