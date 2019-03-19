@@ -1,48 +1,86 @@
 <template>
-    <header class="header pl-2">       
-        <router-link to="/">
-            <v-btn class="ma-0 link text-capitalize nostyle" depressed>
-              Поиск
-            </v-btn>
-          </router-link>       
-        
-        <router-link to="/requests">
-            <v-btn class="ma-0 link text-capitalize nostyle" depressed>
-              Заявки
-            </v-btn>   
-        </router-link> 
-      
-        <router-link to="/profile">
-            <v-btn class="ma-0 link text-capitalize nostyle" depressed>
-              Профиль 
-            </v-btn>
-        </router-link>        
-      
-        <router-link to="/news">
-            <v-btn class="ma-0 link text-capitalize nostyle" depressed>
-              Новости
-            </v-btn>
-        </router-link>        
-    </header>
+  <nav class="border">
+    <header> 
+      <v-tabs
+        centered
+        color="white"
+        dark
+        class="header"
+        v-model="active"        
+      >
+        <v-tabs-slider color="#2f80ed"></v-tabs-slider>
+
+        <v-tab v-for="page in pages"
+           :key="page.caption"
+           @click="goToPage(page.link)"
+           class="link pa-0"
+           :class="{isActive: page.link === currentLink, isNews: page.link === '/news'}"           
+           >
+          {{page.caption}}
+        </v-tab>
+
+      </v-tabs>
+    </header>    
+  </nav>
 </template>
 <script>
 export default {
-  name: "HeaderComponent"
+  name: "HeaderComponent",
+  data() {
+    return {
+      pages: [
+        {
+          link: "/",
+          caption: "Поиск"
+        },
+        {
+          link: "/requests",
+          caption: "Заявки"
+        },
+        {
+          link: "/profile",
+          caption: "Профиль"
+        },
+        {
+          link: "/news",
+          caption: "Новости"
+        }
+      ],
+      currentLink: "",
+      active: null
+    };
+  },
+  methods: {
+    goToPage(path) {      
+      this.currentLink = path;
+      this.$router.push(path);
+    }
+  }
 };
 </script>
 <style scoped>
-.header {
-  border: 1px solid gray;
-  background-color: #ccc;
-}
+
 /*this selector is only for specificity*/
-header.header .link.ma-0 {
-  background-color: #ccc;
-  border: 0;
+nav header .link.pa-0 {
+  color: black;
 }
+
+header {
+  border-bottom: 1px solid gray;
+}
+
+nav header .isActive.link.pa-0 {
+  color: #2f80ed;
+}
+
 .nostyle {
   text-decoration: none;
   color: inherit;
   font-size: 1.5rem;
+}
+
+.link.pa-0.isNews {
+  margin-right:0; 
+  margin-left: 40%;
 }
 </style>
