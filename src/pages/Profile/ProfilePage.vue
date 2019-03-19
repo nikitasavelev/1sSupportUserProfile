@@ -1,39 +1,21 @@
 <template>
-    <div class="mw-50wv pa-2">
-        <div v-if="profileData.companyInfo">
-            <span>{{profileData.companyInfo.companyName}}</span>
-            <span class="pa-1 ml-2 border">{{profileData.companyInfo.inn}}</span>
-            <span class="pa-1 border">{{profileData.companyInfo.kpp}}</span>
-            <v-layout class="mt-2">{{profileData.companyInfo.contactPersonName}}</v-layout>
-           
-           <v-layout row>
-                <support-agents :agents="profileData.supportInfo.managers" :role="'Менеджер'"></support-agents>
-                <support-agents :agents="profileData.supportInfo.consultants" :role="'Консультант'"></support-agents>
-           </v-layout>
-
-            <div class="d-inline-block">
-                <div class="border mt-3 pl-1">
-                    Логин {{profileData.oneCPortalAuthInfo.login}}
-                    <v-btn class="text-capitalize">Восстановить пароль к порталу</v-btn>
-                </div>
-                <div class="border pl-1">
-                    {{profileData.oneCPortalAuthInfo.agreement}}
-                    <v-btn class="text-capitalize">Продлить</v-btn>
-                </div>
-            </div>
-
-            <table class="border mt-2" rules="all">
-                <thead>
-                    <tr>
-                        <th>Мои продукты</th>
-                        <th>Ссылка на обновление</th>
-                    </tr>
-                </thead>
-                <tr v-for="product in profileData.products" :key="product.name">
-                    <td>{{product.name}}</td>
-                    <td><a>{{product.url}}</a></td>
-                </tr>           
-            </table>
+    <div class="pa-2 profile-page">
+        <div v-if="profileData.companyInfo" class="mx-5">
+          <span class="text-uppercase subheader">Профиль организации {{profileData.companyInfo.companyName}}</span>
+          <hr>
+          <div>ИНН: {{profileData.companyInfo.inn}}</div>
+          <div>КПП: {{profileData.companyInfo.kpp}}</div>
+          <div>Логин в 1С: {{profileData.oneCPortalAuthInfo.login}}</div>
+          <div>Тип договора: {{profileData.oneCPortalAuthInfo.agreement}}</div>
+          <div>Дата истечения договора: {{profileData.oneCPortalAuthInfo.agreement}}</div>
+          <hr>
+          <div class="text-uppercase subheader">Мои продукты</div>
+          <hr>
+          <div v-for="product in profileData.products" :key="product.name" class="d-inline-block mx-2">
+            <img src="">
+            <div>{{product.name}}</div>
+            <a :href="product.url">Проверить обновления</a>
+          </div>
         </div>
         <v-layout v-else justify-center mt-5>
             <v-progress-circular
@@ -77,5 +59,18 @@ td {
 
 .column {
   width: 100%;
+}
+
+.profile-page{
+  color: #909090;
+  font-size: 1.6rem;
+}
+
+hr{
+  height: 1px;
+}
+
+.subheader{
+  color:#363636;
 }
 </style>

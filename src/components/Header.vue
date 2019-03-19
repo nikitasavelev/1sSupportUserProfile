@@ -35,7 +35,7 @@ export default {
         },
         {
           link: "/requests",
-          caption: "Заявки"
+          caption: "Обращения"
         },
         {
           link: "/profile",
