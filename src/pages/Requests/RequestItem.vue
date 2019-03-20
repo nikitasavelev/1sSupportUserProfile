@@ -1,29 +1,13 @@
 <template>
-  <v-card max-width="600" class="request-item ma-2 border" @click="showDescription">
-      <v-card-title primary-title>
-          <v-flex>
-            <v-layout justify-space-around>
-                <span>Тема: {{request.theme}} </span>
-                <span>Статус: {{request.status}} </span>
-            </v-layout> 
-            <v-divider></v-divider>
-            <v-container v-if="isLoaded  && isDescriptionShown" class="pb-0">
-              {{this.title}}
-            </v-container>
-            <v-container align-center justify-space-around row fill-height class="pl-0 pb-0">
-                <v-btn class="ml-0 text-capitalize">Заявка {{request.id}}</v-btn>
-                <v-btn>{{request.date}}</v-btn>
-                <v-rating
-                    v-model="request.rating"
-                    :hover="true"
-                    color="#003399"
-                    large
-                    class="d-inline-block"
-            ></v-rating>
-          </v-container>
-          </v-flex>
-      </v-card-title>
-  </v-card>
+  <v-layout row wrap>
+    <v-flex xs10>
+      <div>{{request.theme}}</div>
+    </v-flex>
+    <v-flex xs2 style="text-align: center;">
+       {{request.date}} 
+    </v-flex>
+    <hr>
+  </v-layout>
 </template>
 
 
@@ -86,6 +70,10 @@ export default {
 <style scoped>
 .request-item.border {
   border: 3px solid #ccc;
+}
+
+hr{
+  width: 100%;
 }
 </style>
 

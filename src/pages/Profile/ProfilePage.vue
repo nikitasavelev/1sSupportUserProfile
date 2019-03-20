@@ -1,5 +1,5 @@
 <template>
-    <div class="pa-2 profile-page">
+    <div class="pa-2 px-5 profile-page">
         <div v-if="profileData.companyInfo" class="mx-5">
           <span class="text-uppercase subheader">Профиль организации {{profileData.companyInfo.companyName}}</span>
           <hr>
