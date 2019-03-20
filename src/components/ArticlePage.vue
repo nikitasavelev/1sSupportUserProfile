@@ -28,7 +28,7 @@
     <v-container class="titl">
       <v-layout align-center justify-space-between row>
         <v-flex xs1>
-          <img src="@/assets/ic_arrow_back_24px.png"/>
+          <img src="@/assets/ic_arrow_back_24px.png" @click="goBack" class="goBack"/>
         </v-flex>
         <v-flex xs10>          
           <div v-if="currentArticle != ''" class="ar-name text-xs-center" v-html="currentArticle.title"></div>
@@ -112,6 +112,11 @@ export default {
       console.log(index);
       this.currentArticle = this.article[index];
       console.log(this.currentArticle);
+    },
+    goBack(){
+       window.history.length > 1
+        ? this.$router.go(-1)
+        : this.$router.push('/')
     }
   },
   async mounted() {
@@ -390,6 +395,10 @@ export default {
 
 .activeVersion {
   color: #004eeb;
+}
+
+.goBack{
+  cursor: pointer;
 }
 </style>
 
