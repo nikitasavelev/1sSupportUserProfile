@@ -15,7 +15,7 @@
                 :key="version.id"
                 @click="setCurrentVersion(index)"
                 class="ml-3 version"
-                :class="{activeVersion: version.id === currentArticle.id}"
+                :class="{activeVersion: version.articleId === currentArticle.articleId}"
                >                
                 Версия {{index+1}}
               </a>
@@ -111,6 +111,7 @@ export default {
     setCurrentVersion(index) {
       console.log(index);
       this.currentArticle = this.article[index];
+      console.log(this.currentArticle);
     }
   },
   async mounted() {
@@ -384,10 +385,11 @@ export default {
 
 .version {
   font-size: 1.2rem;
+  color: gray;
 }
 
 .activeVersion {
-  color: red;
+  color: #004eeb;
 }
 </style>
 
