@@ -1,13 +1,13 @@
 <template>
-    <v-layout row wrap>
+    <v-layout class="px-5 requests-page" row wrap>
       <v-flex xs9 class="left-side pr-2 pl-5"> 
         <div class="clearfix"> 
           <v-btn class="ask-question btn ma-0 mt-4 clearfix">Задать вопрос</v-btn>
         </div>   
-        <v-flex xs-8 class="text-uppercase">Активные</v-flex> 
+        <v-flex xs-8 class="text-uppercase">Активные {{activeQuestions.length}}</v-flex> 
         <hr>
         <request-item v-for="request in activeQuestions" :request="request" :key="request.id"></request-item> 
-        <v-flex xs-8 class="text-uppercase">Завершенные</v-flex>
+        <v-flex xs-8 class="text-uppercase">Завершенные {{closedQuestions.length}}</v-flex>
         <hr>
         <request-item v-for="request in closedQuestions" :request="request" :key="request.id"></request-item>  
       </v-flex>
@@ -35,16 +35,7 @@ export default {
   data() {
     return {
       page: 1,      
-      news: [
-        {
-          title: "Title 1",
-          description: "Description 1"
-        },
-        {
-          title: "Title 2",
-          description: "Description 2"
-        },
-      ],
+      news: [],
       activeQuestions:[],
       closedQuestions:[],
     };
@@ -62,6 +53,7 @@ export default {
       return question;
     });
     this.closedQuestions = allQuestions.closedQuestions;
+    this.news = await NewsService.getNews();
   }
 };
 </script>
@@ -74,6 +66,10 @@ export default {
 
 .left-side{
   border-right: 1px solid gray;
+}
+
+.requests-page{
+  font-size: 1.6rem;
 }
 
 .clearfix::after {
