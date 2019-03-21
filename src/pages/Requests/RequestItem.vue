@@ -1,10 +1,23 @@
 <template>
   <v-layout row wrap>
-    <v-flex xs10>
-      <div>{{request.theme}}</div>
+    <v-flex xs9>
+      <div>
+        <span>{{request.title}}</span>
+        <span v-if="!request.isActive" class="text-uppercase right mt-2">Оценить:</span>
+      </div>
+      <div>
+        {{request.text}}
+      </div>
     </v-flex>
-    <v-flex xs2 style="text-align: center;">
-       {{request.date}} 
+    <v-flex xs3 style="text-align: center;">
+        <v-rating
+            v-if="!request.isActive"
+            v-model="request.mark"
+            :hover="true"
+            color="#003399"
+            medium         
+          ></v-rating>
+       {{request.createdDate}} 
     </v-flex>
     <hr>
   </v-layout>

@@ -6,10 +6,10 @@
         </div>   
         <v-flex xs-8 class="text-uppercase">Активные</v-flex> 
         <hr>
-        <request-item v-for="request in shownRequests" :request="request" :key="request.id"></request-item> 
+        <request-item v-for="request in activeQuestions" :request="request" :key="request.id"></request-item> 
         <v-flex xs-8 class="text-uppercase">Завершенные</v-flex>
         <hr>
-        <request-item v-for="request in shownRequests" :request="request" :key="request.id"></request-item>  
+        <request-item v-for="request in closedQuestions" :request="request" :key="request.id"></request-item>  
       </v-flex>
       <v-flex xs3>
         <v-layout align-center column>
@@ -34,59 +34,7 @@ export default {
   components: { RequestItem, NewsItem },
   data() {
     return {
-      page: 1,
-      requests: [
-        {
-          id: "32",
-          theme: "Theme1",
-          status: "Status1",
-          date: "22.10.2018",
-          rating: 3
-        },
-        {
-          id: "33",
-          theme: "Theme2",
-          status: "Status2",
-          date: "23.10.2018",
-          rating: 2
-        },
-        { id: "34", theme: "Theme3", status: "Status3", date: "24.10.2018" },
-        { id: "35", theme: "Theme4", status: "Status4", date: "25.10.2018" },
-        {
-          id: "36",
-          theme: "Theme5",
-          status: "Status5",
-          date: "26.10.2018",
-          rating: 5
-        },
-        {
-          id: "37",
-          theme: "Theme6",
-          status: "Status6",
-          date: "27.10.2018",
-          rating: 1
-        },
-        { id: "38", theme: "Theme7", status: "Status7", date: "28.10.2018" },
-        { id: "39", theme: "Theme8", status: "Status8", date: "29.10.2018" }
-      ],
-      shownRequests: [
-        {
-          id: "32",
-          theme: "Theme1",
-          status: "Status1",
-          date: "22.10.2018",
-          rating: 3
-        },
-        {
-          id: "33",
-          theme: "Theme2",
-          status: "Status2",
-          date: "23.10.2018",
-          rating: 2
-        },
-        { id: "34", theme: "Theme3", status: "Status3", date: "24.10.2018" },
-        { id: "35", theme: "Theme4", status: "Status4", date: "25.10.2018" }
-      ],
+      page: 1,      
       news: [
         {
           title: "Title 1",
@@ -96,7 +44,9 @@ export default {
           title: "Title 2",
           description: "Description 2"
         },
-      ]
+      ],
+      activeQuestions:[],
+      closedQuestions:[],
     };
   },
   methods: {
@@ -106,9 +56,12 @@ export default {
     }
   },
   async mounted() {
-    const a = await QuestionsService.getQuestions();
-    const b = await NewsService.getNews();
-    console.log(a);
+    const allQuestions = await QuestionsService.getQuestions();
+    this.activeQuestions = allQuestions.activeQuestions.map(question => {
+      question.isActive = true;
+      return question;
+    });
+    this.closedQuestions = allQuestions.closedQuestions;
   }
 };
 </script>
