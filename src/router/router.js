@@ -4,8 +4,9 @@ import DefaultPage from "Pages/Main/DefaultPage";
 import MainPage from "Pages/Main/MainPage";
 import ArticlePage from "Components/ArticlePage";
 import ProfilePage from "Pages/Profile/ProfilePage";
-import RequestsPage from 'Pages/Requests/RequestsPage';
-import NewsPage from 'Pages/News/NewsPage';
+import RequestsPage from "Pages/Requests/RequestsPage";
+import NewsPage from "Pages/News/NewsPage";
+import RequestPage from "Pages/Requests/RequestPage";
 
 Vue.use(Router);
 
@@ -26,7 +27,7 @@ export default new Router({
       ]
     },
     {
-      path: '/articles/:articleId',
+      path: "/articles/:articleId",
       component: ArticlePage,
       name: "ArticlePage",
       props: true
@@ -36,15 +37,25 @@ export default new Router({
       component: ProfilePage,
       name: "ProfilePage"
     },
+
+    /* Requests */
+
     {
       path: "/requests",
       component: RequestsPage,
       name: "RequestsPage"
     },
     {
+      path: "/requests/:id",
+      component: RequestPage,
+      name: "RequestPage"
+    },
+
+    
+    {
       path: "/news",
       component: NewsPage,
       name: "NewsPage"
-    },
+    }
   ]
 });

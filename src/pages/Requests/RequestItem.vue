@@ -2,7 +2,9 @@
   <v-layout row wrap>
     <v-flex xs9>
       <div>
-        <span>{{request.title}}</span>
+        <router-link :to="{name: 'RequestPage', params: { id: request.questionId} }">
+          <span>{{request.title}}</span>
+        </router-link>
         <span v-if="!request.isActive" class="text-uppercase right mt-2">Оценить:</span>
       </div>
       <div>

@@ -53,7 +53,10 @@ export default {
       return question;
     });
     this.closedQuestions = allQuestions.closedQuestions;
-    this.news = await NewsService.getNews();
+    this.news = await NewsService.getNews();    
+    const q = await QuestionsService.getQuestion(15);
+    console.log(this.activeQuestions);
+    console.log(q);
   }
 };
 </script>

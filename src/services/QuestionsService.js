@@ -8,7 +8,10 @@ class QuestionsService {
   }
 
   async getQuestion(questionId = 1) {
-    return requestToAPI(`${serverAPIUrls.SUPPORT_QUESTIONS}/${questionId}`);
+    return requestToAPI(`${serverAPIUrls.SUPPORT_QUESTIONS}/${questionId}`, undefined, data => {
+      data.createdDate = formatDate(data.createdDate);
+      return data;
+    });
   }
 
   async getQuestions() {
