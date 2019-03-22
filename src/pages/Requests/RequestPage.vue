@@ -1,15 +1,11 @@
 <template>
     <v-container>
-        <v-layout class="clearfix w-100">
-            <router-link :to="'/requests'" style="min-width: 120px;">
-                <v-flex xs12>
+        <div class="clearfix w-100">
+          <router-link :to="'/requests'" style="min-width: 120px;">
                     Все обращения
-                </v-flex>
-            </router-link>
-            <v-flex offset-xs9>
-                <v-btn class="ml-2">Задать вопрос</v-btn>
-            </v-flex>
-        </v-layout>
+          </router-link>
+          <v-btn class="right-btn">Задать вопрос</v-btn>
+        </div>
         <div>
             <span>Обращение №{{this.$route.params.id}}</span>
             <span class="right">{{request.createdDate}}</span>
@@ -51,11 +47,11 @@ export default {
   clear: both;
 }
 
-.right {
-  float:right;
+.right-btn {
+  float: right;
 }
 
-.w-100{
-    width:100%;
+.w-100 {
+  width: 100%;
 }
 </style>
