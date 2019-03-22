@@ -169,7 +169,6 @@ export default {
         }
       };
       var response = await axios(axiosConfig);
-      console.log(response);
       return response.data.data;
     },
     closeAndSend: async function() {

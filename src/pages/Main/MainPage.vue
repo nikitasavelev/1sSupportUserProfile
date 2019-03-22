@@ -60,7 +60,6 @@ export default {
       response.data.data.length == 0
         ? (this.noDataInResponse = true)
         : (this.noDataInResponse = false);
-      console.log(response.data.data);
       return response.data.data;
     },
     searchHandler: async function(payload) {

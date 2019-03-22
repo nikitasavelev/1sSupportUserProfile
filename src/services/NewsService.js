@@ -11,5 +11,11 @@ class NewsService {
       return data;
     });
   }
+  async getSpecificNews(newsId = 1) {
+    return requestToAPI(`${serverAPIUrls.SUPPORT_QUESTIONS}/${newsId}`, undefined, data => {
+      data.createdDate = formatDate(data.createdDate);
+      return data;
+    });
+  }
 }
 export default new NewsService();

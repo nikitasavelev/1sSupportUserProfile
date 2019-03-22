@@ -4,16 +4,16 @@
           Новости
           <hr>
         </div>
-        <div v-for="n in news" :key="n.id" class="w-100">
-          <div>
-            <span class="mt-3 ml-3">{{n.text}}</span>
-            <span class="right mr-3 mt-3">{{n.createdDate}}</span>
-          </div>
-          <div class="mt-3 clearfix">
-            <img src="" style="height: 100px; width: 100px;" class="left">
-            <span class="ml-3 left">{{n.text}}</span>
-          </div>
-          <hr class="mt-3">
+        <div v-for="n in news" :key="n.id" class="w-100" @click="goToSpecificNews(n.id)">
+            <div>
+              <span class="mt-3 ml-3">{{n.text}}</span>
+              <span class="right mr-3 mt-3">{{n.createdDate}}</span>
+            </div>
+            <div class="mt-3 clearfix">
+              <img src="" style="height: 100px; width: 100px;" class="left">
+              <span class="ml-3 left">{{n.text}}</span>
+            </div>
+            <hr class="mt-3">
         </div>
         <v-btn>Показать еще</v-btn>
     </v-layout>    
@@ -30,7 +30,11 @@ export default {
       areNewsLoaded: false
     };
   },
-  methods: {},
+  methods: {
+    goToSpecificNews(newsId){
+      this.$router.push({name: 'SpecificNewsPage', params: { id: newsId} });
+    }
+  },
   async mounted() {
     this.news = await NewsService.getNews();
     this.areNewsLoaded = true;

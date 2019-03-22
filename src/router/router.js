@@ -4,9 +4,12 @@ import DefaultPage from "Pages/Main/DefaultPage";
 import MainPage from "Pages/Main/MainPage";
 import ArticlePage from "Components/ArticlePage";
 import ProfilePage from "Pages/Profile/ProfilePage";
+
 import RequestsPage from "Pages/Requests/RequestsPage";
-import NewsPage from "Pages/News/NewsPage";
 import RequestPage from "Pages/Requests/RequestPage";
+
+import NewsPage from "Pages/News/NewsPage";
+import SpecificNewsPage from "Pages/News/SpecificNewsPage";
 
 Vue.use(Router);
 
@@ -51,11 +54,15 @@ export default new Router({
       name: "RequestPage"
     },
 
-    
     {
       path: "/news",
       component: NewsPage,
       name: "NewsPage"
+    },
+    {
+      path: "/news/:id",
+      component: SpecificNewsPage,
+      name: "SpecificNewsPage"
     }
   ]
 });
