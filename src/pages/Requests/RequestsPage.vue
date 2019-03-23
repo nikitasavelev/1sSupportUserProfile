@@ -11,33 +11,26 @@
         <hr>
         <request-item v-for="request in closedQuestions" :request="request" :key="request.id"></request-item>  
       </v-flex>
-      <v-flex xs3>
-        <v-layout align-center column>
-          <news-item v-for="n in news" :news="n" :key="n.title"></news-item>
-          <v-btn class="text-none">Показать все новости</v-btn>
-        </v-layout>
-      </v-flex>
+      <side-news></side-news>
       <v-pagination @input="onPageChange" :total-visible="8" :length="16" v-model="page"></v-pagination>
     </v-layout>
 </template>
 <script>
-import axios from "axios";
 import { serverAPIUrls } from "Constants/SERVER_API_URLS.js";
 import RequestItem from "./RequestItem";
 import QuestionsService from "Services/QuestionsService.js";
-import NewsService from "Services/NewsService.js";
-import NewsItem from "../News/NewsItem";
+import SideNews from "Components/SideNews";
 
 export default {
   name: "RequestsPage",
   props: {},
-  components: { RequestItem, NewsItem },
+  components: { RequestItem, SideNews },
   data() {
     return {
-      page: 1,      
+      page: 1,
       news: [],
-      activeQuestions:[],
-      closedQuestions:[],
+      activeQuestions: [],
+      closedQuestions: []
     };
   },
   methods: {
@@ -53,22 +46,21 @@ export default {
       return question;
     });
     this.closedQuestions = allQuestions.closedQuestions;
-    this.news = await NewsService.getNews();
   }
 };
 </script>
 <style scoped>
-.left-side  .ask-question.btn.ma-0 {
+.left-side .ask-question.btn.ma-0 {
   color: white;
   background-color: #2f80ed;
   float: right;
 }
 
-.left-side{
+.left-side {
   border-right: 1px solid gray;
 }
 
-.requests-page{
+.requests-page {
   font-size: 1.6rem;
 }
 
@@ -76,9 +68,5 @@ export default {
   display: table;
   content: "";
   clear: both;
-}
-
-.text-none{
-  text-transform: none;
 }
 </style>

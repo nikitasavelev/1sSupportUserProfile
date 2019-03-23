@@ -36,43 +36,8 @@ export default {
 };
 </script>
 <style scoped>
-.border {
-  border: 1px solid gray;
-}
-th,
-td {
-  padding: 10px;
-}
-.mw-50wv {
-  max-width: 50vw;
-}
-
-.column {
-  width: 100%;
-}
-
 .profile-page {
   color: #909090;
   font-size: 1.6rem;
-}
-
-hr {
-  height: 1px;
-}
-
-.right-side {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-content: space-between;
-  align-items: center;
-}
-
-.subheader {
-  color: #363636;
-}
-
-.left-side {
-  border-right: 1px solid gray;
 }
 </style>

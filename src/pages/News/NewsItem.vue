@@ -26,5 +26,4 @@ hr {
   flex-direction: column;
   width: 100%;
 }
-
 </style>

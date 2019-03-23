@@ -33,7 +33,7 @@ export default new Vuex.Store({
       //   state.role = localStorage.getItem("role");
       //   return state.role;
       // }
-      return "Operator";
+      return "Client";
     }
   },
   actions: {

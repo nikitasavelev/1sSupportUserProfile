@@ -6,16 +6,14 @@
 </template>
 <script>
 import UsersService from "Services/UsersService.js";
-import ClientProfilePage from "./ClientProfilePage";
 
 export default {
-  name: "ProfilePage",
+  name: "OperatorProfilePage",
   props: {},
   components: {},
   data() {
     return {
       profileData: {},
-      news: {},
       role: ""
     };
   },
