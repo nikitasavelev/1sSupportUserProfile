@@ -24,30 +24,15 @@
   </nav>
 </template>
 <script>
+import { pagesConfig } from "Constants/PAGES_CONFIG.js";
 export default {
   name: "HeaderComponent",
   data() {
     return {
-      pages: [
-        {
-          link: "/",
-          caption: "Поиск"
-        },
-        {
-          link: "/requests",
-          caption: "Обращения"
-        },
-        {
-          link: "/profile",
-          caption: "Профиль"
-        },
-        {
-          link: "/news",
-          caption: "Новости"
-        }
-      ],
       currentLink: "",
-      active: null
+      active: null,
+      role: "",
+      pages: []
     };
   },
   methods: {
@@ -58,6 +43,8 @@ export default {
   },
   mounted() {
     /*after page is reloaded current selected tab is reset. This code sets current tab*/
+    this.role = this.$store.getters.getRole;
+    this.pages = pagesConfig[this.role];
     const path = this.$router.history.current.path;
     let index;
     this.pages.forEach((page, i) => {

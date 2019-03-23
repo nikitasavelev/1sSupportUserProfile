@@ -6,7 +6,8 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     authorizationToken: "",
-    sessionId: ""
+    sessionId: "",
+    role: ""
   },
   mutations: {
     setAuthorizationToken(state, token) {
@@ -25,6 +26,14 @@ export default new Vuex.Store({
         return state.authorizationToken;
       }
       return "";
+    },
+    getRole: state => {
+      // if (state.role !== "") return state.role;
+      // if (localStorage.getItem("role") !== null) {
+      //   state.role = localStorage.getItem("role");
+      //   return state.role;
+      // }
+      return "Operator";
     }
   },
   actions: {
