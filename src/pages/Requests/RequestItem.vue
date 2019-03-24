@@ -3,21 +3,21 @@
     <v-flex xs9>
       <div>
         <router-link :to="{name: 'RequestPage', params: { id: request.questionId} }">
-          <span>{{request.title}}</span>
+          <span class="request-title">{{request.title}}</span>
         </router-link>
-        <span v-if="!request.isActive" class="text-uppercase right mt-2">Оценить:</span>
+        <span v-if="!request.isActive" class="text-uppercase right mt-2 request-mark">Оценить:</span>
       </div>
-      <div>
+      <div class="request-text">
         {{request.text}}
       </div>
     </v-flex>
-    <v-flex xs3 style="text-align: center;">
+    <v-flex xs3 class="request-create-date">
         <v-rating
             v-if="!request.isActive"
             v-model="request.mark"
             :hover="true"
             color="#003399"
-            medium         
+            small         
           ></v-rating>
        {{request.createdDate}} 
     </v-flex>
@@ -87,8 +87,31 @@ export default {
   border: 3px solid #ccc;
 }
 
-hr{
+hr {
   width: 100%;
+}
+
+.request-title {
+  font-size: 1.125rem;
+  color: #003399;
+  font-family: Open Sans;
+}
+
+.request-text {
+  font-size: 0.875rem;
+  color: #828282;
+  font-family: Open Sans;
+}
+
+.request-create-date {
+  text-align: center;
+  font-size: 1rem;
+  color: #4f4f4f;
+}
+
+.request-mark {
+  font-size: 0.875rem;
+  color: #333333;
 }
 </style>
 

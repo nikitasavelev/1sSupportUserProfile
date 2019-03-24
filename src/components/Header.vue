@@ -8,7 +8,7 @@
         class="header"
         v-model="active"        
       >
-        <v-tabs-slider color="#2f80ed"></v-tabs-slider>
+        <v-tabs-slider color="#003399"></v-tabs-slider>
 
         <v-tab v-for="page in pages"
            :key="page.caption"
@@ -67,7 +67,7 @@ header {
 }
 
 nav header .isActive.link.pa-0 {
-  color: #2f80ed;
+  color: #003399;
 }
 
 .nostyle {

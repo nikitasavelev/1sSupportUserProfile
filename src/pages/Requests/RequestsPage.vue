@@ -4,15 +4,15 @@
         <div class="clearfix"> 
           <v-btn class="ask-question btn ma-0 mt-4 clearfix">Задать вопрос</v-btn>
         </div>   
-        <v-flex xs-8 class="text-uppercase">Активные {{activeQuestions.length}}</v-flex> 
+        <v-flex xs-8 class="text-uppercase requests-header">Активные {{activeQuestions.length}}</v-flex> 
         <hr>
         <request-item v-for="request in activeQuestions" :request="request" :key="request.id"></request-item> 
-        <v-flex xs-8 class="text-uppercase">Завершенные {{closedQuestions.length}}</v-flex>
+        <v-flex xs-8 class="text-uppercase requests-header">Завершенные {{closedQuestions.length}}</v-flex>
         <hr>
         <request-item v-for="request in closedQuestions" :request="request" :key="request.id"></request-item>  
       </v-flex>
       <side-news></side-news>
-      <v-pagination @input="onPageChange" :total-visible="8" :length="16" v-model="page"></v-pagination>
+      <!-- <v-pagination @input="onPageChange" :total-visible="8" :length="16" v-model="page"></v-pagination> -->
     </v-layout>
 </template>
 <script>
@@ -52,7 +52,7 @@ export default {
 <style scoped>
 .left-side .ask-question.btn.ma-0 {
   color: white;
-  background-color: #2f80ed;
+  background-color: #003399;
   float: right;
 }
 
@@ -61,12 +61,18 @@ export default {
 }
 
 .requests-page {
-  font-size: 1.6rem;
+  font-size: 1.25rem;
 }
 
 .clearfix::after {
   display: table;
   content: "";
   clear: both;
+}
+
+.requests-header {
+  font-size: 1.125rem;
+  line-height: 1.125rem;
+  font-family: Open Sans;
 }
 </style>
