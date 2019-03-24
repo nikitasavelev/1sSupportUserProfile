@@ -1,8 +1,8 @@
 <template>
-    <div column class="news align-center pa-1">
-        <p class="ml-4">{{news.text}}</p>
-        <img src="">
-        <div class="ml-4">{{news.createdDate}}</div>
+    <div column class="news align-center pa-1" @click="goToSpecificNews(news.id)">
+        <p class="ml-4">{{news.title}}</p>
+        <img :src="news.imageUrl">
+        <div class="ml-4">{{news.shortPreview}}</div>
         <hr>
     </div>
 </template>
@@ -12,6 +12,11 @@ export default {
   name: "NewsItem",
   props: {
     news: {}
+  },
+  methods: {
+    goToSpecificNews(newsId) {
+      this.$router.push({ name: "SpecificNewsPage", params: { id: newsId } });
+    }
   }
 };
 </script>

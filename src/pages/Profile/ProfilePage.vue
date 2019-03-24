@@ -5,10 +5,6 @@
     </div>
 </template>
 <script>
-import UsersService from "Services/UsersService.js";
-import SupportAgents from "./SupportAgents";
-import NewsService from "Services/NewsService.js";
-import NewsItem from "../News/NewsItem";
 import Store from "Store/store.js";
 import ClientProfilePage from "./ClientProfilePage";
 import OperatorProfilePage from "./OperatorProfilePage";
@@ -17,8 +13,6 @@ export default {
   name: "ProfilePage",
   props: {},
   components: {
-    SupportAgents,
-    NewsItem,
     ClientProfilePage,
     OperatorProfilePage
   },

@@ -13,4 +13,6 @@ export const serverAPIUrls = Object.freeze({
   SET_ARTICLES_MARKS: serverAPIDomain + "/articles/marks",
   GET_NEWS: serverAPIDomain + "/news",
   GET_USER_INFO: serverAPIDomain + "/users",
+  GET_NEWS_SHORT_PREVIEWS: serverAPIDomain + "/news/short_previews",
+  GET_NEWS_PREVIEWS: serverAPIDomain + "/news/previews",
 });

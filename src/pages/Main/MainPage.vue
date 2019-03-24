@@ -40,10 +40,10 @@ export default {
   methods: {
     getToken: async function() {
       let response = await axios.post(serverAPIUrls.LOGIN, {
-        // inn: "000000000000",
-        // login: "test"
-        inn:"999999999999",
-        login:"operator"
+        inn: "000000000000",
+        login: "test"
+        // inn:"999999999999",
+        // login:"operator"
       });
       return response.data.data.accessToken;
     },

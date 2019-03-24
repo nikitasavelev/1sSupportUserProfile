@@ -32,14 +32,13 @@
 </template>
 <script>
 import UsersService from "Services/UsersService.js";
-import SupportAgents from "./SupportAgents";
 import Store from "Store/store.js";
 import SideNews from "Components/SideNews";
 
 export default {
   name: "ClientProfilePage",
   props: {},
-  components: { SupportAgents, SideNews },
+  components: { SideNews },
   data() {
     return {
       profileData: {},

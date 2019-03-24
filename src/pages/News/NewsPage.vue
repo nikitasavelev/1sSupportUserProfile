@@ -6,12 +6,12 @@
         </div>
         <div v-for="n in news" :key="n.id" class="w-100" @click="goToSpecificNews(n.id)">
             <div>
-              <span class="mt-3 ml-3">{{n.text}}</span>
+              <span class="mt-3 ml-3">{{n.title}}</span>
               <span class="right mr-3 mt-3">{{n.createdDate}}</span>
             </div>
             <div class="mt-3 clearfix">
-              <img src="" style="height: 100px; width: 100px;" class="left">
-              <span class="ml-3 left">{{n.text}}</span>
+              <img :src="n.imageUrl" style="height: 150px; width: 150px;" class="left">
+              <span class="ml-3 left">{{n.preview}}</span>
             </div>
             <hr class="mt-3">
         </div>
@@ -19,7 +19,6 @@
     </v-layout>    
 </template>
 <script>
-import { serverAPIUrls } from "Constants/SERVER_API_URLS.js";
 import NewsService from "Services/NewsService.js";
 export default {
   name: "NewsPage",
@@ -36,7 +35,7 @@ export default {
     }
   },
   async mounted() {
-    this.news = await NewsService.getNews();
+    this.news = await NewsService.getNewsPreviews();
     this.areNewsLoaded = true;
   }
 };

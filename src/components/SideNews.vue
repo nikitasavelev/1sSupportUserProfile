@@ -21,9 +21,10 @@ export default {
       news: []
     };
   },
-  methods: {},
+  methods: {
+  },
   async mounted() {
-    this.news = await NewsService.getNews();
+    this.news = await NewsService.getNewsShortPreviews();
   }
 };
 </script>

@@ -11,8 +11,27 @@ class NewsService {
       return data;
     });
   }
+
+  async getNewsShortPreviews() {
+    return requestToAPI(serverAPIUrls.GET_NEWS_SHORT_PREVIEWS, undefined, data => {
+      data.forEach(news => {
+        news.createdDate = formatDate(news.createdDate);
+      });
+      return data;
+    });
+  }
+
+  async getNewsPreviews() {
+    return requestToAPI(serverAPIUrls.GET_NEWS_PREVIEWS, undefined, data => {
+      data.forEach(news => {
+        news.createdDate = formatDate(news.createdDate);
+      });
+      return data;
+    });
+  }
+
   async getSpecificNews(newsId = 1) {
-    return requestToAPI(`${serverAPIUrls.SUPPORT_QUESTIONS}/${newsId}`, undefined, data => {
+    return requestToAPI(`${serverAPIUrls.GET_NEWS}/${newsId}`, undefined, data => {
       data.createdDate = formatDate(data.createdDate);
       return data;
     });
