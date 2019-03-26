@@ -1,7 +1,7 @@
 <template>
     <div column class="news align-center pa-1" @click="goToSpecificNews(news.id)">
         <p class="ml-4 news-title">{{news.title}}</p>
-        <img :src="news.imageUrl" alt="image of product">
+        <img :src="news.imageUrl" alt="image of product" class="news-img">
         <div class="ml-4 news-short-preview">{{news.shortPreview}}</div>
         <hr>
     </div>
@@ -43,5 +43,10 @@ hr {
   font-size: 0.875rem;
   color: #333333;
   text-align: center;
+}
+
+.news-img{
+  height:200px;
+  width:250px;
 }
 </style>
