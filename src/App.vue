@@ -26,6 +26,6 @@ export default {
 }
 html,
 body {
-  font-size: 16px !important;
+  font-size: 18px !important;
 }
 </style>

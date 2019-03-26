@@ -1,6 +1,6 @@
 <template>
-  <nav class="border">
-    <header> 
+  <nav class="border" role="navigation">
+    <header role="banner"> 
       <v-tabs
         centered
         color="white"
@@ -68,6 +68,11 @@ header {
 
 nav header .isActive.link.pa-0 {
   color: #003399;
+}
+
+.link{
+  font-family: Open Sans;
+  font-size: 1.25rem;
 }
 
 .nostyle {

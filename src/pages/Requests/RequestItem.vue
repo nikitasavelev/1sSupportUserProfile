@@ -1,5 +1,5 @@
 <template>
-  <v-layout row wrap>
+  <v-layout row wrap class="pa-2">
     <v-flex xs9>
       <div>
         <router-link :to="{name: 'RequestPage', params: { id: request.questionId} }">
@@ -83,10 +83,6 @@ export default {
 
 
 <style scoped>
-.request-item.border {
-  border: 3px solid #ccc;
-}
-
 hr {
   width: 100%;
 }
@@ -99,7 +95,8 @@ hr {
 
 .request-text {
   font-size: 0.875rem;
-  color: #828282;
+  /* color: #828282; */
+  color: #333333;
   font-family: Open Sans;
 }
 

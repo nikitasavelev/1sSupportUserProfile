@@ -1,8 +1,8 @@
 <template>
     <div column class="news align-center pa-1" @click="goToSpecificNews(news.id)">
         <p class="ml-4 news-title">{{news.title}}</p>
-        <img :src="news.imageUrl">
-        <div class="ml-4">{{news.shortPreview}}</div>
+        <img :src="news.imageUrl" alt="image of product">
+        <div class="ml-4 news-short-preview">{{news.shortPreview}}</div>
         <hr>
     </div>
 </template>
@@ -32,9 +32,16 @@ hr {
   width: 100%;
 }
 
-.news-title{
+.news-title {
   font-family: Open Sans;
   font-size: 1rem;
   color: #333333;
+}
+
+.news-short-preview {
+  font-family: Open Sans;
+  font-size: 0.875rem;
+  color: #333333;
+  text-align: center;
 }
 </style>

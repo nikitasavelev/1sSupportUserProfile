@@ -30,8 +30,4 @@ export default {
 };
 </script>
 <style scoped>
-.profile-page {
-  color: #909090;
-  font-size: 1.6rem;
-}
 </style>

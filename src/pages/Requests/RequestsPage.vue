@@ -71,8 +71,8 @@ export default {
 }
 
 .requests-header {
-  font-size: 1.125rem;
-  line-height: 1.125rem;
+  font-size: 1.25rem;
+  line-height: 1.25rem;
   font-family: Open Sans;
 }
 </style>
