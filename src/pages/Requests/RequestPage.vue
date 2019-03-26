@@ -4,12 +4,12 @@
           <router-link :to="'/requests'" style="min-width: 120px;">
                     Все обращения
           </router-link>
-          <v-btn class="right-btn">Задать вопрос</v-btn>
+          <v-btn class="right-btn ask-question" color="primary">Задать вопрос</v-btn>
         </div>
         <div>
-            <span>Обращение №{{this.$route.params.id}}</span>
-            <span class="right">{{request.createdDate}}</span>
-            <div>{{request.title}}</div>
+            <span class="request-number">Обращение №{{this.$route.params.id}}</span>
+            <span class="right request-created-date">{{request.createdDate}}</span>
+            <div class="request-title">{{request.title}}</div>
         </div>
         <hr>
          <v-textarea
@@ -19,9 +19,9 @@
           label="Solo textarea"
           placeholder="Напишите сообщение"
         ></v-textarea>
-        <v-btn class="d-block" color="primary">Отправить</v-btn>
+        <v-btn class="d-block right" color="primary">Отправить</v-btn>
         <v-flex offset-xs5>
-            <v-btn class="d-block" color="success">Вопрос решен</v-btn>
+            <v-btn class="d-block mt-5" color="success">Вопрос решен</v-btn>
         </v-flex>
     </v-container>
 </template>
@@ -53,5 +53,26 @@ export default {
 
 .w-100 {
   width: 100%;
+}
+
+.right-btn .ask-question {
+  color: white !important;
+}
+
+.request-number {
+  font-size: 0.75rem;
+  font-family: Open Sans;
+}
+
+.request-created-date {
+  font-size: 1rem;
+  color: #4f4f4f;
+  font-family: Open Sans;
+}
+
+.request-title {
+  font-size: 1.125rem;
+  color: #333333;
+  font-family: Open Sans;
 }
 </style>
