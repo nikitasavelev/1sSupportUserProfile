@@ -7,16 +7,21 @@ export default new Vuex.Store({
   state: {
     authorizationToken: "",
     sessionId: "",
-    role: ""
+    role: "",
   },
   mutations: {
     setAuthorizationToken(state, token) {
       state.authorizationToken = token;
-      localStorage.setItem("token", token);
+      localStorage.setItem("token", token);      
     },
     setSessionId(state, sessionId) {
       state.sessionId = sessionId;
+    },
+    setRole(state, role){
+      state.role = role;
+      localStorage.setItem("role", role);
     }
+
   },
   getters: {
     getAuthorizationToken: state => {
@@ -26,7 +31,7 @@ export default new Vuex.Store({
         return state.authorizationToken;
       }
       return "";
-    },
+    },    
     getRole: state => {
       // if (state.role !== "") return state.role;
       // if (localStorage.getItem("role") !== null) {
@@ -42,6 +47,9 @@ export default new Vuex.Store({
     },
     updateSessionId(context, newSessionId) {
       context.commit("setSessionId", newSessionId);
+    },
+    updateRole(context, newRole) {
+      context.commit("setRole", newRole);
     }
   }
 });

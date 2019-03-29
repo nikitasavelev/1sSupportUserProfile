@@ -8,7 +8,6 @@
       :allCount="totalCount"
       :lastQuery="lastQuery"/>
     <modal-component/>
-
   </div>
 </template>
 

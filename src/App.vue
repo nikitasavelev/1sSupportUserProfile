@@ -1,6 +1,7 @@
 <template>
   <v-app id="app" style="background-color:white">
-    <header-component></header-component>
+    <header-component v-if="this.$store.getters.getAuthorizationToken">
+    </header-component>
     <keep-alive include="DefaultPage">
       <router-view/>
     </keep-alive>
@@ -13,7 +14,7 @@ import Toolbar from "Components/Toolbar";
 import HeaderComponent from "Components/Header";
 export default {
   name: "App",
-  components: { ModalComponent, Toolbar, HeaderComponent }
+  components: { ModalComponent, Toolbar, HeaderComponent },
 };
 </script>
 

@@ -8,8 +8,8 @@
 </template>
 
 <script>
-import MainPage from './MainPage'
-import Toolbar from 'Components/Toolbar'
+import MainPage from './MainPage';
+import Toolbar from 'Components/Toolbar';
 export default {
   name: "DefaultPage",
   components: { Toolbar, MainPage }

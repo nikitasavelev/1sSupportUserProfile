@@ -1,9 +1,11 @@
 import Vue from "vue";
 import Router from "vue-router";
+import Store from "Store/store.js";
 import DefaultPage from "Pages/Main/DefaultPage";
 import MainPage from "Pages/Main/MainPage";
 import ArticlePage from "Components/ArticlePage";
 import ProfilePage from "Pages/Profile/ProfilePage";
+import LoginPage from "Pages/Login/LoginPage";
 
 import RequestsPage from "Pages/Requests/RequestsPage";
 import RequestPage from "Pages/Requests/RequestPage";
@@ -13,7 +15,7 @@ import SpecificNewsPage from "Pages/News/SpecificNewsPage";
 
 Vue.use(Router);
 
-export default new Router({
+const router = new Router({
   mode: "history",
   base: process.env.BASE_URL,
   routes: [
@@ -28,6 +30,11 @@ export default new Router({
           component: MainPage
         }
       ]
+    },
+    {
+      path:"/login",
+      component:LoginPage,
+      name:"LoginPage",
     },
     {
       path: "/articles/:articleId",
@@ -54,6 +61,7 @@ export default new Router({
       name: "RequestPage"
     },
 
+    /* News */
     {
       path: "/news",
       component: NewsPage,
@@ -66,3 +74,13 @@ export default new Router({
     }
   ]
 });
+
+router.beforeEach((to, from, next) => {
+  if (!Store.getters.getAuthorizationToken && to.path !== '/login' ){
+    next({ name: 'LoginPage'});
+  } else {
+    next();
+  }
+})
+
+export default router;
