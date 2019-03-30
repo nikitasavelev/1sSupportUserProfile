@@ -28,10 +28,8 @@
 
 <script>
 import LoginService from "Services/LoginService.js";
-import Toolbar from "Components/Toolbar";
 export default {
   name: "LoginPage",
-  components: { Toolbar },
   data() {
     return {
       serverResponse: {},
@@ -64,7 +62,7 @@ export default {
       this.role = this.serverResponse.roleType.name;
       this.$store.dispatch("updateAuthorizationToken", this.accessToken);
       this.$store.dispatch("updateRole", this.role);
-      this.redirectToStartPageForRole("Operator");
+      this.redirectToStartPageForRole("Client");
     },
     redirectToStartPageForRole(role) {
       switch (role) {

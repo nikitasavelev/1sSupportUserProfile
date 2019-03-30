@@ -14,7 +14,7 @@ import Toolbar from "Components/Toolbar";
 import HeaderComponent from "Components/Header";
 export default {
   name: "App",
-  components: { ModalComponent, Toolbar, HeaderComponent },
+  components: { ModalComponent, Toolbar, HeaderComponent }
 };
 </script>
 
@@ -29,4 +29,5 @@ html,
 body {
   font-size: 16px !important;
 }
+
 </style>
