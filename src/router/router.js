@@ -32,9 +32,9 @@ const router = new Router({
       ]
     },
     {
-      path:"/login",
-      component:LoginPage,
-      name:"LoginPage",
+      path: "/login",
+      component: LoginPage,
+      name: "LoginPage"
     },
     {
       path: "/articles/:articleId",
@@ -75,12 +75,13 @@ const router = new Router({
   ]
 });
 
+
 router.beforeEach((to, from, next) => {
-  if (!Store.getters.getAuthorizationToken && to.path !== '/login' ){
-    next({ name: 'LoginPage'});
+  if (!Store.getters.getAuthorizationToken && to.path !== "/login") {
+    next({ name: "LoginPage" });
   } else {
     next();
   }
-})
+});
 
 export default router;

@@ -37,15 +37,6 @@ export default {
     };
   },
   methods: {
-    getToken: async function() {
-      let response = await axios.post(serverAPIUrls.LOGIN, {
-        inn: "000000000000",
-        login: "test"
-        // inn:"999999999999",
-        // login:"operator"
-      });
-      return response.data.data.accessToken;
-    },
     getArticles: async function(query, sessionId) {
       let axiosConfig = {
         method: "get",
@@ -87,8 +78,6 @@ export default {
   async created() {
     // not necessary to have Token and SessionId as data here,
     // but it's easier to debug
-    this.token = await this.getToken();
-    this.$store.dispatch("updateAuthorizationToken", this.token);
     this.articlesMarks = await this.getMarks(this.token);
   }
 };
