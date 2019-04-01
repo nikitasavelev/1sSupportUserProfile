@@ -1,5 +1,5 @@
 <template>
-    <v-container @click="showDatePickerFrom = false; showDatePickerTo=false;">
+    <v-container @click="hideDatePickers">
       <div>Иванов Иван Иванович</div>
       <hr>
       <v-layout class="my-2" align-center>
@@ -8,7 +8,7 @@
           <input
             v-model="dateFrom"
             class="datepicker ml-2 pa-1"
-            @click="showDatePickerFrom = !showDatePickerFrom"
+            @click="toggleDatePickerFrom"
             >  
           <v-date-picker 
             v-model="dateFrom"
@@ -23,7 +23,7 @@
           <input
             v-model="dateTo"
             class="datepicker pa-1"
-            @click="showDatePickerTo = !showDatePickerTo"
+            @click="toggleDatePickerTo"
             >  
           <v-date-picker 
             v-model="dateTo"
@@ -85,11 +85,25 @@ export default {
       showDatePickerFrom: false,
       showDatePickerTo: false,
       dateFrom: new Date().toISOString().substr(0, 10),
-      dateTo: new Date().toISOString().substr(0, 10),
-      
+      dateTo: new Date().toISOString().substr(0, 10)
     };
   },
-  methods: {},
+  methods: {
+    toggleDatePickerFrom(event) {
+      event.stopPropagation();
+      this.showDatePickerFrom = !this.showDatePickerFrom;
+      this.showDatePickerTo = false;
+    },
+    toggleDatePickerTo(event) {
+      event.stopPropagation();
+      this.showDatePickerTo = !this.showDatePickerTo;
+      this.showDatePickerFrom = false;
+    },
+    hideDatePickers() {
+      this.showDatePickerFrom = false;
+      this.showDatePickerTo = false;
+    }
+  },
   async mounted() {
     this.profileData = await UsersService.getUserInfo();
   }
@@ -101,7 +115,7 @@ hr {
   background-color: black;
 }
 
-.v-input__slot{
+.v-input__slot {
   margin: 0 !important;
   padding: 0 !important;
 }

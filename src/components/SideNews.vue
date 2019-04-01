@@ -8,7 +8,6 @@
 </template>
 
 <script>
-import { serverAPIUrls } from "Constants/SERVER_API_URLS.js";
 import NewsService from "Services/NewsService.js";
 import NewsItem from "Pages/News/NewsItem";
 
