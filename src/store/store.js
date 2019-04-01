@@ -33,12 +33,12 @@ export default new Vuex.Store({
       return "";
     },    
     getRole: state => {
-      // if (state.role !== "") return state.role;
-      // if (localStorage.getItem("role") !== null) {
-      //   state.role = localStorage.getItem("role");
-      //   return state.role;
-      // }
-      return "Client";
+      if (state.role !== "") return state.role;
+      if (localStorage.getItem("role") !== null) {
+        state.role = localStorage.getItem("role");
+        return state.role;
+      }
+      return "";
     }
   },
   actions: {

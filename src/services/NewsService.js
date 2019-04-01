@@ -6,7 +6,7 @@ class NewsService {
   async getNews() {
     return requestToAPI(serverAPIUrls.GET_NEWS, undefined, data => {
       data.forEach(news => {
-        news.createdDate = formatDate(news.createdDate);
+        news.createdAt = formatDate(news.createdAt);
       });
       return data;
     });
@@ -15,7 +15,7 @@ class NewsService {
   async getNewsShortPreviews() {
     return requestToAPI(serverAPIUrls.GET_NEWS_SHORT_PREVIEWS, undefined, data => {
       data.forEach(news => {
-        news.createdDate = formatDate(news.createdDate);
+        news.createdAt = formatDate(news.createdAt);
       });
       return data;
     });
@@ -24,7 +24,7 @@ class NewsService {
   async getNewsPreviews() {
     return requestToAPI(serverAPIUrls.GET_NEWS_PREVIEWS, undefined, data => {
       data.forEach(news => {
-        news.createdDate = formatDate(news.createdDate);
+        news.createdAt = formatDate(news.createdAt);
       });
       return data;
     });
@@ -32,7 +32,7 @@ class NewsService {
 
   async getSpecificNews(newsId = 1) {
     return requestToAPI(`${serverAPIUrls.GET_NEWS}/${newsId}`, undefined, data => {
-      data.createdDate = formatDate(data.createdDate);
+      data.createdAt = formatDate(data.createdAt);
       return data;
     });
   }

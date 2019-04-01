@@ -1,7 +1,7 @@
 <template>
     <v-flex xs3>
         <v-layout align-center column>
-          <news-item v-for="n in news" :news="n" :key="n.title"></news-item>
+          <news-item v-for="n in news" :news="n" :key="n.id"></news-item>
           <v-btn class="text-none">Показать все новости</v-btn>
         </v-layout>
     </v-flex>

@@ -2,7 +2,7 @@ import { serverAPIUrls } from "Constants/SERVER_API_URLS.js";
 import { requestToAPI } from "Constants/DEFAULT_REQUEST.js";
 
 class LoginService {
-  async login(inn, userLogin) {
+  async signIn(login, password) {
     const requestParameters = {
         headers: {
             "Content-Type": "application/json"
@@ -11,8 +11,8 @@ class LoginService {
         mode: "cors",
         cache: "default",
         body: JSON.stringify({
-            inn,
-            login: userLogin
+            login,
+            password
         })       
     };
     return requestToAPI(serverAPIUrls.LOGIN, requestParameters);

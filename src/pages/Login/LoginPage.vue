@@ -2,12 +2,12 @@
   <v-container fill-height class="mw-50">
     <v-layout column justify-center align-center>
       <img class="v-img-logo img-logo-login mb-5" src="@/assets/logo.jpeg"/>
-      <form class="login-form pa-5" @submit="login">
+      <form class="login-form pa-5" @submit="signIn">
         <v-layout align-center column class="pa-5">
           <div class="login-system">Вход в систему</div>
           <v-text-field
-              v-model="inn"
-              :rules="innRules"
+              v-model="login"
+              :rules="loginRules"
               :counter="12"
               label="Логин"
               required
@@ -35,9 +35,9 @@ export default {
       serverResponse: {},
       accessToken: "",
       role: "",
-      inn: "",
+      login: "",
       password: "",
-      innRules: [
+      loginRules: [
         v => !!v || "Заполните поле инн",
         v => v.length <= 12 || "Инн должен быть длиной 12 символов"
       ],
@@ -48,7 +48,7 @@ export default {
     };
   },
   methods: {
-    async login(event) {
+    async signIn(event) {
       event.preventDefault();
 
       // inn:"999999999999",
@@ -56,13 +56,13 @@ export default {
 
       // inn:"000000000000",
       // login:"test",
-
-      this.serverResponse = await LoginService.login("000000000000", "test");
+      //;
+      this.serverResponse = await LoginService.signIn(this.login, this.password);
       this.accessToken = this.serverResponse.accessToken;
       this.role = this.serverResponse.roleType.name;
       this.$store.dispatch("updateAuthorizationToken", this.accessToken);
       this.$store.dispatch("updateRole", this.role);
-      this.redirectToStartPageForRole("Client");
+      this.redirectToStartPageForRole(this.role);
     },
     redirectToStartPageForRole(role) {
       switch (role) {

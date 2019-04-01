@@ -7,7 +7,7 @@
         <div v-for="n in news" :key="n.id" class="w-100" @click="goToSpecificNews(n.id)">
             <div>
               <span class="mt-3 ml-3 news-title">{{n.title}}</span>
-              <span class="right mr-3 mt-3 news-created-date">{{n.createdDate}}</span>
+              <span class="right mr-3 mt-3 news-created-date">{{n.createdAt}}</span>
             </div>
             <div class="mt-3 clearfix">
               <img :src="n.imageUrl" style="height: 150px; width: 150px;" class="left">

@@ -3,7 +3,7 @@
         <router-link to="/news">Все новости</router-link>
         <v-layout column class="ml-5">
           <p class="specific-news-page-title">{{news.title}}</p>
-          <p class="specific-news-page-created-date">{{news.createdDate}}</p>
+          <p class="specific-news-page-created-date">{{news.createdAt}}</p>
           <div class="specific-news-page-text">{{news.text}}</div>
           <img :src="news.imageUrl">
           <v-layout row justify-center>

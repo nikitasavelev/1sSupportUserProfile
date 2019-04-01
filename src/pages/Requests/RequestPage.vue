@@ -8,7 +8,7 @@
         </div>
         <div>
             <span class="request-number">Обращение №{{this.$route.params.id}}</span>
-            <span class="right request-created-date">{{request.createdDate}}</span>
+            <span class="right request-created-date">{{request.createdAt}}</span>
             <div class="request-title">{{request.title}}</div>
         </div>
         <hr>

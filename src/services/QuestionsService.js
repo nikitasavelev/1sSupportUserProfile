@@ -8,19 +8,19 @@ class QuestionsService {
   }
 
   async getQuestion(questionId = 1) {
-    return requestToAPI(`${serverAPIUrls.SUPPORT_QUESTIONS}/${questionId}`, undefined, data => {
-      data.createdDate = formatDate(data.createdDate);
+    return requestToAPI(`${serverAPIUrls.GET_QUESTIONS}/${questionId}`, undefined, data => {
+      data.createdAt = formatDate(data.createdAt);
       return data;
     });
   }
 
   async getQuestions() {
-    return requestToAPI(serverAPIUrls.SUPPORT_QUESTIONS, undefined, data => {
+    return requestToAPI(serverAPIUrls.GET_QUESTIONS, undefined, data => {
       data.activeQuestions.forEach(question => {
-        question.createdDate = formatDate(question.createdDate);
+        question.createdAt = formatDate(question.createdAt);
       });
       data.closedQuestions.forEach(question => {
-        question.createdDate = formatDate(question.createdDate);
+        question.createdAt = formatDate(question.createdAt);
       });
       return data;
     });

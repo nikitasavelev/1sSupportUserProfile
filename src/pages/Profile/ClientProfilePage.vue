@@ -10,7 +10,7 @@
                 <div>Логин в 1С: {{profileData.oneCPortalAuthInfo.login}}</div>
                 <div>Тип договора: {{profileData.oneCPortalAuthInfo.agreement}}</div>
                 <div>
-                  Дата истечения договора: {{profileData.oneCPortalAuthInfo.agreement}}
+                  Дата истечения договора: {{profileData.oneCPortalAuthInfo.expiresDate}}
                 </div>
               </v-layout>
               <hr>
