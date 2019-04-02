@@ -25,5 +25,22 @@ class QuestionsService {
       return data;
     });
   }
+
+  async askQuestion(text, titleId) {
+    const requestParameters = {
+      headers: {
+        "Content-Type": "application/json"
+      },
+      method: "POST",
+      mode: "cors",
+      cache: "default",
+      body: JSON.stringify({
+        contactData: "999999",
+        text,
+        titleId
+      })
+    };
+    return requestToAPI(serverAPIUrls.GET_QUESTIONS, requestParameters);
+  }
 }
 export default new QuestionsService();
