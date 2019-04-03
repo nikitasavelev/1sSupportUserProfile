@@ -5,7 +5,9 @@ import DefaultPage from "Pages/Main/DefaultPage";
 import MainPage from "Pages/Main/MainPage";
 import ArticlePage from "Components/ArticlePage";
 import ProfilePage from "Pages/Profile/ProfilePage";
+
 import LoginPage from "Pages/Login/LoginPage";
+import RegistrationPage from "Pages/Login/RegistrationPage";
 
 import RequestsPage from "Pages/Requests/RequestsPage";
 import RequestPage from "Pages/Requests/RequestPage";
@@ -35,6 +37,11 @@ const router = new Router({
       path: "/login",
       component: LoginPage,
       name: "LoginPage"
+    },
+    {
+      path: "/register",
+      component: RegistrationPage,
+      name: "RegistrationPage"
     },
     {
       path: "/articles/:articleId",
@@ -75,9 +82,8 @@ const router = new Router({
   ]
 });
 
-
 router.beforeEach((to, from, next) => {
-  if (!Store.getters.getAuthorizationToken && to.path !== "/login") {
+  if (!Store.getters.getAuthorizationToken && to.path !== "/login" && to.path !== "/register") {
     next({ name: "LoginPage" });
   } else {
     next();
