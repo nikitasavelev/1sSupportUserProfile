@@ -8,14 +8,14 @@ class QuestionsService {
   }
 
   async getQuestion(questionId = 1) {
-    return requestToAPI(`${serverAPIUrls.GET_QUESTIONS}/${questionId}`, undefined, data => {
+    return requestToAPI(`${serverAPIUrls.QUESTIONS}/${questionId}`, undefined, data => {
       data.createdAt = formatDate(data.createdAt);
       return data;
     });
   }
 
   async getQuestions() {
-    return requestToAPI(serverAPIUrls.GET_QUESTIONS, undefined, data => {
+    return requestToAPI(serverAPIUrls.QUESTIONS, undefined, data => {
       data.activeQuestions.forEach(question => {
         question.createdAt = formatDate(question.createdAt);
       });
@@ -40,7 +40,32 @@ class QuestionsService {
         titleId
       })
     };
-    return requestToAPI(serverAPIUrls.GET_QUESTIONS, requestParameters);
+    return requestToAPI(serverAPIUrls.QUESTIONS, requestParameters);
+  }
+
+  async resolveQuestion(questionId) {
+    const requestParameters = {
+      headers: {
+        "Content-Type": "application/json"
+      },
+      method: "PUT",
+      mode: "cors",
+      cache: "default"
+    };
+    return requestToAPI(`${serverAPIUrls.QUESTIONS}${questionId}${serverAPIUrls.RESOLVE_QUESTION}`, requestParameters);
+  }
+
+  async closeQuestion(questionId, mark) {
+    const requestParameters = {
+      headers: {
+        "Content-Type": "application/json"
+      },
+      method: "PUT",
+      mode: "cors",
+      cache: "default",
+      body: JSON.stringify(mark)
+    };
+    return requestToAPI(`${serverAPIUrls.QUESTIONS}${questionId}${serverAPIUrls.CLOSE_QUESTION}`, requestParameters);
   }
 }
 export default new QuestionsService();

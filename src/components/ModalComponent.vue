@@ -175,7 +175,7 @@ export default {
       this.modlst = 2;
       let axiosConfig = {
         method: "post",
-        url: serverAPIUrls.GET_QUESTIONS,
+        url: serverAPIUrls.QUESTIONS,
         headers: {
           Authorization: "Bearer " + this.token
         },

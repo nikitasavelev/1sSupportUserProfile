@@ -5,54 +5,83 @@
                     Все обращения
           </router-link>
         </div>
-        <div v-if="this.$route.params.id !== '0'">
-            <span class="request-number">Обращение №{{this.$route.params.id}}</span>
-            <span class="right request-created-date">{{request.createdAt}}</span>
-            <div class="request-title">{{request.title}}</div>
-        </div>
-        <hr>
-        <form @submit="formSubmit">
-          <v-textarea
-            solo
-            class="mt-3"
-            name="input-7-4"
-            label="Solo textarea"
-            required
-            v-model="message"
-            placeholder="Напишите сообщение"
-          ></v-textarea>
-          <v-btn class="d-block right" color="primary" type="submit">Отправить</v-btn>
-        </form>
-        <v-flex offset-xs5 v-if="this.$route.params.id !== '0'">
-            <v-btn class="d-block mt-5" color="success" @click="solveQuestion">Вопрос решен</v-btn>
-        </v-flex>
-        <v-dialog
-          v-model="isModalShown"
-          width="400"
-        >  
-          <v-card>
-            <v-layout column justify-center align-center>
+        <div v-if="isLoaded">
+          <div v-if="this.$route.params.id !== '0'">
+              <span class="request-number">Обращение №{{this.$route.params.id}}</span>
+              <span class="right request-created-date">{{request.createdAt}}</span>
+              <div class="request-title">{{request.title}}</div>
+          </div>
+          <hr>
+          <form @submit="formSubmit">
+            <v-textarea
+              solo
+              class="mt-3"
+              name="input-7-4"
+              label="Solo textarea"
+              required
+              v-model="message"
+              placeholder="Напишите сообщение"
+            ></v-textarea>
+            <v-btn 
+              class="d-block right"
+              color="primary"
+              type="submit"
+              v-if="!isResolved && request.mark == null">Отправить</v-btn>
+          </form>
+          <v-layout justify-center align-center column v-if="this.questionId !== '0'">
               <v-btn
-                v-for="title in titles"
-                :key="title.id"
-                class="title modal mt-1"
-                :class="{'active-title': titleId === title.id}"
-                @click="setTitle(title.id)"
-                >{{title.text}}</v-btn>
-            </v-layout>
-            <v-divider></v-divider>
-            <v-card-actions>
-              <v-spacer></v-spacer>
-              <v-btn
-                color="primary"
-                flat
-                @click="createQuestion"
-              >
-                Отправить обращение 
+              class="d-block mt-5"
+              color="success"
+              @click="resolveQuestion"
+              v-if="!isResolved && request.mark == null">
+                Вопрос решен
               </v-btn>
-            </v-card-actions>
-            </v-card>
+              <div class="question-resolved" v-if="isResolved || request.mark > 0">Вопрос решен</div>
+              <v-rating
+                  v-model="request.mark"
+                  :hover="true"
+                  :readonly="isClosed"
+                  color="#003399"
+                  v-if="isResolved || request.mark > 0"
+                  large          
+                ></v-rating>
+          </v-layout>
+          <v-dialog
+            v-model="isModalShown"
+            width="400"
+          >  
+            <v-card>
+              <v-layout column justify-center align-center>
+                <v-btn
+                  v-for="title in titles"
+                  :key="title.id"
+                  class="title modal mt-1"
+                  :class="{'active-title': titleId === title.id}"
+                  @click="setTitle(title.id)"
+                  >{{title.text}}</v-btn>
+              </v-layout>
+              <v-divider></v-divider>
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn
+                  color="primary"
+                  flat
+                  @click="createQuestion"
+                >
+                  Отправить обращение 
+                </v-btn>
+              </v-card-actions>
+              </v-card>
           </v-dialog>
+        </div>
+        <v-layout v-else justify-center mt-5>
+                <v-progress-circular
+                    :size="70"
+                    :width="7"
+                    color="primary"
+                    indeterminate
+                    ></v-progress-circular>
+            </v-layout>
     </v-container>
 </template>
 <script>
@@ -66,14 +95,23 @@ export default {
       message: "",
       isModalShown: false,
       titles: [],
-      titleId: ""
+      titleId: "",
+      questionId: this.$route.params.id,
+      isResolved: false,
+      isClosed: false,
+      isLoaded: false
     };
   },
   async mounted() {
     this.titles = await QuestionsService.getTitles();
-    if (this.$route.params.id !== "0") {
-      this.request = await QuestionsService.getQuestion(this.$route.params.id);
+    if (this.questionId !== "0") {
+      this.request = await QuestionsService.getQuestion(this.questionId);
+      this.isResolved =
+        this.request.state.name == "QuestionStateType.ResolvedByClient"
+          ? true
+          : false;
     }
+    this.isLoaded = true;
   },
   methods: {
     createQuestion() {
@@ -85,11 +123,22 @@ export default {
     },
     formSubmit(event) {
       event.preventDefault();
-      if (this.$route.params.id === "0") {
+      if (this.questionId === "0") {
         this.isModalShown = true;
       }
     },
-    solveQuestion() {}
+    resolveQuestion() {
+      QuestionsService.resolveQuestion(this.questionId);
+      this.isResolved = true;
+    }
+  },
+  watch: {
+    "request.mark": function(mark) {
+      if (mark != null) {
+        QuestionsService.closeQuestion(this.questionId, mark);
+        this.isClosed = true;
+      }
+    }
   }
 };
 </script>
@@ -136,5 +185,9 @@ export default {
 .mt-1.modal.title.active-title {
   background-color: #003399;
   color: white;
+}
+
+.question-resolved {
+  color: #4caf50;
 }
 </style>
