@@ -42,7 +42,7 @@ export default {
         method: "get",
         url: serverAPIUrls.GET_SEARCH,
         headers: {
-          Authorization: "Bearer " + this.token
+          Authorization: "Bearer " + this.$store.getters.getAuthorizationToken
         },
         params: {
           text: query
@@ -65,7 +65,7 @@ export default {
         method: "get",
         url: serverAPIUrls.GET_POPULAR_SEARCH,
         headers: {
-          Authorization: "Bearer " + this.token
+          Authorization: "Bearer " + this.$store.getters.getAuthorizationToken
         },
         params: {
           n: 1
@@ -78,7 +78,7 @@ export default {
   async created() {
     // not necessary to have Token and SessionId as data here,
     // but it's easier to debug
-    this.articlesMarks = await this.getMarks(this.token);
+    this.articlesMarks = await this.getMarks(this.$store.getters.getAuthorizationToken)    
   }
 };
 </script>

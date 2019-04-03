@@ -10,8 +10,8 @@ export const serverAPIUrls = Object.freeze({
   QUESTIONS: serverAPIDomain + "/questions/",
   RESOLVE_QUESTION: "/resolve",
   CLOSE_QUESTION: "/close",
-  GET_SEARCH: serverAPIDomain + "/search",
-  GET_POPULAR_SEARCH: serverAPIDomain + "/search/popular",
+  GET_SEARCH: serverAPIDomain + "/searching/search/",
+  GET_POPULAR_SEARCH: serverAPIDomain + "/searching/popular/",
 
   GET_ARTICLE: serverAPIDomain + "/articles",
   SET_ARTICLES_MARKS: serverAPIDomain + "/articles/marks",
