@@ -19,11 +19,12 @@
               <div v-for="product in profileData.products" :key="product.name" class="d-inline-block mx-2">
                 <img :src="product.imageUrl" class="product-image" alt="image of product">
                 <div class="client-profile-page-product-name">{{product.name}}</div>
-                <a :href="product.url" class="client-profile-page-check-updates"
+                <p class="client-profile-page-check-updates"
                   title="check updates for product"
+                  @click="checkUpdates(product.url)"
                 >
                   Проверить обновления
-                </a>
+                </p>
               </div>
             </div>
             <v-layout v-else justify-center mt-5>
@@ -54,7 +55,11 @@ export default {
       role: ""
     };
   },
-  methods: {},
+  methods: {
+    checkUpdates(url) {
+      window.open(url, "_blank");
+    }
+  },
   async mounted() {
     this.profileData = await UsersService.getUserInfo();
     this.role = Store.getters.getRole;
@@ -97,5 +102,8 @@ hr {
 .client-profile-page-check-updates {
   font-family: Open Sans;
   font-size: 0.875rem;
+  color: blue;
+  cursor: pointer;
+  text-decoration: underline;
 }
 </style>
