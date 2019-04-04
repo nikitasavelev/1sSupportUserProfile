@@ -46,7 +46,7 @@ hr {
 }
 
 .news-img{
-  height:200px;
-  width:250px;
+  height: 75%;
+  width: 75%;
 }
 </style>
