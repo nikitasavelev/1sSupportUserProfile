@@ -5,7 +5,9 @@
           <p class="specific-news-page-title">{{news.title}}</p>
           <p class="specific-news-page-created-date">{{news.createdAt}}</p>
           <div class="specific-news-page-text">{{news.text}}</div>
-          <img :src="news.imageUrl">
+          <v-layout justify-center>
+           <img :src="news.imageUrl" class="specific-news-image">
+          </v-layout>
           <v-layout row justify-center>
             <span class="text-uppercase specific-news-page-mark mt-3">Оцените новость:</span>
             <v-rating
@@ -57,5 +59,10 @@ export default {
   font-family: Open Sans;
   font-size: 0.875rem;
   color: #333333;
+}
+
+.specific-news-image{
+  max-width: 500px;
+  max-height: 500px;
 }
 </style>
