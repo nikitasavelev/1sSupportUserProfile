@@ -50,28 +50,11 @@
             v-model="isModalShown"
             width="400"
           >  
-            <v-card>
-              <v-layout column justify-center align-center>
-                <v-btn
-                  v-for="title in titles"
-                  :key="title.id"
-                  class="title modal mt-1"
-                  :class="{'active-title': titleId === title.id}"
-                  @click="setTitle(title.id)"
-                  >{{title.text}}</v-btn>
-              </v-layout>
-              <v-divider></v-divider>
-              <v-card-actions>
-                <v-spacer></v-spacer>
-                <v-btn
-                  color="primary"
-                  flat
-                  @click="createQuestion"
-                >
-                  Отправить обращение 
-                </v-btn>
-              </v-card-actions>
-              </v-card>
+            <choose-title-modal
+             :titles="titles"
+             @update:isModalShown="isModalShown = false"
+             :message="message">
+            </choose-title-modal>
           </v-dialog>
         </div>
         <v-layout v-else justify-center mt-5>
@@ -86,6 +69,7 @@
 </template>
 <script>
 import QuestionsService from "Services/QuestionsService.js";
+import ChooseTitleModal from "./ChooseTitleModal";
 
 export default {
   name: "RequestPage",
@@ -95,13 +79,13 @@ export default {
       message: "",
       isModalShown: false,
       titles: [],
-      titleId: "",
       questionId: this.$route.params.id,
       isResolved: false,
       isClosed: false,
       isLoaded: false
     };
   },
+  components: { ChooseTitleModal },
   async mounted() {
     this.titles = await QuestionsService.getTitles();
     if (this.questionId !== "0") {
@@ -114,13 +98,6 @@ export default {
     this.isLoaded = true;
   },
   methods: {
-    createQuestion() {
-      this.isModalShown = false;
-      QuestionsService.askQuestion(this.message, this.titleId);
-    },
-    setTitle(titleId) {
-      this.titleId = titleId;
-    },
     formSubmit(event) {
       event.preventDefault();
       if (this.questionId === "0") {
@@ -176,15 +153,6 @@ export default {
   font-size: 1.125rem;
   color: #333333;
   font-family: Open Sans;
-}
-
-.title {
-  max-width: 50%;
-}
-
-.mt-1.modal.title.active-title {
-  background-color: #003399;
-  color: white;
 }
 
 .question-resolved {
