@@ -1,18 +1,20 @@
 <template>
     <div column class="news align-center pa-1" @click="goToSpecificNews(news.id)">
         <p class="ml-4 news-title">{{news.title}}</p>
-        <img :src="news.imageUrl" alt="image of product" class="news-img">
+        <image-with-aspect-ratio :source="news.imageUrl" class="news-img"></image-with-aspect-ratio>
         <div class="ml-4 news-short-preview">{{news.shortPreview}}</div>
         <hr>
     </div>
 </template>
 
 <script>
+import ImageWithAspectRatio from "Components/ImageWithAspectRatio";
 export default {
   name: "NewsItem",
   props: {
     news: {}
   },
+  components: { ImageWithAspectRatio },
   methods: {
     goToSpecificNews(newsId) {
       this.$router.push({ name: "SpecificNewsPage", params: { id: newsId } });

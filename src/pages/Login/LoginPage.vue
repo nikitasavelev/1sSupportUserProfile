@@ -1,7 +1,8 @@
 <template>
   <v-container fill-height class="mw-50">
     <v-layout column justify-center align-center>
-      <img class="v-img-logo img-logo-login mb-5" src="@/assets/logo.jpeg"/>
+      <image-with-aspect-ratio class="v-img-logo img-logo-login mb-5" :source="'/logo.jpeg'">
+      </image-with-aspect-ratio>
       <form class="login-form pa-5" @submit="signIn">
         <v-layout align-center column class="pa-5">
           <div class="login-system">Вход в систему</div>
@@ -28,8 +29,10 @@
 
 <script>
 import LoginService from "Services/LoginService.js";
+import ImageWithAspectRatio from "Components/ImageWithAspectRatio";
 export default {
   name: "LoginPage",
+  components: { ImageWithAspectRatio },
   data() {
     return {
       serverResponse: {},
@@ -85,7 +88,7 @@ export default {
 }
 
 .img-logo-login {
-  max-width: 450px;
+  max-width: 650px;
   height: 150px;
 }
 

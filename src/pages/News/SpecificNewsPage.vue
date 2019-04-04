@@ -6,7 +6,7 @@
           <p class="specific-news-page-created-date">{{news.createdAt}}</p>
           <div class="specific-news-page-text">{{news.text}}</div>
           <v-layout justify-center>
-           <img :src="news.imageUrl" class="specific-news-image">
+           <image-with-aspect-ratio :source="news.imageUrl" class="specific-news-image"></image-with-aspect-ratio>
           </v-layout>
           <v-layout row justify-center>
             <span class="text-uppercase specific-news-page-mark mt-3">Оцените новость:</span>
@@ -22,6 +22,7 @@
 
 <script>
 import NewsService from "Services/NewsService";
+import ImageWithAspectRatio from "Components/ImageWithAspectRatio";
 
 export default {
   name: "SpecificNewsPage",
@@ -30,6 +31,7 @@ export default {
       news: {}
     };
   },
+  components: { ImageWithAspectRatio },
   async mounted() {
     this.news = await NewsService.getSpecificNews(this.$route.params.id);
   }
@@ -61,7 +63,7 @@ export default {
   color: #333333;
 }
 
-.specific-news-image{
+.specific-news-image {
   max-width: 500px;
   max-height: 500px;
 }

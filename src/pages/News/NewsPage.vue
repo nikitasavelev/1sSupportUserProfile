@@ -11,7 +11,7 @@
             </div>
             <v-layout class="mt-3 clearfix">
               <p class="ml-3 news-preview">
-                <img :src="n.imageUrl" class="left image mr-3">
+                <image-with-aspect-ratio :source="n.imageUrl" class="left image mr-3"></image-with-aspect-ratio>
                 {{n.preview}}
               </p> 
             </v-layout>
@@ -22,6 +22,7 @@
 </template>
 <script>
 import NewsService from "Services/NewsService.js";
+import ImageWithAspectRatio from "Components/ImageWithAspectRatio";
 export default {
   name: "NewsPage",
   props: {},
@@ -31,6 +32,7 @@ export default {
       areNewsLoaded: false
     };
   },
+  components: { ImageWithAspectRatio },
   methods: {
     goToSpecificNews(newsId) {
       this.$router.push({ name: "SpecificNewsPage", params: { id: newsId } });

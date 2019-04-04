@@ -17,7 +17,7 @@
               <div class="text-uppercase subheader py-2">Мои продукты</div>
               <hr>
               <div v-for="product in profileData.products" :key="product.name" class="d-inline-block mx-2">
-                <img :src="product.imageUrl" class="product-image" alt="image of product">
+                <image-with-aspect-ratio :source="product.imageUrl" class="product-image"></image-with-aspect-ratio>
                 <div class="client-profile-page-product-name">{{product.name}}</div>
                 <p class="client-profile-page-check-updates"
                   title="check updates for product"
@@ -43,16 +43,18 @@
 import UsersService from "Services/UsersService.js";
 import Store from "Store/store.js";
 import SideNews from "Components/SideNews";
+import ImageWithAspectRatio from "Components/ImageWithAspectRatio";
 
 export default {
   name: "ClientProfilePage",
   props: {},
-  components: { SideNews },
+  components: { SideNews, ImageWithAspectRatio },
   data() {
     return {
       profileData: {},
       news: {},
-      role: ""
+      role: "",
+      imgRefs: this.$refs
     };
   },
   methods: {
@@ -67,6 +69,7 @@ export default {
 };
 </script>
 <style scoped>
+@import "../../../node_modules/css-aspect-ratio/css-aspect-ratio.css";
 hr {
   height: 1px;
 }
@@ -83,8 +86,7 @@ hr {
 }
 
 .product-image {
-  height: 150px;
-  width: 150px;
+  max-width: 250px;
 }
 
 .client-profile-page-info {
