@@ -21,6 +21,9 @@
               required
             ></v-text-field>
             <v-btn color="primary" class="text-uppercase" type="submit">Войти</v-btn>
+            <router-link :to="{ name: 'RegistrationPage'}">
+              Зарегистрироваться
+            </router-link>
           </v-layout>
       </form>
     </v-layout>
@@ -46,7 +49,7 @@ export default {
       ],
       passwordRules: [
         v => !!v || "Пароль не может быть пуст",
-        v => v.length >= 6 || "Пароль должен быть длиннее 6 символов"
+        v => v.length >= 6 || "Слабый пароль"
       ]
     };
   },
