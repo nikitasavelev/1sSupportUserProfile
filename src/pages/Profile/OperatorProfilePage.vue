@@ -1,39 +1,12 @@
 <template>
-    <v-container @click="hideDatePickers">
+    <v-container @click="arePickersShown = !arePickersShown">
       <div>Иванов Иван Иванович</div>
       <hr>
-      <v-layout class="my-2" align-center>
-        <span>Выберите период с</span>
-        <div>
-          <input
-            v-model="dateFrom"
-            class="datepicker ml-2 pa-1"
-            @click="toggleDatePickerFrom"
-            >  
-          <v-date-picker 
-            v-model="dateFrom"
-            v-if="showDatePickerFrom"
-            @input="showDatePickerFrom = false"
-            style="position: absolute;"
-            >
-          </v-date-picker>
-        </div>
-        <span class="mx-2">по</span>
-        <div>
-          <input
-            v-model="dateTo"
-            class="datepicker pa-1"
-            @click="toggleDatePickerTo"
-            >  
-          <v-date-picker 
-            v-model="dateTo"
-            v-if="showDatePickerTo"
-            @input="showDatePickerTo = false"
-            style="position: absolute;"
-            >
-          </v-date-picker>
-        </div>
-      </v-layout>
+      <date-pickers
+       :are-pickers-shown="arePickersShown"
+       @update:dateFrom="dateFrom = $event"
+       @update:dateTo="dateTo = $event">
+      </date-pickers>
       <hr>
       <v-layout column class="px-5 py-2">
         <div>
@@ -73,36 +46,22 @@
 </template>
 <script>
 import UsersService from "Services/UsersService.js";
+import DatePickers from "Components/DatePickers";
 
 export default {
   name: "OperatorProfilePage",
   props: {},
-  components: {},
+  components: { DatePickers },
   data() {
     return {
       profileData: {},
       role: "",
-      showDatePickerFrom: false,
-      showDatePickerTo: false,
-      dateFrom: new Date().toISOString().substr(0, 10),
-      dateTo: new Date().toISOString().substr(0, 10)
+      dateFrom: "",
+      dateTo: "",
+      arePickersShown: false,
     };
   },
   methods: {
-    toggleDatePickerFrom(event) {
-      event.stopPropagation();
-      this.showDatePickerFrom = !this.showDatePickerFrom;
-      this.showDatePickerTo = false;
-    },
-    toggleDatePickerTo(event) {
-      event.stopPropagation();
-      this.showDatePickerTo = !this.showDatePickerTo;
-      this.showDatePickerFrom = false;
-    },
-    hideDatePickers() {
-      this.showDatePickerFrom = false;
-      this.showDatePickerTo = false;
-    }
   },
   async mounted() {
     this.profileData = await UsersService.getUserInfo();
