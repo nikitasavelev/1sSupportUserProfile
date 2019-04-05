@@ -43,9 +43,7 @@ export default {
     source() {
       if (this.source != null) {
         this.actualSource = this.source;
-        this.isHTTPLink = this.source
-          ? this.source.substring(0, 4) === "http"
-          : false;
+        this.isHTTPLink = this.source.substring(0, 4) === "http";
       }
     }
   }
