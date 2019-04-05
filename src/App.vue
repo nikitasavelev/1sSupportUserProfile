@@ -9,12 +9,10 @@
 </template>
 
 <script>
-import ModalComponent from "Components/ModalComponent";
-import Toolbar from "Components/Toolbar";
 import HeaderComponent from "Components/Header";
 export default {
   name: "App",
-  components: { ModalComponent, Toolbar, HeaderComponent }
+  components: { HeaderComponent }
 };
 </script>
 

@@ -29,7 +29,7 @@ export default {
   name: "ChooseTitleModal",
   props: {
     titles: Array,
-    message: ""
+    message: String
   },
   data() {
     return {

@@ -11,8 +11,7 @@
 export default {
   name: "ImageWithAspectRatio",
   props: {
-    source:"",
-   
+    source:String, 
   },
   data() {
     return {

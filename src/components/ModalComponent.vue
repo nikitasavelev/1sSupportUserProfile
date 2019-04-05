@@ -185,7 +185,7 @@ export default {
           titleId: this.theme.id
         }
       };
-      var response = await axios(axiosConfig);
+      await axios(axiosConfig);
       // return response.data
     }
   },
