@@ -3,7 +3,10 @@
         class="aspect-ratio"
         :style="{'--aspect-ratio-h': 1, '--aspect-ratio-w': aspectRatioWidth}">
         <img v-if="isHTTPLink" :src="actualSource" alt="image of product" ref="image">
-        <img v-if="!isHTTPLink" :src="require(`../assets${source}`)" alt="Logo of company" ref="image">
+        <img 
+          v-if="!isHTTPLink && actualSource !== '' && actualSource != null"
+          :src="require(`../assets${source}`)"
+          alt="Logo of company" ref="image">
     </div>
 </template>
 
@@ -11,7 +14,7 @@
 export default {
   name: "ImageWithAspectRatio",
   props: {
-    source:String, 
+    source: String
   },
   data() {
     return {
@@ -21,15 +24,29 @@ export default {
     };
   },
   mounted() {
-    this.actualSource = this.source;
-    const aspectRatio =
-      this.$refs.image.naturalWidth / this.$refs.image.naturalHeight;
-    this.aspectRatioWidth = aspectRatio;
-    this.isHTTPLink = this.source ? this.source.includes("http") : false;
+    if (this.source != null) {
+      // figuring out if source is link or file
+      this.isHTTPLink =
+        this.source != null ? this.source.substring(0, 4) === "http" : false;
+      // if source is not link then we consider it's located in assets folder
+      this.actualSource = this.isHTTPLink
+        ? this.source
+        : `../assets${this.source}`;
+      if (this.$refs.image) {
+        const aspectRatio =
+          this.$refs.image.naturalWidth / this.$refs.image.naturalHeight;
+        this.aspectRatioWidth = aspectRatio;
+      }
+    }
   },
   watch: {
     source() {
-      this.$refs.image.src = this.source;
+      if (this.source != null) {
+        this.actualSource = this.source;
+        this.isHTTPLink = this.source
+          ? this.source.substring(0, 4) === "http"
+          : false;
+      }
     }
   }
 };
