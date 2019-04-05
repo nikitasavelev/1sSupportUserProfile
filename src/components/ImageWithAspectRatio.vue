@@ -3,7 +3,7 @@
         class="aspect-ratio"
         :style="{'--aspect-ratio-h': 1, '--aspect-ratio-w': aspectRatioWidth}">
         <img v-if="isHTTPLink" :src="actualSource" alt="image of product" ref="image">
-        <img v-if="!isHTTPLink" src="../assets/logo.jpeg" alt="Logo of company" ref="image">
+        <img v-if="!isHTTPLink" :src="require(`../assets${source}`)" alt="Logo of company" ref="image">
     </div>
 </template>
 

@@ -26,5 +26,15 @@ export const pagesConfig = {
       link: "/profile",
       caption: "Профиль"
     }
+  ],
+  Admin: [
+    {
+      link: "/profile",
+      caption:"Профиль"
+    },
+    {
+      link: "/requests",
+      caption:"Обращения"
+    }
   ]
 };

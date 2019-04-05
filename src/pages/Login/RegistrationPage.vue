@@ -1,7 +1,8 @@
 <template>
     <v-container fill-height class="mw-50">
         <v-layout column justify-center align-center>
-        <img class="v-img-logo img-logo-login mb-5" src="@/assets/logo.jpeg"/>
+        <image-with-aspect-ratio class="v-img-logo img-logo-login mb-5" :source="'/logo.jpeg'">
+        </image-with-aspect-ratio>
         <form class="register-form" @submit="register">
             <v-layout align-center column class="pa-3 px-5">
                 <div class="login-system">Регистрация</div>
@@ -71,8 +72,11 @@
   </v-container>
 </template>
 <script>
+import ImageWithAspectRatio from "Components/ImageWithAspectRatio";
+
 export default {
   name: "RegistrationPage",
+  components: { ImageWithAspectRatio },
   data() {
     return {
       phone: "",

@@ -56,13 +56,6 @@ export default {
   methods: {
     async signIn(event) {
       event.preventDefault();
-
-      // inn:"999999999999",
-      // login:"operator",
-
-      // inn:"000000000000",
-      // login:"test",
-      //;
       this.serverResponse = await LoginService.signIn(this.login, this.password);
       this.accessToken = this.serverResponse.accessToken;
       this.role = this.serverResponse.roleType.name;
@@ -76,7 +69,7 @@ export default {
           this.$router.push({ name: "MainPage" });
           break;
         case "Operator":
-        case "Administrator":
+        case "Admin":
           this.$router.push({ name: "ProfilePage" });
           break;
       }
