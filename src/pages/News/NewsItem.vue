@@ -47,8 +47,7 @@ hr {
   text-align: center;
 }
 
-.news-img{
-  height: 75%;
+.news-img {
   width: 75%;
 }
 </style>
