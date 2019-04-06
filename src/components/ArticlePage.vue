@@ -109,9 +109,7 @@ export default {
   },
   methods: {
     setCurrentVersion(index) {
-      console.log(index);
       this.currentArticle = this.article[index];
-      console.log(this.currentArticle);
     },
     goBack(){
        window.history.length > 1
@@ -123,7 +121,6 @@ export default {
     this.token = localStorage.token;
     this.article = await ArticlesService.getArticle(this.articleId);
     this.currentArticle = this.article[0];
-    console.log(this.article);
   },
 
   async beforeDestroy() {
