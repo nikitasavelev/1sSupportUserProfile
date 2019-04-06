@@ -1,5 +1,5 @@
 <template>
-    <v-layout column class="px-5 py-2">
+    <v-layout v-if="analytics" column class="px-5 py-2">
         <div>
           <span>Закрытых заявок</span>
           <span class="right">{{analytics.resolvedQuestionsCount}}</span>
@@ -33,6 +33,14 @@
           <span class="right">{{analytics.timeInBusyState}}</span>
         </div>
       </v-layout>
+    <v-layout v-else justify-center mt-5>
+        <v-progress-circular
+            :size="70"
+            :width="7"
+            color="primary"
+            indeterminate
+            ></v-progress-circular>
+    </v-layout>
 </template>
 <script>
 export default {
