@@ -8,7 +8,7 @@
         <div v-if="isLoaded">
           <div v-if="this.$route.params.id !== '0'">
               <span class="request-number">Обращение №{{this.$route.params.id}}</span>
-              <span class="right request-created-date">{{request.createdAt}}</span>
+              <span class="right request-created-date">{{request.updatedAt}}</span>
               <div class="request-title">{{request.title}}</div>
           </div>
           <hr>
@@ -26,14 +26,14 @@
               class="d-block right"
               color="primary"
               type="submit"
-              v-if="!isResolved && request.mark == null">Отправить</v-btn>
+              v-if="!isResolved || request.mark === 0">Отправить</v-btn>
           </form>
           <v-layout justify-center align-center column v-if="this.questionId !== '0'">
               <v-btn
               class="d-block mt-5"
               color="success"
               @click="resolveQuestion"
-              v-if="!isResolved && request.mark == null">
+              v-if="!isResolved || request.mark === 0">
                 Вопрос решен
               </v-btn>
               <div class="question-resolved" v-if="isResolved || request.mark > 0">Вопрос решен</div>
@@ -90,10 +90,9 @@ export default {
     this.titles = await QuestionsService.getTitles();
     if (this.questionId !== "0") {
       this.request = await QuestionsService.getQuestion(this.questionId);
+      // ids 5 and 6 means resolved (by client or by operator)
       this.isResolved =
-        this.request.state.name == "QuestionStateType.ResolvedByClient"
-          ? true
-          : false;
+        this.request.state.id === 5 || this.request.state.id === 6;
     }
     this.isLoaded = true;
   },
@@ -111,7 +110,7 @@ export default {
   },
   watch: {
     "request.mark": function(mark) {
-      if (mark != null) {
+      if (mark !== 0 && !this.isResolved) {
         QuestionsService.closeQuestion(this.questionId, mark);
         this.isClosed = true;
       }

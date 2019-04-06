@@ -9,16 +9,16 @@ export const serverAPIUrls = Object.freeze({
   GET_SUPPORT_MESSAGES_TITLES: serverAPIDomain + "/questions/titles",
   QUESTIONS: serverAPIDomain + "/questions/",
   RESOLVE_QUESTION: "/resolve",
-  CLOSE_QUESTION: "/close",
+  CLOSE_QUESTION: "/marks",
   GET_SEARCH: serverAPIDomain + "/searching/search/",
   GET_POPULAR_SEARCH: serverAPIDomain + "/searching/popular/",
 
   GET_ARTICLE: serverAPIDomain + "/articles",
   SET_ARTICLES_MARKS: serverAPIDomain + "/articles/marks",
 
-  GET_USER_INFO: serverAPIDomain + "/clients/me",
+  GET_USER_INFO: serverAPIDomain + "/providers/me",
 
   GET_NEWS: serverAPIDomain + "/news",
-  GET_NEWS_SHORT_PREVIEWS: serverAPIDomain + "/news/short-previews",
+  GET_NEWS_SHORT_PREVIEWS: serverAPIDomain + "/news/previews/short",
   GET_NEWS_PREVIEWS: serverAPIDomain + "/news/previews",
 });

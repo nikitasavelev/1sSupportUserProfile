@@ -19,7 +19,7 @@
             color="#003399"
             small         
           ></v-rating>
-       {{request.createdAt}} 
+       {{request.updatedAt}} 
     </v-flex>
     <hr>
   </v-layout>

@@ -9,8 +9,8 @@
               <span class="mt-3 ml-3 news-title">{{n.title}}</span>
               <span class="right mr-3 mt-3 news-created-date">{{n.createdAt}}</span>
             </div>
-            <v-layout class="mt-3 clearfix">
-              <p class="ml-3 news-preview">
+            <v-layout class="mt-3">
+              <p class="ml-3 news-preview clearfix">
                 <image-with-aspect-ratio :source="n.imageUrl" class="left image mr-3"></image-with-aspect-ratio>
                 {{n.preview}}
               </p> 
@@ -88,7 +88,6 @@ div .newsCaption.w-100.my-2 {
 }
 
 .image {
-  max-height: 200px;
   max-width: 200px;
 }
 </style>

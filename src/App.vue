@@ -27,5 +27,9 @@ html,
 body {
   font-size: 16px !important;
 }
-
+.clearfix::after {
+  display: table;
+  content: "";
+  clear: both;
+}
 </style>

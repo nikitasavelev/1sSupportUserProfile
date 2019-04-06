@@ -9,7 +9,7 @@ class QuestionsService {
 
   async getQuestion(questionId = 1) {
     return requestToAPI(`${serverAPIUrls.QUESTIONS}/${questionId}`, undefined, data => {
-      data.createdAt = formatDate(data.createdAt);
+      data.updatedAt = formatDate(data.updatedAt);
       return data;
     });
   }
@@ -17,10 +17,10 @@ class QuestionsService {
   async getQuestions() {
     return requestToAPI(serverAPIUrls.QUESTIONS, undefined, data => {
       data.activeQuestions.forEach(question => {
-        question.createdAt = formatDate(question.createdAt);
+        question.updatedAt = formatDate(question.updatedAt);
       });
       data.closedQuestions.forEach(question => {
-        question.createdAt = formatDate(question.createdAt);
+        question.updatedAt = formatDate(question.updatedAt);
       });
       return data;
     });

@@ -1,6 +1,6 @@
 <template>
     <div 
-        class="aspect-ratio"
+        class="aspect-ratio clearfix"
         :style="{'--aspect-ratio-h': 1, '--aspect-ratio-w': aspectRatioWidth}">
         <img v-if="isHTTPLink" :src="actualSource" alt="image of product" ref="image">
         <img 

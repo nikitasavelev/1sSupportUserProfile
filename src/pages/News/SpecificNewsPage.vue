@@ -5,7 +5,7 @@
           <p class="specific-news-page-title">{{news.title}}</p>
           <p class="specific-news-page-created-date">{{news.createdAt}}</p>
           <div class="specific-news-page-text">{{news.text}}</div>
-          <v-layout justify-center>
+          <v-layout justify-center class="clearfix">
            <image-with-aspect-ratio :source="news.imageUrl" class="specific-news-image"></image-with-aspect-ratio>
           </v-layout>
           <v-layout row justify-center>
@@ -65,6 +65,5 @@ export default {
 
 .specific-news-image {
   max-width: 500px;
-  max-height: 500px;
 }
 </style>
