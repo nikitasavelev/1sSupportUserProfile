@@ -2,11 +2,15 @@
     <v-layout class="my-2" align-center>
         <span>Выберите период с</span>
         <div>
-          <input
-            v-model="dateFrom"
-            class="datepicker ml-2 pa-1"
-            @click="toggleDatePickerFrom"
-            >  
+          <label>
+            <input
+              v-model="dateFrom"
+              class="datepicker ml-2 pa-1"
+              @click="toggleDatePickerFrom"
+              name="date from"
+              aria-label="start date"
+              > 
+          </label> 
           <v-date-picker 
             v-model="dateFrom"
             v-if="showDatePickerFrom"
@@ -17,11 +21,15 @@
         </div>
         <span class="mx-2">по</span>
         <div>
-          <input
-            v-model="dateTo"
-            class="datepicker pa-1"
-            @click="toggleDatePickerTo"
-            >  
+          <label>
+            <input
+              v-model="dateTo"
+              class="datepicker pa-1"
+              @click="toggleDatePickerTo"
+              name="date to"
+              aria-label="end date"
+              > 
+          </label> 
           <v-date-picker 
             v-model="dateTo"
             v-if="showDatePickerTo"
