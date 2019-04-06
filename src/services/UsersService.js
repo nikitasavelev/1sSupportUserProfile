@@ -12,5 +12,9 @@ class UsersService {
   async getOperatorAnalytics(){
     return requestToAPI(serverAPIUrls.GET_OPERATOR_ANALYTICS);
   }
+
+  async getOperatorsAnalytics(){
+    return requestToAPI(serverAPIUrls.GET_OPERATORS_ANALYTICS);
+  }
 }
 export default new UsersService();
