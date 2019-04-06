@@ -2,7 +2,9 @@
     <v-flex xs3>
         <v-layout align-center column>
           <news-item v-for="n in news" :news="n" :key="n.id"></news-item>
-          <v-btn class="text-none">Показать все новости</v-btn>
+          <router-link to="/news">
+            <v-btn class="text-none">Показать все новости</v-btn>
+          </router-link>
         </v-layout>
     </v-flex>
 </template>

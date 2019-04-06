@@ -17,7 +17,7 @@
             </v-layout>
             <hr class="mt-3">
         </div>
-        <v-btn @click="loadMore">Показать еще</v-btn>
+        <v-btn @click="getMoreNews">Показать еще</v-btn>
     </v-layout>    
 </template>
 <script>
@@ -37,9 +37,9 @@ export default {
     goToSpecificNews(newsId) {
       this.$router.push({ name: "SpecificNewsPage", params: { id: newsId } });
     },
-    loadMore() {
-      // const recievedNews = await NewsService.loadMore(this.news.length, 5);
-      // this.news.concat(recievedNews);
+    async getMoreNews() {
+      const recievedNews = await NewsService.getNewsPreviews(this.news.length - 1, 2);
+      this.news = this.news.concat(recievedNews);
     }
   },
   async mounted() {

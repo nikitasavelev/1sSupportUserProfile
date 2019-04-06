@@ -12,8 +12,8 @@ class NewsService {
     });
   }
 
-  async getNewsShortPreviews() {
-    return requestToAPI(serverAPIUrls.GET_NEWS_SHORT_PREVIEWS, undefined, data => {
+  async getNewsShortPreviews(offset = 0, count = 5) {
+    return requestToAPI(`${serverAPIUrls.GET_NEWS_SHORT_PREVIEWS}?offset=${offset}&count=${count}`, undefined, data => {
       data.forEach(news => {
         news.createdAt = formatDate(news.createdAt);
       });
@@ -21,8 +21,8 @@ class NewsService {
     });
   }
 
-  async getNewsPreviews() {
-    return requestToAPI(serverAPIUrls.GET_NEWS_PREVIEWS, undefined, data => {
+  async getNewsPreviews(offset = 0, count = 2) {
+    return requestToAPI(`${serverAPIUrls.GET_NEWS_PREVIEWS}?offset=${offset}&count=${count}`, undefined, data => {
       data.forEach(news => {
         news.createdAt = formatDate(news.createdAt);
       });

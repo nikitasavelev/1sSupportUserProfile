@@ -14,7 +14,6 @@
         <request-item v-for="request in closedQuestions" :request="request" :key="request.id"></request-item>  
       </v-flex>
       <side-news></side-news>
-      <!-- <v-pagination @input="onPageChange" :total-visible="8" :length="16" v-model="page"></v-pagination> -->
     </v-layout>
 </template>
 <script>
