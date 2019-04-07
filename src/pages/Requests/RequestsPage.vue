@@ -1,4 +1,5 @@
 <template>
+  <main>
     <v-layout class="px-5 requests-page" row wrap>
       <v-flex xs9 class="left-side pr-2 pl-5"> 
         <div class="clearfix">
@@ -15,6 +16,7 @@
       </v-flex>
       <side-news></side-news>
     </v-layout>
+  </main>
 </template>
 <script>
 import { serverAPIUrls } from "Constants/SERVER_API_URLS.js";

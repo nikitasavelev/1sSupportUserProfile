@@ -75,7 +75,7 @@ div .newsCaption.w-100.my-2 {
 
 .news-preview {
   font-size: 0.875rem;
-  color: #828282;
+  color: #333333;
 }
 
 .news-created-date {

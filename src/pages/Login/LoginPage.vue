@@ -1,33 +1,35 @@
 <template>
-  <v-container fill-height class="mw-50">
-    <v-layout column justify-center align-center>
-      <image-with-aspect-ratio class="v-img-logo img-logo-login mb-5" :source="'/logo.jpeg'">
-      </image-with-aspect-ratio>
-      <form class="login-form pa-5" @submit="signIn">
-        <v-layout align-center column class="pa-5">
-          <div class="login-system">Вход в систему</div>
-          <v-text-field
-              v-model="login"
-              :rules="loginRules"
-              :counter="12"
-              label="Логин"
-              required
-            ></v-text-field>
+  <main>
+    <v-container fill-height class="mw-50">
+      <v-layout column justify-center align-center>
+        <image-with-aspect-ratio class="v-img-logo img-logo-login mb-5" :source="'/logo.jpeg'">
+        </image-with-aspect-ratio>
+        <form class="login-form pa-5" @submit="signIn">
+          <v-layout align-center column class="pa-5">
+            <div class="login-system">Вход в систему</div>
             <v-text-field
-              v-model="password"
-              :rules="passwordRules"
-              :type="'password'"
-              label="Пароль"
-              required
-            ></v-text-field>
-            <v-btn color="primary" class="text-uppercase" type="submit">Войти</v-btn>
-            <router-link :to="{ name: 'RegistrationPage'}">
-              Зарегистрироваться
-            </router-link>
-          </v-layout>
-      </form>
-    </v-layout>
-  </v-container>
+                v-model="login"
+                :rules="loginRules"
+                :counter="12"
+                label="Логин"
+                required
+              ></v-text-field>
+              <v-text-field
+                v-model="password"
+                :rules="passwordRules"
+                :type="'password'"
+                label="Пароль"
+                required
+              ></v-text-field>
+              <v-btn color="primary" class="text-uppercase" type="submit">Войти</v-btn>
+              <router-link :to="{ name: 'RegistrationPage'}">
+                Зарегистрироваться
+              </router-link>
+            </v-layout>
+        </form>
+      </v-layout>
+    </v-container>
+  </main>
 </template>
 
 <script>

@@ -1,4 +1,5 @@
 <template>
+  <main>
     <v-container>
         <div class="clearfix w-100">
           <router-link :to="'/requests'" style="min-width: 120px;">
@@ -66,6 +67,7 @@
                   ></v-progress-circular>
             </v-layout>
     </v-container>
+  </main>
 </template>
 <script>
 import QuestionsService from "Services/QuestionsService.js";

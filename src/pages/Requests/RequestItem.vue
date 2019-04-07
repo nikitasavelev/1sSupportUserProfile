@@ -16,6 +16,7 @@
             v-if="!request.isActive"
             v-model="request.mark"
             :hover="true"
+            readonly
             color="#003399"
             small         
           ></v-rating>
