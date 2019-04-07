@@ -24,14 +24,14 @@
               class="d-block right"
               color="primary"
               type="submit"
-              v-if="!isResolved || request.mark === 0">Отправить</v-btn>
+              v-if="!isResolved">Отправить</v-btn>
           </form>
           <v-layout justify-center align-center column v-if="this.questionId !== '0'">
               <v-btn
               class="d-block mt-5 resolve-question-btn"
               color="#27ae60"
               @click="resolveQuestion"
-              v-if="!isResolved || request.mark === 0">
+              v-if="!isResolved">
                 Вопрос решен
               </v-btn>
               <div class="question-resolved" v-if="isResolved || request.mark > 0">Вопрос решен</div>
@@ -109,7 +109,7 @@ export default {
   },
   watch: {
     "request.mark": function(mark) {
-      if (mark !== 0 && !this.isResolved) {
+      if (mark !== 0) {
         QuestionsService.closeQuestion(this.questionId, mark);
         this.isClosed = true;
       }
