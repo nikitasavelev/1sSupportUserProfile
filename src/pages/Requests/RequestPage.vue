@@ -1,11 +1,9 @@
 <template>
   <main>
     <v-container>
-        <div class="clearfix w-100">
-          <router-link :to="'/requests'" style="min-width: 120px;">
-                    Все обращения
-          </router-link>
-        </div>
+        <router-link :to="'/requests'" style="min-width: 120px;">
+                  Все обращения
+        </router-link>
         <div v-if="isLoaded">
           <div v-if="this.$route.params.id !== '0'">
               <span class="request-number">Обращение №{{this.$route.params.id}}</span>
@@ -17,7 +15,6 @@
             <v-textarea
               solo
               class="mt-3"
-              name="input-7-4"
               label="Solo textarea"
               required
               v-model="message"
@@ -31,8 +28,8 @@
           </form>
           <v-layout justify-center align-center column v-if="this.questionId !== '0'">
               <v-btn
-              class="d-block mt-5"
-              color="success"
+              class="d-block mt-5 resolve-question-btn"
+              color="#27ae60"
               @click="resolveQuestion"
               v-if="!isResolved || request.mark === 0">
                 Вопрос решен
@@ -121,24 +118,6 @@ export default {
 };
 </script>
 <style scoped>
-.clearfix::after {
-  display: table;
-  content: "";
-  clear: both;
-}
-
-.right-btn {
-  float: right;
-}
-
-.w-100 {
-  width: 100%;
-}
-
-.right-btn .ask-question {
-  color: white !important;
-}
-
 .request-number {
   font-size: 0.75rem;
   font-family: Open Sans;
@@ -158,5 +137,9 @@ export default {
 
 .question-resolved {
   color: #4caf50;
+}
+
+.d-block.mt-5.resolve-question-btn {
+  color: white;
 }
 </style>

@@ -67,12 +67,6 @@ export default {
   font-size: 1.25rem;
 }
 
-.clearfix::after {
-  display: table;
-  content: "";
-  clear: both;
-}
-
 .requests-header {
   font-size: 1.25rem;
   line-height: 1.25rem;

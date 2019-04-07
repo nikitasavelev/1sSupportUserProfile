@@ -1,5 +1,5 @@
 <template>
-    <div class="pa-2 px-5 profile-page">
+    <div class="pa-2 px-5">
       <client-profile-page v-if="role === 'Client'"></client-profile-page>
       <operator-profile-page v-if="role === 'Operator'"></operator-profile-page>
       <admin-profile-page v-if="role === 'Admin'"></admin-profile-page>
