@@ -50,12 +50,6 @@ export default {
 </script>
 
 <style scoped>
-.clearfix::after {
-  display: table;
-  content: "";
-  clear: both;
-}
-
 div .newsCaption.w-100.my-2 {
   text-align: left;
   font-size: 1.25rem;
@@ -75,16 +69,12 @@ div .newsCaption.w-100.my-2 {
 
 .news-preview {
   font-size: 0.875rem;
-  color: #828282;
+  color: #333333;
 }
 
 .news-created-date {
   font-size: 1rem;
   color: #4f4f4f;
-}
-
-.left {
-  float: left;
 }
 
 .image {

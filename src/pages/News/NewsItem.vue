@@ -1,10 +1,10 @@
 <template>
-    <div column class="news align-center pa-1" @click="goToSpecificNews(news.id)">
+    <v-layout column align-center class="pa-1" @click="goToSpecificNews(news.id)">
         <p class="ml-4 news-title">{{news.title}}</p>
         <image-with-aspect-ratio :source="news.imageUrl" class="news-img"></image-with-aspect-ratio>
         <div class="ml-4 news-short-preview">{{news.shortPreview}}</div>
         <hr>
-    </div>
+    </v-layout>
 </template>
 
 <script>
@@ -25,12 +25,6 @@ export default {
 <style scoped>
 hr {
   height: 1px;
-  width: 100%;
-}
-
-.news {
-  display: flex;
-  flex-direction: column;
   width: 100%;
 }
 

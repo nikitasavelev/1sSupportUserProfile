@@ -1,22 +1,24 @@
 <template>
     <v-container>
-        <router-link to="/news">Все новости</router-link>
-        <v-layout column class="ml-5">
-          <p class="specific-news-page-title">{{news.title}}</p>
-          <p class="specific-news-page-created-date">{{news.createdAt}}</p>
-          <div class="specific-news-page-text">{{news.text}}</div>
-          <v-layout justify-center class="clearfix">
-           <image-with-aspect-ratio :source="news.imageUrl" class="specific-news-image"></image-with-aspect-ratio>
+        <main>
+          <router-link to="/news">Все новости</router-link>
+          <v-layout column class="ml-5">
+            <p class="specific-news-page-title">{{news.title}}</p>
+            <p class="specific-news-page-created-date">{{news.createdAt}}</p>
+            <div class="specific-news-page-text">{{news.text}}</div>
+            <v-layout justify-center class="clearfix">
+            <image-with-aspect-ratio :source="news.imageUrl" class="specific-news-image"></image-with-aspect-ratio>
+            </v-layout>
+            <v-layout row justify-center>
+              <span class="text-uppercase specific-news-page-mark mt-3">Оцените новость:</span>
+              <v-rating
+                :hover="true"
+                color="#003399"
+                medium         
+              ></v-rating>
+            </v-layout>
           </v-layout>
-          <v-layout row justify-center>
-            <span class="text-uppercase specific-news-page-mark mt-3">Оцените новость:</span>
-            <v-rating
-              :hover="true"
-              color="#003399"
-              medium         
-            ></v-rating>
-          </v-layout>
-        </v-layout>
+        </main>
     </v-container>
 </template>
 
@@ -48,7 +50,7 @@ export default {
 .specific-news-page-created-date {
   font-family: Open Sans;
   font-size: 0.875rem;
-  color: #bdbdbd;
+  color: #333333;
 }
 
 .specific-news-page-text {

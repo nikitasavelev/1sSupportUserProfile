@@ -1,4 +1,5 @@
 <template>
+  <main>
     <v-layout row wrap>
         <v-flex xs9 class="left-side">
             <div v-if="profileData.companyInfo" class="mx-5">
@@ -38,6 +39,7 @@
         </v-flex>
         <side-news></side-news> 
     </v-layout>
+  </main>
 </template>
 <script>
 import UsersService from "Services/UsersService.js";

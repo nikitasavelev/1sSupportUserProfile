@@ -1,17 +1,23 @@
 <template>
    <v-card>
-        <v-layout column justify-center align-center>
+      <v-layout column justify-center align-center>
         <v-btn
-            v-for="title in titles"
-            :key="title.id"
-            class="title modal mt-1"
-            :class="{'active-title': titleId === title.id}"
-            @click="setTitle(title.id)"
-            >{{title.text}}</v-btn>
-        </v-layout>
-        <v-divider></v-divider>
-        <v-card-actions>
-        <v-spacer></v-spacer>
+          v-for="title in titles"
+          :key="title.id"
+          class="title modal mt-1"
+          :class="{'active-title': titleId === title.id}"
+          @click="setTitle(title.id)"
+        >{{title.text}}</v-btn>
+      </v-layout>
+      <v-divider></v-divider>
+      <v-card-actions>
+      <v-layout column>
+        <v-alert
+          :value="isAlertShown"
+          type="error"
+        >
+          Выберите тему
+        </v-alert>
         <v-btn
             color="primary"
             flat
@@ -19,7 +25,8 @@
         >
             Отправить обращение 
         </v-btn>
-        </v-card-actions>
+      </v-layout>  
+      </v-card-actions>
     </v-card> 
 </template>
 
@@ -33,13 +40,19 @@ export default {
   },
   data() {
     return {
-      titleId: ""
+      titleId: "",
+      isAlertShown: false
     };
   },
   methods: {
     createQuestion() {
-      this.$emit("update:isModalShown", false);
-      QuestionsService.askQuestion(this.message, this.titleId);
+      if (this.titleId !== "") {
+        this.$emit("update:isModalShown", false);
+        QuestionsService.askQuestion(this.message, this.titleId);
+        this.$router.push("/requests");
+      } else {
+        this.isAlertShown = true;
+      }
     },
     setTitle(titleId) {
       this.titleId = titleId;

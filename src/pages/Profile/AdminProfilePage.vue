@@ -7,9 +7,10 @@
             @update:dateTo="dateTo = $event">
         </date-pickers>
         <hr>
-        <table class="data-table"
+        <table
             rules="rows"
-            cellspacing="5">
+            cellspacing="5"
+        >
             <thead>
                 <th v-for="header in headers" :key="header" class="pa-3">{{header}}</th>
             </thead>
@@ -66,7 +67,5 @@ export default {
 hr {
   height: 0.1px;
   background-color: black;
-}
-.data-table {
 }
 </style>

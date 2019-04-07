@@ -37,13 +37,8 @@ export default {
 </script>
 <style scoped>
 hr {
-  height: 0.1px;
+  height: 1px;
   background-color: black;
-}
-
-.v-input__slot {
-  margin: 0 !important;
-  padding: 0 !important;
 }
 
 .datepicker {

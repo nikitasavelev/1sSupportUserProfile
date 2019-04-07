@@ -1,10 +1,9 @@
 <template>
+  <main>
     <v-container>
-        <div class="clearfix w-100">
-          <router-link :to="'/requests'" style="min-width: 120px;">
-                    Все обращения
-          </router-link>
-        </div>
+        <router-link :to="'/requests'" style="min-width: 120px;">
+                  Все обращения
+        </router-link>
         <div v-if="isLoaded">
           <div v-if="this.$route.params.id !== '0'">
               <span class="request-number">Обращение №{{this.$route.params.id}}</span>
@@ -16,7 +15,6 @@
             <v-textarea
               solo
               class="mt-3"
-              name="input-7-4"
               label="Solo textarea"
               required
               v-model="message"
@@ -26,14 +24,14 @@
               class="d-block right"
               color="primary"
               type="submit"
-              v-if="!isResolved || request.mark === 0">Отправить</v-btn>
+              v-if="!isResolved">Отправить</v-btn>
           </form>
           <v-layout justify-center align-center column v-if="this.questionId !== '0'">
               <v-btn
-              class="d-block mt-5"
-              color="success"
+              class="d-block mt-5 resolve-question-btn"
+              color="#27ae60"
               @click="resolveQuestion"
-              v-if="!isResolved || request.mark === 0">
+              v-if="!isResolved">
                 Вопрос решен
               </v-btn>
               <div class="question-resolved" v-if="isResolved || request.mark > 0">Вопрос решен</div>
@@ -66,6 +64,7 @@
                   ></v-progress-circular>
             </v-layout>
     </v-container>
+  </main>
 </template>
 <script>
 import QuestionsService from "Services/QuestionsService.js";
@@ -110,7 +109,7 @@ export default {
   },
   watch: {
     "request.mark": function(mark) {
-      if (mark !== 0 && !this.isResolved) {
+      if (mark !== 0) {
         QuestionsService.closeQuestion(this.questionId, mark);
         this.isClosed = true;
       }
@@ -119,24 +118,6 @@ export default {
 };
 </script>
 <style scoped>
-.clearfix::after {
-  display: table;
-  content: "";
-  clear: both;
-}
-
-.right-btn {
-  float: right;
-}
-
-.w-100 {
-  width: 100%;
-}
-
-.right-btn .ask-question {
-  color: white !important;
-}
-
 .request-number {
   font-size: 0.75rem;
   font-family: Open Sans;
@@ -156,5 +137,9 @@ export default {
 
 .question-resolved {
   color: #4caf50;
+}
+
+.d-block.mt-5.resolve-question-btn {
+  color: white;
 }
 </style>
