@@ -5,13 +5,14 @@
         <image-with-aspect-ratio class="v-img-logo img-logo-login mb-5" :source="'/logo.jpeg'">
         </image-with-aspect-ratio>
         <form class="login-form pa-5" @submit="signIn">
-          <v-layout align-center column class="pa-5">
+          <v-layout align-center column class="pa-4">
             <div class="login-system">Вход в систему</div>
             <v-text-field
                 v-model="login"
                 :rules="loginRules"
                 :counter="12"
                 label="Логин"
+                @input="isAlertShown = false"
                 required
               ></v-text-field>
               <v-text-field
@@ -19,8 +20,15 @@
                 :rules="passwordRules"
                 :type="'password'"
                 label="Пароль"
+                @input="isAlertShown = false"
                 required
               ></v-text-field>
+              <v-alert
+                :value="isAlertShown"
+                type="error"
+              >
+                Ошибка авторизации
+              </v-alert>
               <v-btn color="primary" class="text-uppercase" type="submit">Войти</v-btn>
               <router-link :to="{ name: 'RegistrationPage'}">
                 Зарегистрироваться
@@ -45,9 +53,10 @@ export default {
       role: "",
       login: "",
       password: "",
+      isAlertShown: false,
       loginRules: [
-        v => !!v || "Заполните поле инн",
-        v => v.length <= 12 || "Инн должен быть длиной 12 символов"
+        v => !!v || "Заполните поле логина",
+        v => v.length <= 12 || "Логин должен быть длиной 12 символов"
       ],
       passwordRules: [
         v => !!v || "Пароль не может быть пуст",
@@ -58,12 +67,19 @@ export default {
   methods: {
     async signIn(event) {
       event.preventDefault();
-      this.serverResponse = await LoginService.signIn(this.login, this.password);
-      this.accessToken = this.serverResponse.accessToken;
-      this.role = this.serverResponse.roleType.name;
-      this.$store.dispatch("updateAuthorizationToken", this.accessToken);
-      this.$store.dispatch("updateRole", this.role);
-      this.redirectToStartPageForRole(this.role);
+      this.serverResponse = await LoginService.signIn(
+        this.login,
+        this.password
+      );
+      if (this.serverResponse.accessToken && this.serverResponse.roleType.name) {
+        this.accessToken = this.serverResponse.accessToken;
+        this.role = this.serverResponse.roleType.name;
+        this.$store.dispatch("updateAuthorizationToken", this.accessToken);
+        this.$store.dispatch("updateRole", this.role);
+        this.redirectToStartPageForRole(this.role);
+      } else {
+        this.isAlertShown = true;
+      }
     },
     redirectToStartPageForRole(role) {
       switch (role) {

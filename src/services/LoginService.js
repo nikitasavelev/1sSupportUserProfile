@@ -4,18 +4,23 @@ import { requestToAPI } from "Constants/DEFAULT_REQUEST.js";
 class LoginService {
   async signIn(login, password) {
     const requestParameters = {
-        headers: {
-            "Content-Type": "application/json"
-        },
-        method: "POST",
-        mode: "cors",
-        cache: "default",
-        body: JSON.stringify({
-            login,
-            password
-        })       
+      headers: {
+        "Content-Type": "application/json"
+      },
+      method: "POST",
+      mode: "cors",
+      cache: "default",
+      body: JSON.stringify({
+        login,
+        password
+      })
     };
-    return requestToAPI(serverAPIUrls.LOGIN, requestParameters);
+    try {
+      const response = await requestToAPI(serverAPIUrls.LOGIN, requestParameters);
+      return response;
+    } catch (error) {
+      return error;
+    }
   }
 }
 export default new LoginService();
