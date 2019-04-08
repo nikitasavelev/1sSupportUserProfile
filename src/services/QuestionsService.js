@@ -65,7 +65,7 @@ class QuestionsService {
       cache: "default",
       body: JSON.stringify(mark)
     };
-    return requestToAPI(`${serverAPIUrls.QUESTIONS}${questionId}${serverAPIUrls.CLOSE_QUESTION}`, requestParameters);
+    return requestToAPI(`${serverAPIUrls.QUESTIONS}${questionId}${serverAPIUrls.MARKS}`, requestParameters);
   }
 }
 export default new QuestionsService();

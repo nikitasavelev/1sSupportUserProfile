@@ -1,11 +1,11 @@
 <template>
     <v-layout class="my-2" align-center>
         <span>Выберите период с</span>
-        <div>
+        <div class="datepicker-wrapper">
           <label>
             <input
               v-model="dateFrom"
-              class="datepicker ml-2 pa-1"
+              class="datepicker-input ml-2 pa-1"
               @click="toggleDatePickerFrom"
               name="date from"
               aria-label="start date"
@@ -15,16 +15,16 @@
             v-model="dateFrom"
             v-if="showDatePickerFrom"
             @input="showDatePickerFrom = false"
-            style="position: absolute;"
+            class="datepicker"            
             >
           </v-date-picker>
         </div>
         <span class="mx-2">по</span>
-        <div>
+        <div class="datepicker-wrapper">
           <label>
             <input
               v-model="dateTo"
-              class="datepicker pa-1"
+              class="datepicker-input pa-1"
               @click="toggleDatePickerTo"
               name="date to"
               aria-label="end date"
@@ -34,7 +34,7 @@
             v-model="dateTo"
             v-if="showDatePickerTo"
             @input="showDatePickerTo = false"
-            style="position: absolute;"
+            class="datepicker"
             >
           </v-date-picker>
         </div>
@@ -83,8 +83,18 @@ export default {
 </script>
 
 <style scoped>
-.datepicker {
+.datepicker-input {
   width: 6rem;
   border: 1px solid #ccc;
+}
+
+.datepicker {
+  position: absolute;
+  top: 35px;
+  left: 5px;
+}
+
+.datepicker-wrapper {
+  position: relative;
 }
 </style>

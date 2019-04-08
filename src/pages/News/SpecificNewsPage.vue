@@ -2,7 +2,7 @@
     <v-container>
         <main>
           <router-link to="/news">Все новости</router-link>
-          <v-layout column class="ml-5">
+          <v-layout v-if="isLoaded" column class="ml-5">
             <p class="specific-news-page-title">{{news.title}}</p>
             <p class="specific-news-page-created-date">{{news.createdAt}}</p>
             <div class="specific-news-page-text">{{news.text}}</div>
@@ -12,12 +12,22 @@
             <v-layout row justify-center>
               <span class="text-uppercase specific-news-page-mark mt-3">Оцените новость:</span>
               <v-rating
+                v-model="news.mark"
                 :hover="true"
                 color="#003399"
-                medium         
+                medium 
+                :readonly="isMarked"        
               ></v-rating>
             </v-layout>
           </v-layout>
+          <v-layout v-else justify-center mt-5>
+            <v-progress-circular
+              :size="70"
+              :width="7"
+              color="primary"
+              indeterminate
+              ></v-progress-circular>
+        </v-layout>
         </main>
     </v-container>
 </template>
@@ -30,12 +40,24 @@ export default {
   name: "SpecificNewsPage",
   data() {
     return {
-      news: {}
+      news: {},
+      isMarked: false,
+      isLoaded: false
     };
   },
   components: { ImageWithAspectRatio },
   async mounted() {
     this.news = await NewsService.getSpecificNews(this.$route.params.id);
+    this.isMarked = this.news.mark > 0;
+    this.isLoaded = true;
+  },
+  watch: {
+    "news.mark": function(mark) {
+      if (mark !== 0 && !this.isMarked) {
+        NewsService.markNews(this.news.id, mark);
+        this.isMarked = true;
+      }
+    }
   }
 };
 </script>
