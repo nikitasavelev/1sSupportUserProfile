@@ -56,13 +56,13 @@
           </v-dialog>
         </div>
         <v-layout v-else justify-center mt-5>
-                <v-progress-circular
-                  :size="70"
-                  :width="7"
-                  color="primary"
-                  indeterminate
-                  ></v-progress-circular>
-            </v-layout>
+            <v-progress-circular
+              :size="70"
+              :width="7"
+              color="primary"
+              indeterminate
+              ></v-progress-circular>
+        </v-layout>
     </v-container>
   </main>
 </template>

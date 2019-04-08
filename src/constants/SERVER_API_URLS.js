@@ -9,7 +9,7 @@ export const serverAPIUrls = Object.freeze({
   GET_SUPPORT_MESSAGES_TITLES: serverAPIDomain + "/questions/titles",
   QUESTIONS: serverAPIDomain + "/questions/",
   RESOLVE_QUESTION: "/resolve",
-  CLOSE_QUESTION: "/marks",
+  MARKS: "/marks",
   GET_SEARCH: serverAPIDomain + "/searching/search/",
   GET_POPULAR_SEARCH: serverAPIDomain + "/searching/popular/",
 
