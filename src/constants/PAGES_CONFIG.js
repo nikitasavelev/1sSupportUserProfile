@@ -25,6 +25,10 @@ export const pagesConfig = {
     {
       link: "/profile",
       caption: "Профиль"
+    },
+    {
+      link: "/articles",
+      caption: "Справочник"
     }
   ],
   Admin: [
@@ -35,6 +39,10 @@ export const pagesConfig = {
     {
       link: "/requests",
       caption:"Обращения"
+    },
+    {
+      link: "/articles",
+      caption: "Справочник"
     }
   ]
 };
