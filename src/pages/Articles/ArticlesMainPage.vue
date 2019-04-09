@@ -23,10 +23,9 @@
               v-for="item in items"
               :key="item.name"
               :prepend-icon="item.icon"
-              no-action
             >
 
-              <template v-slot:activator>
+              <template slot="activator">
                 <v-list-tile>
                   <v-list-tile-content>
                     <v-list-tile-title>{{ item.name }}</v-list-tile-title>
@@ -37,10 +36,11 @@
               <v-list-group
                 v-for="child in item.children"
                 :key="child.name"
-                no-action
+                sub-group
+                class="ml-4"
               >
 
-                <template v-slot:activator>
+                <template slot="activator">
                   <v-list-tile>
                     <v-list-tile-content>
                       <v-list-tile-title>{{ child.name }}</v-list-tile-title>
@@ -51,6 +51,7 @@
                     <v-list-tile
                       v-for="grandchild in child.children"
                       :key="grandchild.name"
+                      class="ml-5 pl-5"
                     >
                       <v-list-tile-content>
                         <v-list-tile-title>{{ grandchild.name }}</v-list-tile-title>
