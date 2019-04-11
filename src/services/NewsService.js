@@ -36,5 +36,18 @@ class NewsService {
       return data;
     });
   }
+
+  async markNews(newsId, mark) {
+    const requestParameters = {
+      headers: {
+        "Content-Type": "application/json"
+      },
+      method: "POST",
+      mode: "cors",
+      cache: "default",
+      body: JSON.stringify(mark)
+    };
+    return requestToAPI(`${serverAPIUrls.GET_NEWS}/${newsId}${serverAPIUrls.MARKS}`, requestParameters);
+  }
 }
 export default new NewsService();
