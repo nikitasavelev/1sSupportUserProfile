@@ -22,5 +22,32 @@ class LoginService {
       return error;
     }
   }
+
+  async signUp(firstName, secondName, lastName, email, password, phone, partnerLogin, partnerPassword) {
+    const requestParameters = {
+      headers: {
+        "Content-Type": "application/json"
+      },
+      method: "POST",
+      mode: "cors",
+      cache: "default",
+      body: JSON.stringify({
+        firstName,
+        secondName,
+        lastName,
+        email,
+        password,
+        phone,
+        partnerLogin,
+        partnerPassword
+      })
+    };
+    try {
+      const response = await requestToAPI(serverAPIUrls.SIGN_UP, requestParameters);
+      return response;
+    } catch (error) {
+      return error;
+    }
+  }
 }
 export default new LoginService();
