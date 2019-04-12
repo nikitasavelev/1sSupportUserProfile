@@ -9,7 +9,7 @@
              v-if="$store.getters.getRole === 'Client'">Задать вопрос</v-btn>
           </router-link> 
         </div>   
-        <v-flex xs-8 class="text-uppercase requests-header">Активные {{activeQuestions.length}}</v-flex> 
+        <v-flex xs-8 class="text-uppercase requests-header mt-2">Активные {{activeQuestions.length}}</v-flex> 
         <hr>
         <request-item v-for="request in activeQuestions" :request="request" :key="request.id"></request-item> 
         <v-flex xs-8 class="text-uppercase requests-header">Завершенные {{closedQuestions.length}}</v-flex>
