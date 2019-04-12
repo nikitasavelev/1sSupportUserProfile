@@ -23,7 +23,17 @@ class LoginService {
     }
   }
 
-  async signUp(firstName, secondName, lastName, email, password, phone, partnerLogin, partnerPassword) {
+  async signUp(
+    firstName,
+    secondName,
+    lastName,
+    email,
+    password,
+    confirmPassword,
+    phone,
+    partnerLogin,
+    partnerPassword
+  ) {
     const requestParameters = {
       headers: {
         "Content-Type": "application/json"
@@ -37,6 +47,7 @@ class LoginService {
         lastName,
         email,
         password,
+        confirmPassword,
         phone,
         partnerLogin,
         partnerPassword
