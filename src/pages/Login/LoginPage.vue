@@ -8,9 +8,9 @@
           <v-layout align-center column class="pa-4">
             <div class="login-system">Вход в систему</div>
             <v-text-field
-                v-model="login"
-                :rules="loginRules"
-                :counter="12"
+                v-model="email"
+                :rules="emailRules"
+                :counter="25"
                 label="Логин"
                 @input="isAlertShown = false"
                 required
@@ -51,12 +51,12 @@ export default {
       serverResponse: {},
       accessToken: "",
       role: "",
-      login: "",
+      email: "",
       password: "",
       isAlertShown: false,
-      loginRules: [
+      emailRules: [
         v => !!v || "Заполните поле логина",
-        v => v.length <= 12 || "Логин должен быть длиной 12 символов"
+        v => v.length <= 25 || "Логин должен быть длиной 25 символов"
       ],
       passwordRules: [
         v => !!v || "Пароль не может быть пуст",
@@ -68,12 +68,12 @@ export default {
     async signIn(event) {
       event.preventDefault();
       this.serverResponse = await LoginService.signIn(
-        this.login,
+        this.email,
         this.password
       );
-      if (this.serverResponse.accessToken && this.serverResponse.roleType.name) {
+      if (this.serverResponse.accessToken && this.serverResponse.role) {
         this.accessToken = this.serverResponse.accessToken;
-        this.role = this.serverResponse.roleType.name;
+        this.role = this.serverResponse.role;
         this.$store.dispatch("updateAuthorizationToken", this.accessToken);
         this.$store.dispatch("updateRole", this.role);
         this.redirectToStartPageForRole(this.role);
