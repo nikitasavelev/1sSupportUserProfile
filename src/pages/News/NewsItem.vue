@@ -2,7 +2,7 @@
     <v-layout column align-center class="pa-1" @click="goToSpecificNews(news.id)">
         <p class="ml-4 news-title">{{news.title}}</p>
         <image-with-aspect-ratio :source="news.imageUrl" class="news-img"></image-with-aspect-ratio>
-        <div class="ml-4 news-short-preview">{{news.shortPreview}}</div>
+        <div class="ml-4 news-short-preview">{{news.preview}}</div>
         <hr>
     </v-layout>
 </template>

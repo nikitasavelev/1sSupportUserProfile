@@ -4,6 +4,7 @@ export const serverAPIDomain = "https://api.4buttons.ru/1c/v0.1";
 export const serverAPIUrls = Object.freeze({
   SURPRISE: serverAPIDomain + "/server_infos/surprise",
   LOGIN: serverAPIDomain + "/identity/sign-in",
+  SIGN_UP: serverAPIDomain + "/identity/sign-up",
   LOGOUT: serverAPIDomain + "/tokens/logout",
 
   GET_SUPPORT_MESSAGES_TITLES: serverAPIDomain + "/questions/titles",
@@ -16,7 +17,7 @@ export const serverAPIUrls = Object.freeze({
   GET_ARTICLE: serverAPIDomain + "/articles",
   SET_ARTICLES_MARKS: serverAPIDomain + "/articles/marks",
 
-  GET_USER_INFO: serverAPIDomain + "/providers/clients/me",
+  GET_USER_INFO: serverAPIDomain + "/companies/clients/me",
 
   GET_OPERATOR_ANALYTICS: serverAPIDomain + "/analytics/me",
   GET_OPERATORS_ANALYTICS: serverAPIDomain + "/analytics/operators",

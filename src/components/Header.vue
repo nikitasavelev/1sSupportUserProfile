@@ -37,6 +37,15 @@ export default {
     goToPage(path) {
       this.currentLink = path;
       this.$router.push(path);
+    },
+    setActive() {
+      let index;
+      this.pages.forEach((page, i) => {
+        if (page.link === this.currentLink) {
+          index = i;
+        }
+      });
+      this.active = index;
     }
   },
   mounted() {
@@ -44,13 +53,15 @@ export default {
     this.role = this.$store.getters.getRole;
     this.pages = pagesConfig[this.role];
     this.currentLink = `/${this.$router.history.current.path.split("/")[1]}`;
-    let index;
-    this.pages.forEach((page, i) => {
-      if (page.link === this.currentLink) {
-        index = i;
+    this.setActive();
+  },
+  watch: {
+    $route(to, from) {
+      if (to.path.split("/")[1] !== from.path.split("/")[1]) {
+        this.currentLink = `/${to.path.split("/")[1]}`;
+        this.setActive();
       }
-    });
-    this.active = index;
+    }
   }
 };
 </script>
