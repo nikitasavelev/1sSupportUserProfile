@@ -17,7 +17,7 @@ export const serverAPIUrls = Object.freeze({
   GET_ARTICLE: serverAPIDomain + "/articles",
   SET_ARTICLES_MARKS: serverAPIDomain + "/articles/marks",
 
-  GET_USER_INFO: serverAPIDomain + "/providers/clients/me",
+  GET_USER_INFO: serverAPIDomain + "/companies/clients/me",
 
   GET_OPERATOR_ANALYTICS: serverAPIDomain + "/analytics/me",
   GET_OPERATORS_ANALYTICS: serverAPIDomain + "/analytics/operators",

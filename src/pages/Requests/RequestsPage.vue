@@ -4,7 +4,9 @@
       <v-flex xs9 class="left-side pr-2 pl-5"> 
         <div class="clearfix">
           <router-link :to="'/requests/0'">
-            <v-btn class="ask-question btn ma-0 mt-4 clearfix">Задать вопрос</v-btn>
+            <v-btn
+             class="ask-question btn ma-0 mt-4 clearfix"
+             v-if="$store.getters.getRole === 'Client'">Задать вопрос</v-btn>
           </router-link> 
         </div>   
         <v-flex xs-8 class="text-uppercase requests-header">Активные {{activeQuestions.length}}</v-flex> 
