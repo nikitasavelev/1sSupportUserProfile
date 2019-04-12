@@ -91,7 +91,7 @@ export default {
       this.request = await QuestionsService.getQuestion(this.questionId);
       // ids 5 and 6 means resolved (by client or by operator)
       this.isResolved =
-        this.request.state.id === 5 || this.request.state.id === 6;
+        this.request.stateType === 5 || this.request.stateType=== 6;
     }
     this.isLoaded = true;
   },
