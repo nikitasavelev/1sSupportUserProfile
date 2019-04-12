@@ -91,7 +91,8 @@ export default {
       this.request = await QuestionsService.getQuestion(this.questionId);
       // ids 5 and 6 means resolved (by client or by operator)
       this.isResolved =
-        this.request.stateType === 5 || this.request.stateType=== 6;
+        this.request.stateType === 5 || this.request.stateType === 6;
+      this.isClosed = this.request.mark > 0;
     }
     this.isLoaded = true;
   },
@@ -109,7 +110,7 @@ export default {
   },
   watch: {
     "request.mark": function(mark) {
-      if (mark !== 0) {
+      if (mark !== 0 && this.request.stateType !== 6) {
         QuestionsService.closeQuestion(this.questionId, mark);
         this.isClosed = true;
       }
