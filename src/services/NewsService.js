@@ -42,10 +42,10 @@ class NewsService {
       headers: {
         "Content-Type": "application/json"
       },
-      method: "POST",
+      method: "PUT",
       mode: "cors",
       cache: "default",
-      body: JSON.stringify(mark)
+      body: JSON.stringify({ mark })
     };
     return requestToAPI(`${serverAPIUrls.GET_NEWS}/${newsId}${serverAPIUrls.MARKS}`, requestParameters);
   }

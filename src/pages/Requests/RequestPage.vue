@@ -11,6 +11,7 @@
               <div class="request-title">{{request.title}}</div>
           </div>
           <hr>
+          <chat-messages :questionId="Number(questionId)" />
           <form @submit="formSubmit">
             <v-textarea
               solo
@@ -20,6 +21,13 @@
               v-model="message"
               placeholder="Напишите сообщение"
             ></v-textarea>
+            <v-text-field
+                v-if="this.questionId === '0'"
+                v-model="title"
+                label="Напишите тему"
+                class="mt-2 choose-title"
+                required
+            ></v-text-field>
             <v-btn 
               class="d-block right"
               color="primary"
@@ -44,16 +52,6 @@
                   large          
                 ></v-rating>
           </v-layout>
-          <v-dialog
-            v-model="isModalShown"
-            width="400"
-          >  
-            <choose-title-modal
-             :titles="titles"
-             @update:isModalShown="isModalShown = false"
-             :message="message">
-            </choose-title-modal>
-          </v-dialog>
         </div>
         <v-layout v-else justify-center mt-5>
             <v-progress-circular
@@ -68,7 +66,7 @@
 </template>
 <script>
 import QuestionsService from "Services/QuestionsService.js";
-import ChooseTitleModal from "./ChooseTitleModal";
+import ChatMessages from "./ChatMessages";
 
 export default {
   name: "RequestPage",
@@ -76,30 +74,33 @@ export default {
     return {
       request: {},
       message: "",
-      isModalShown: false,
-      titles: [],
+      title: "",
       questionId: this.$route.params.id,
       isResolved: false,
       isClosed: false,
       isLoaded: false
     };
   },
-  components: { ChooseTitleModal },
+  components: { ChatMessages },
   async mounted() {
-    this.titles = await QuestionsService.getTitles();
+    //this.titles = await QuestionsService.getTitles();
     if (this.questionId !== "0") {
       this.request = await QuestionsService.getQuestion(this.questionId);
       // ids 5 and 6 means resolved (by client or by operator)
       this.isResolved =
-        this.request.stateType === 5 || this.request.stateType=== 6;
+        this.request.stateType === 5 || this.request.stateType === 6;
+      this.isClosed = this.request.mark > 0;
     }
     this.isLoaded = true;
   },
   methods: {
-    formSubmit(event) {
+    async formSubmit(event) {
       event.preventDefault();
       if (this.questionId === "0") {
-        this.isModalShown = true;
+        await QuestionsService.askQuestion(this.message, this.title);
+        this.$router.push("/requests");
+      } else {
+        await QuestionsService.sendMessage(this.questionId, this.message);
       }
     },
     resolveQuestion() {
@@ -109,7 +110,7 @@ export default {
   },
   watch: {
     "request.mark": function(mark) {
-      if (mark !== 0) {
+      if (mark !== 0 && this.request.stateType !== 6) {
         QuestionsService.closeQuestion(this.questionId, mark);
         this.isClosed = true;
       }
@@ -141,5 +142,11 @@ export default {
 
 .d-block.mt-5.resolve-question-btn {
   color: white;
+}
+
+.choose-title {
+  max-width: 20vw;
+  max-height: 2vh;
+  height: 2vh;
 }
 </style>

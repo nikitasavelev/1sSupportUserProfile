@@ -36,13 +36,14 @@
                 ></v-text-field>
                 <v-text-field
                     v-model="password"
+                    class="mt-3"
                     :rules="passwordRules"
                     :type="'password'"
                     label="Пароль"
                     required
                 ></v-text-field>
                 <v-text-field
-                    v-model="repeatPassword"
+                    v-model="confirmPassword"
                     :rules="passwordRules"
                     :type="'password'"
                     label="Подтвердите пароль"
@@ -75,6 +76,7 @@
                 <v-btn color="primary" class="text-uppercase" type="submit">Зарегистрироваться</v-btn>
             </v-layout>
         </form>
+        <div v-if="isSent">Отправлено!</div>
     </v-layout>
   </v-container>
 </template>
@@ -93,27 +95,31 @@ export default {
       lastName: "",
       secondName: "",
       password: "",
-      repeatPassword: "",
+      confirmPassword: "",
       partnerLogin: "",
       partnerPassword: "",
       passwordRules: [
         v => !!v || "Пароль не может быть пуст",
         v => v.length >= 6 || "Пароль должен быть длиннее 6 символов"
-      ]
+      ],
+      isSent: false
     };
   },
   methods: {
-    async signUp() {
-      await LoginService.signUp(
+    async signUp(event) {
+      event.preventDefault();
+      const response = await LoginService.signUp(
         this.firstName,
         this.secondName,
         this.lastName,
         this.email,
         this.password,
+        this.confirmPassword,
         this.phone,
         this.partnerLogin,
         this.partnerPassword
       );
+      this.isSent = true;
     }
   }
 };

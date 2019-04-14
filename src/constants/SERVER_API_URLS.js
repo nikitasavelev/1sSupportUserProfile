@@ -25,4 +25,6 @@ export const serverAPIUrls = Object.freeze({
   GET_NEWS: serverAPIDomain + "/news",
   GET_NEWS_SHORT_PREVIEWS: serverAPIDomain + "/news/previews/short",
   GET_NEWS_PREVIEWS: serverAPIDomain + "/news/previews",
+
+  MESSAGES: "/messages",
 });
