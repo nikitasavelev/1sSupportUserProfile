@@ -50,7 +50,6 @@ export default {
   async mounted() {
     this.messages = await QuestionsService.getMessages(this.questionId);
     this.isLoaded = true;
-    console.log(this.messages);
   }
 };
 </script>
