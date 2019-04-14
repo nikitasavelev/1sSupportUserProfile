@@ -86,9 +86,10 @@ export default {
   },
   components: { ChooseTitleModal },
   async mounted() {
-    this.titles = await QuestionsService.getTitles();
+    //this.titles = await QuestionsService.getTitles();
     if (this.questionId !== "0") {
       this.request = await QuestionsService.getQuestion(this.questionId);
+      debugger;
       // ids 5 and 6 means resolved (by client or by operator)
       this.isResolved =
         this.request.stateType === 5 || this.request.stateType === 6;
@@ -110,6 +111,7 @@ export default {
   },
   watch: {
     "request.mark": function(mark) {
+      debugger;
       if (mark !== 0 && this.request.stateType !== 6) {
         QuestionsService.closeQuestion(this.questionId, mark);
         this.isClosed = true;

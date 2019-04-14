@@ -3,9 +3,9 @@ import { requestToAPI } from "Constants/DEFAULT_REQUEST.js";
 import formatDate from "Constants/FORMAT_DATE.js";
 
 class QuestionsService {
-  async getTitles() {
-    return requestToAPI(serverAPIUrls.GET_SUPPORT_MESSAGES_TITLES);
-  }
+  // async getTitles() {
+  //   return requestToAPI(serverAPIUrls.GET_SUPPORT_MESSAGES_TITLES);
+  // }
 
   async getQuestion(questionId = 1) {
     return requestToAPI(`${serverAPIUrls.QUESTIONS}/${questionId}`, undefined, data => {
@@ -63,7 +63,7 @@ class QuestionsService {
       method: "PUT",
       mode: "cors",
       cache: "default",
-      body: JSON.stringify(mark)
+      body: JSON.stringify({ mark })
     };
     return requestToAPI(`${serverAPIUrls.QUESTIONS}${questionId}${serverAPIUrls.MARKS}`, requestParameters);
   }
