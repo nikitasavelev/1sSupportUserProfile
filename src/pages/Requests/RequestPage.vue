@@ -11,6 +11,7 @@
               <div class="request-title">{{request.title}}</div>
           </div>
           <hr>
+          <chat-messages :questionId="Number(questionId)" />
           <form @submit="formSubmit">
             <v-textarea
               solo
@@ -65,6 +66,7 @@
 </template>
 <script>
 import QuestionsService from "Services/QuestionsService.js";
+import ChatMessages from "./ChatMessages";
 
 export default {
   name: "RequestPage",
@@ -79,6 +81,7 @@ export default {
       isLoaded: false
     };
   },
+  components: { ChatMessages },
   async mounted() {
     //this.titles = await QuestionsService.getTitles();
     if (this.questionId !== "0") {
@@ -96,6 +99,8 @@ export default {
       if (this.questionId === "0") {
         await QuestionsService.askQuestion(this.message, this.title);
         this.$router.push("/requests");
+      } else {
+        await QuestionsService.sendMessage(this.questionId, this.message);
       }
     },
     resolveQuestion() {

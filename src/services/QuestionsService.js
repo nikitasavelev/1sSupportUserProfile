@@ -8,7 +8,7 @@ class QuestionsService {
   // }
 
   async getQuestion(questionId = 1) {
-    return requestToAPI(`${serverAPIUrls.QUESTIONS}/${questionId}`, undefined, data => {
+    return requestToAPI(`${serverAPIUrls.QUESTIONS}${questionId}`, undefined, data => {
       data.updatedAt = formatDate(data.updatedAt);
       return data;
     });
@@ -65,6 +65,28 @@ class QuestionsService {
       body: JSON.stringify({ mark })
     };
     return requestToAPI(`${serverAPIUrls.QUESTIONS}${questionId}${serverAPIUrls.MARKS}`, requestParameters);
+  }
+
+  async getMessages(questionId) {
+    return requestToAPI(`${serverAPIUrls.QUESTIONS}${questionId}${serverAPIUrls.MESSAGES}`,undefined, data => {
+      data.forEach(message => {
+        message.createdAt = formatDate(message.createdAt);
+      });     
+      return data;
+    });
+  }
+
+  async sendMessage(questionId, text) {
+    const requestParameters = {
+      headers: {
+        "Content-Type": "application/json"
+      },
+      method: "POST",
+      mode: "cors",
+      cache: "default",
+      body: JSON.stringify({ text })
+    };
+    return requestToAPI(`${serverAPIUrls.QUESTIONS}${questionId}${serverAPIUrls.MESSAGES}`, requestParameters);
   }
 }
 export default new QuestionsService();
