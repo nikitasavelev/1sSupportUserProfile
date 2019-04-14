@@ -26,7 +26,7 @@ class QuestionsService {
     });
   }
 
-  async askQuestion(text, titleId) {
+  async askQuestion(text, title) {
     const requestParameters = {
       headers: {
         "Content-Type": "application/json"
@@ -35,9 +35,8 @@ class QuestionsService {
       mode: "cors",
       cache: "default",
       body: JSON.stringify({
-        contactData: "999999",
         text,
-        titleId
+        title
       })
     };
     return requestToAPI(serverAPIUrls.QUESTIONS, requestParameters);
