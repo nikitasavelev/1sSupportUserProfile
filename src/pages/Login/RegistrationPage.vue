@@ -119,7 +119,6 @@ export default {
         this.partnerLogin,
         this.partnerPassword
       );
-      console.log(response);
       this.isSent = true;
     }
   }

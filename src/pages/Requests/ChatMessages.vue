@@ -5,7 +5,8 @@
             v-for="(message, index) in messages"
             :key="message.id"
             class="clearfix chat-message-and-time"
-            :align-end="message.isMe">
+            :align-end="message.isMe"
+            :align-start="!message.isMe">
             <v-layout                 
                 v-if="index === 0 || messages[index].firstName !== messages[index-1].firstName"
                 :class="{'right': message.isMe, 'left': !message.isMe}"
@@ -17,7 +18,7 @@
             <v-card
                 class="chat-message pa-2 mt-2"
                 :class="{'right': message.isMe, 'left': !message.isMe}">
-                <div>{{message.text}}</div>
+                <div class="">{{message.text}}</div>
                 <div
                     class="chat-message-time"
                     :class="{'right': message.isMe, 'left': !message.isMe}"
