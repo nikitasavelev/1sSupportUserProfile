@@ -4,17 +4,20 @@ import formatDate from "Constants/FORMAT_DATE.js";
 
 class UsersService {
   async getUserInfo() {
-    return requestToAPI(serverAPIUrls.GET_USER_INFO, undefined, data => {
-      data.oneCPortalAuthInfo.expiresIn = formatDate(data.oneCPortalAuthInfo.expiresIn);
-      return data;
+    return requestToAPI({
+      url: serverAPIUrls.GET_USER_INFO,
+      modifyDataCallback: data => {
+        data.oneCPortalAuthInfo.expiresIn = formatDate(data.oneCPortalAuthInfo.expiresIn);
+        return data;
+      }
     });
   }
-  async getOperatorAnalytics(){
-    return requestToAPI(serverAPIUrls.GET_OPERATOR_ANALYTICS);
+  async getOperatorAnalytics() {
+    return requestToAPI({ url: serverAPIUrls.GET_OPERATOR_ANALYTICS });
   }
 
-  async getOperatorsAnalytics(){
-    return requestToAPI(serverAPIUrls.GET_OPERATORS_ANALYTICS);
+  async getOperatorsAnalytics() {
+    return requestToAPI({ url: serverAPIUrls.GET_OPERATORS_ANALYTICS });
   }
 }
 export default new UsersService();

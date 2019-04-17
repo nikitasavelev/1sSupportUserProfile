@@ -11,7 +11,8 @@
               <div class="request-title">{{request.title}}</div>
           </div>
           <hr>
-          <chat-messages :questionId="Number(questionId)" />
+          <chat-messages v-if="this.$route.params.id !== '0'"
+           :questionId="Number(questionId)" />
           <form @submit="formSubmit">
             <v-textarea
               solo

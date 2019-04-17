@@ -12,23 +12,27 @@ export const defaultRequestOptions = Object.freeze({
 
 /**
  *
- * @param {string} url url to fetch
- * @param {object} requestOptions object with options for request
- * @param {function} modifyDataCallback if data needs to be modified after getting response
+ * @param {object} options common object for request
+ * possible properties of this object:
+ *    @param {url} string url to fetch
+ *    @param {object} headers request headers
+ *    @param {method} string HTTP-method
+ *    @param {body} object request body *  
+ *    @param {function} modifyDataCallback callback if data needs to be modified after getting response
  */
-export async function requestToAPI(url, requestOptions = defaultRequestOptions, modifyDataCallback) {
+export async function requestToAPI(options) {
   if (isAccessTokenExpired()) {
     const response = await LoginService.getNewAccessToken();
-    if (response.code === "Ok"){
+    if (response.code === "Ok") {
       updateStateAndLocalStorage(response.data);
     }
   }
-  requestOptions.headers.Authorization = "Bearer " + Store.getters.getAuthorizationToken;
-  return fetch(url, requestOptions)
+  setParams(options);
+  return fetch(options.url, options.requestOptions)
     .then(res => res.json())
     .then(res => {
-      if (modifyDataCallback instanceof Function) {
-        res.data = modifyDataCallback(res.data);
+      if (options.modifyDataCallback instanceof Function) {
+        res.data = options.modifyDataCallback(res.data);
       }
       return res.data;
     });
@@ -55,5 +59,27 @@ function isAccessTokenExpired() {
     return !(expirationDate > currentDate);
   } else {
     Router.push({ name: "LoginPage" });
+  }
+}
+
+// if specific param is provided it's set
+// default param is set otherwise
+function setParams(options) {
+  options.requestOptions = {};
+  options.requestOptions = {
+    headers: {
+      Authorization: "Bearer " + Store.getters.getAuthorizationToken
+    },
+    mode: options.requestOptions.mode || "cors",
+    cache: options.requestOptions.cache || "default"
+  };
+  if (options.headers) {
+    options.requestOptions.headers["Content-Type"] = options.headers["Content-Type"] || "text/plain";
+  }
+  if (options.body) {
+    options.requestOptions.body = JSON.stringify(options.body);
+  }
+  if (options.method) {
+    options.requestOptions.method = options.method;
   }
 }
