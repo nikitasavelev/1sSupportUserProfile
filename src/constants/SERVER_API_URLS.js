@@ -8,8 +8,9 @@ export const serverAPIUrls = Object.freeze({
   SIGN_UP: serverAPIDomain + "/identity/sign-up",
   LOGOUT: serverAPIDomain + "/tokens/logout",
   ACCESS_TOKENS: serverAPIDomain + "/identity/access-tokens",
+  REFRESH_TOKENS: serverAPIDomain + "/identity/refresh-tokens",
   REFRESH_TOKEN: "refresh",
-
+  REVOKE_TOKEN: "revoke",
 
   GET_SUPPORT_MESSAGES_TITLES: serverAPIDomain + "/questions/titles",
   QUESTIONS: serverAPIDomain + "/questions/",

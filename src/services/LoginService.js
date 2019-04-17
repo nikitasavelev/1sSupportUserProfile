@@ -1,6 +1,6 @@
 import { serverAPIUrls } from "Constants/SERVER_API_URLS.js";
 import { requestToAPI } from "Constants/DEFAULT_REQUEST.js";
-
+import Store from "Store/store.js";
 class LoginService {
   async signIn(email, password) {
     try {
@@ -81,6 +81,38 @@ class LoginService {
         .then(res => res.json())
         .then(response => response);
       return response;
+    } catch (error) {
+      return error;
+    }
+  }
+
+  async logout() {
+    const requests = [
+      requestToAPI({
+        url: `${serverAPIUrls.ACCESS_TOKENS}/${serverAPIUrls.REVOKE_TOKEN}`,
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: {}
+      }),
+      requestToAPI({
+        url: `${serverAPIUrls.REFRESH_TOKENS}/${localStorage.getItem("refreshToken")}/${serverAPIUrls.REVOKE_TOKEN}`,
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: {}
+      })
+    ];
+    try {
+      await Promise.all(requests);
+      localStorage.removeItem("refreshToken");
+      localStorage.removeItem("expires");
+      localStorage.removeItem("role");
+      localStorage.removeItem("token");
+      Store.dispatch("updateAuthorizationToken", null);
+      Store.dispatch("updateRole", null);
     } catch (error) {
       return error;
     }
