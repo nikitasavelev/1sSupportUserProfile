@@ -8,85 +8,86 @@ class QuestionsService {
   // }
 
   async getQuestion(questionId = 1) {
-    return requestToAPI(`${serverAPIUrls.QUESTIONS}${questionId}`, undefined, data => {
-      data.updatedAt = formatDate(data.updatedAt);
-      return data;
+    return requestToAPI({
+      url: `${serverAPIUrls.QUESTIONS}${questionId}`,
+      modifyDataCallback: data => {
+        data.updatedAt = formatDate(data.updatedAt);
+        return data;
+      }
     });
   }
 
   async getQuestions() {
-    return requestToAPI(serverAPIUrls.QUESTIONS, undefined, data => {
-      data.activeQuestions.forEach(question => {
-        question.updatedAt = formatDate(question.updatedAt);
-      });
-      data.closedQuestions.forEach(question => {
-        question.updatedAt = formatDate(question.updatedAt);
-      });
-      return data;
+    return requestToAPI({
+      url: serverAPIUrls.QUESTIONS,
+      modifyDataCallback: data => {
+        data.activeQuestions.forEach(question => {
+          question.updatedAt = formatDate(question.updatedAt);
+        });
+        data.closedQuestions.forEach(question => {
+          question.updatedAt = formatDate(question.updatedAt);
+        });
+        return data;
+      }
     });
   }
 
   async askQuestion(text, title) {
-    const requestParameters = {
+    return requestToAPI({
+      url: serverAPIUrls.QUESTIONS,
       headers: {
         "Content-Type": "application/json"
       },
       method: "POST",
-      mode: "cors",
-      cache: "default",
-      body: JSON.stringify({
+      body: {
         text,
         title
-      })
-    };
-    return requestToAPI(serverAPIUrls.QUESTIONS, requestParameters);
+      }
+    });
   }
 
   async resolveQuestion(questionId) {
-    const requestParameters = {
+    return requestToAPI({
+      url: `${serverAPIUrls.QUESTIONS}${questionId}${serverAPIUrls.RESOLVE_QUESTION}`,
       headers: {
         "Content-Type": "application/json"
       },
-      method: "PUT",
-      mode: "cors",
-      cache: "default"
-    };
-    return requestToAPI(`${serverAPIUrls.QUESTIONS}${questionId}${serverAPIUrls.RESOLVE_QUESTION}`, requestParameters);
+      method: "PUT"
+    });
   }
 
   async closeQuestion(questionId, mark) {
-    const requestParameters = {
+    return requestToAPI({
+      url: `${serverAPIUrls.QUESTIONS}${questionId}${serverAPIUrls.MARKS}`,
       headers: {
         "Content-Type": "application/json"
       },
       method: "PUT",
-      mode: "cors",
-      cache: "default",
-      body: JSON.stringify({ mark })
-    };
-    return requestToAPI(`${serverAPIUrls.QUESTIONS}${questionId}${serverAPIUrls.MARKS}`, requestParameters);
+      body: { mark }
+    });
   }
 
   async getMessages(questionId) {
-    return requestToAPI(`${serverAPIUrls.QUESTIONS}${questionId}${serverAPIUrls.MESSAGES}`,undefined, data => {
-      data.forEach(message => {
-        message.createdAt = formatDate(message.createdAt);
-      });     
-      return data;
+    return requestToAPI({
+      url: `${serverAPIUrls.QUESTIONS}${questionId}${serverAPIUrls.MESSAGES}`,
+      modifyDataCallback: data => {
+        data.forEach(message => {
+          message.createdAt = formatDate(message.createdAt);
+        });
+        return data;
+      }
     });
   }
 
   async sendMessage(questionId, text) {
-    const requestParameters = {
+    return requestToAPI({
+      url: `${serverAPIUrls.QUESTIONS}${questionId}${serverAPIUrls.MESSAGES}`,
       headers: {
         "Content-Type": "application/json"
       },
       method: "POST",
-      mode: "cors",
-      cache: "default",
-      body: JSON.stringify({ text })
-    };
-    return requestToAPI(`${serverAPIUrls.QUESTIONS}${questionId}${serverAPIUrls.MESSAGES}`, requestParameters);
+      body: { text }
+    });
   }
 }
 export default new QuestionsService();

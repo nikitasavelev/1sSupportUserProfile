@@ -1,22 +1,20 @@
 import { serverAPIUrls } from "Constants/SERVER_API_URLS.js";
 import { requestToAPI } from "Constants/DEFAULT_REQUEST.js";
-
+import Store from "Store/store.js";
 class LoginService {
   async signIn(email, password) {
-    const requestParameters = {
-      headers: {
-        "Content-Type": "application/json"
-      },
-      method: "POST",
-      mode: "cors",
-      cache: "default",
-      body: JSON.stringify({
-        email,
-        password
-      })
-    };
     try {
-      const response = await requestToAPI(serverAPIUrls.LOGIN, requestParameters);
+      const response = await requestToAPI({
+        url: serverAPIUrls.LOGIN,
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: {
+          email,
+          password
+        }
+      });
       localStorage.setItem("refreshToken", response.refreshToken);
       localStorage.setItem("expires", response.expires);
       return response;
@@ -36,27 +34,25 @@ class LoginService {
     partnerLogin,
     partnerPassword
   ) {
-    const requestParameters = {
-      headers: {
-        "Content-Type": "application/json"
-      },
-      method: "POST",
-      mode: "cors",
-      cache: "default",
-      body: JSON.stringify({
-        firstName,
-        secondName,
-        lastName,
-        email,
-        password,
-        confirmPassword,
-        phone,
-        partnerLogin,
-        partnerPassword
-      })
-    };
     try {
-      const response = await requestToAPI(serverAPIUrls.SIGN_UP, requestParameters);
+      const response = await requestToAPI({
+        url: serverAPIUrls.SIGN_UP,
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: {
+          firstName,
+          secondName,
+          lastName,
+          email,
+          password,
+          confirmPassword,
+          phone,
+          partnerLogin,
+          partnerPassword
+        }
+      });
       return response;
     } catch (error) {
       return error;
@@ -67,8 +63,8 @@ class LoginService {
     const requestParameters = {
       headers: {
         "Content-Type": "application/json",
-        "Connection": 'keep-alive',
-        "Accept": "*/*",
+        Connection: "keep-alive",
+        Accept: "*/*",
         "Accept-encoding": "gzip,deflate",
         "Content-length": "2"
       },
@@ -82,9 +78,41 @@ class LoginService {
         `${serverAPIUrls.ACCESS_TOKENS}/${localStorage.getItem("refreshToken")}/${serverAPIUrls.REFRESH_TOKEN}`,
         requestParameters
       )
-      .then(res => res.json())
-      .then((response) => response);
+        .then(res => res.json())
+        .then(response => response);
       return response;
+    } catch (error) {
+      return error;
+    }
+  }
+
+  async logout() {
+    const requests = [
+      requestToAPI({
+        url: `${serverAPIUrls.ACCESS_TOKENS}/${serverAPIUrls.REVOKE_TOKEN}`,
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: {}
+      }),
+      requestToAPI({
+        url: `${serverAPIUrls.REFRESH_TOKENS}/${localStorage.getItem("refreshToken")}/${serverAPIUrls.REVOKE_TOKEN}`,
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: {}
+      })
+    ];
+    try {
+      await Promise.all(requests);
+      localStorage.removeItem("refreshToken");
+      localStorage.removeItem("expires");
+      localStorage.removeItem("role");
+      localStorage.removeItem("token");
+      Store.dispatch("updateAuthorizationToken", null);
+      Store.dispatch("updateRole", null);
     } catch (error) {
       return error;
     }

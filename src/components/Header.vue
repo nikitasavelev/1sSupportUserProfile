@@ -17,12 +17,16 @@
            >
           {{page.caption}}
         </v-tab>
+        <span class="exit pa-2 ml-5 mt-1 mr-2" @click="logout">
+          <v-icon dark class="dark">exit_to_app</v-icon>
+        </span>
       </v-tabs>
     </header>    
   </nav>
 </template>
 <script>
 import { pagesConfig } from "Constants/PAGES_CONFIG.js";
+import LoginService from "Services/LoginService";
 export default {
   name: "HeaderComponent",
   data() {
@@ -46,6 +50,10 @@ export default {
         }
       });
       this.active = index;
+    },
+    async logout() {
+      await LoginService.logout();
+      this.$router.push({ name: "LoginPage" });
     }
   },
   mounted() {
@@ -93,5 +101,13 @@ nav header .isActive.link.pa-0 {
 .link.pa-0.isNews {
   margin-right: 0;
   margin-left: 40%;
+}
+
+.exit {
+  cursor: pointer;
+}
+
+.exit.pa-2 .dark {
+  color: #000;
 }
 </style>
