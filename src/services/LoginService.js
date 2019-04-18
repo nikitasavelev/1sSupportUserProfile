@@ -87,26 +87,23 @@ class LoginService {
   }
 
   async logout() {
-    const requests = [
-      requestToAPI({
-        url: `${serverAPIUrls.ACCESS_TOKENS}/${serverAPIUrls.REVOKE_TOKEN}`,
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: {}
-      }),
-      requestToAPI({
+    try {
+      const revokeRefreshToken = await requestToAPI({
         url: `${serverAPIUrls.REFRESH_TOKENS}/${localStorage.getItem("refreshToken")}/${serverAPIUrls.REVOKE_TOKEN}`,
         method: "POST",
         headers: {
           "Content-Type": "application/json"
         },
         body: {}
-      })
-    ];
-    try {
-      await Promise.all(requests);
+      });
+      const revokeAccessToken = await requestToAPI({
+        url: `${serverAPIUrls.ACCESS_TOKENS}/${serverAPIUrls.REVOKE_TOKEN}`,
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: {}
+      });
       localStorage.removeItem("refreshToken");
       localStorage.removeItem("expires");
       localStorage.removeItem("role");

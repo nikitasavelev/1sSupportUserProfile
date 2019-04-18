@@ -17,15 +17,13 @@ export const defaultRequestOptions = Object.freeze({
  *    @param {url} string url to fetch
  *    @param {object} headers request headers
  *    @param {method} string HTTP-method
- *    @param {body} object request body *  
+ *    @param {body} object request body *
  *    @param {function} modifyDataCallback callback if data needs to be modified after getting response
  */
 export async function requestToAPI(options) {
   if (isAccessTokenExpired()) {
     const response = await LoginService.getNewAccessToken();
-    if (response.code === "Ok") {
-      updateStateAndLocalStorage(response.data);
-    }
+    updateStateAndLocalStorage(response.data);
   }
   setParams(options);
   return fetch(options.url, options.requestOptions)
