@@ -25,20 +25,14 @@ class LoginService {
     }
   }
 
-  async signUp(
-    firstName,
-    secondName,
-    lastName,
-    email,
-    password,
-    confirmPassword,
-    phone,
-    partnerLogin,
-    partnerPassword
-  ) {
+  async signUp(firstName, secondName, lastName, email, password, confirmPassword, phone, secretKey, crmLogin) {
+    let urlForRequest = serverAPIUrls.SIGN_UP_CLIENT;
+    if (crmLogin.length > 0) {
+      urlForRequest = serverAPIUrls.SIGN_UP_EMPLOYEE;
+    }
     try {
       const response = await requestToAPI({
-        url: serverAPIUrls.SIGN_UP,
+        url: urlForRequest,
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -51,8 +45,8 @@ class LoginService {
           password,
           confirmPassword,
           phone,
-          partnerLogin,
-          partnerPassword
+          secretKey,
+          crmLogin
         }
       });
       return response;

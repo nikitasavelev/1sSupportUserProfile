@@ -5,7 +5,8 @@ export const serverAPIUrls = Object.freeze({
   SURPRISE: serverAPIDomain + "/server_infos/surprise",
 
   LOGIN: serverAPIDomain + "/identity/sign-in",
-  SIGN_UP: serverAPIDomain + "/identity/sign-up",
+  SIGN_UP_EMPLOYEE: serverAPIDomain + "/identity/sign-up/employee",
+  SIGN_UP_CLIENT: serverAPIDomain + "/identity/sign-up/client",
   LOGOUT: serverAPIDomain + "/tokens/logout",
   ACCESS_TOKENS: serverAPIDomain + "/identity/access-tokens",
   REFRESH_TOKENS: serverAPIDomain + "/identity/refresh-tokens",
