@@ -12,7 +12,7 @@
           </div>
           <hr>
           <chat-messages v-if="this.$route.params.id !== '0'"
-           :questionId="Number(questionId)" />
+           :questionId="Number(questionId)" ref="chatMessages"/>
           <form @submit="formSubmit">
             <v-textarea
               solo
@@ -101,7 +101,12 @@ export default {
         await QuestionsService.askQuestion(this.message, this.title);
         this.$router.push("/requests");
       } else {
-        await QuestionsService.sendMessage(this.questionId, this.message);
+        const justSentMessage = await QuestionsService.sendMessage(
+          this.questionId,
+          this.message
+        );
+        this.$refs.chatMessages.sendOwnMessage(justSentMessage);
+        this.message = "";
       }
     },
     resolveQuestion() {

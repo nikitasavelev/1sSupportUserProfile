@@ -8,37 +8,31 @@ export default new Vuex.Store({
     authorizationToken: "",
     sessionId: "",
     role: "",
+    userId: ""
   },
   mutations: {
-    setAuthorizationToken(state, token) {
-      state.authorizationToken = token;
-      localStorage.setItem("token", token);      
+    setAuthorizationToken(state, authorizationToken) {
+      setValueAndAddToLocalStorage(state, "authorizationToken", authorizationToken);
     },
     setSessionId(state, sessionId) {
       state.sessionId = sessionId;
     },
-    setRole(state, role){
-      state.role = role;
-      localStorage.setItem("role", role);
+    setRole(state, role) {
+      setValueAndAddToLocalStorage(state, "role", role);
+    },
+    setUserid(state, userId) {
+      setValueAndAddToLocalStorage(state, "userId", userId);
     }
-
   },
   getters: {
     getAuthorizationToken: state => {
-      if (state.authorizationToken !== "") return state.authorizationToken;
-      if (localStorage.getItem("token") !== null) {
-        state.authorizationToken = localStorage.getItem("token");
-        return state.authorizationToken;
-      }
-      return "";
-    },    
+      return getStoreValue(state, "authorizationToken");
+    },
     getRole: state => {
-      if (state.role !== "") return state.role;
-      if (localStorage.getItem("role") !== null) {
-        state.role = localStorage.getItem("role");
-        return state.role;
-      }
-      return "";
+      return getStoreValue(state, "role");
+    },
+    getUserId: state => {
+      return getStoreValue(state, "userId");
     }
   },
   actions: {
@@ -53,3 +47,24 @@ export default new Vuex.Store({
     }
   }
 });
+
+function setValueAndAddToLocalStorage(state, name, value) {
+  state[name] = value;
+  localStorage.setItem(name, value);
+}
+
+/**
+ *
+ * @param {string} value
+ * checks value in store, if it's presented then it's returned
+ * if it's not localStorage is checked. Even if in localStorage
+ * it isn't found empty String is returned
+ */
+function getStoreValue(store, value) {
+  if (store[value] !== "") return store[value];
+  if (localStorage.getItem(value) !== null) {
+    store[value] = localStorage.getItem(value);
+    return store[value];
+  }
+  return "";
+}

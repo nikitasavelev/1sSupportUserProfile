@@ -15,8 +15,10 @@ class LoginService {
           password
         }
       });
+      // TO DO: refactor this to one function
       localStorage.setItem("refreshToken", response.refreshToken);
       localStorage.setItem("expires", response.expires);
+      localStorage.setItem("userId", response.userId);
       return response;
     } catch (error) {
       return error;
@@ -104,10 +106,13 @@ class LoginService {
         },
         body: {}
       });
+      // TO DO: refactor this to one function
       localStorage.removeItem("refreshToken");
       localStorage.removeItem("expires");
       localStorage.removeItem("role");
       localStorage.removeItem("token");
+      localStorage.removeItem("userId");
+
       Store.dispatch("updateAuthorizationToken", null);
       Store.dispatch("updateRole", null);
     } catch (error) {

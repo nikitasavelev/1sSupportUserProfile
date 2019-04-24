@@ -1,6 +1,7 @@
 import { serverAPIUrls } from "Constants/SERVER_API_URLS.js";
 import { requestToAPI } from "Constants/DEFAULT_REQUEST.js";
 import formatDate from "Constants/FORMAT_DATE.js";
+import Store from "Store/store.js";
 
 class QuestionsService {
   // async getTitles() {
@@ -73,6 +74,7 @@ class QuestionsService {
       modifyDataCallback: data => {
         data.forEach(message => {
           message.createdAt = formatDate(message.createdAt);
+          message.isMe = Number(Store.getters.getUserId) === Number(message.authorId);
         });
         return data;
       }
@@ -86,7 +88,11 @@ class QuestionsService {
         "Content-Type": "application/json"
       },
       method: "POST",
-      body: { text }
+      body: { text },
+      modifyDataCallback: data => {
+        data.createdAt = formatDate(data.createdAt);
+        return data;
+      }
     });
   }
 }

@@ -39,7 +39,7 @@ export async function requestToAPI(options) {
 function updateStateAndLocalStorage(response) {
   if (response.expires && response.accessToken && response.refreshToken && response.role) {
     localStorage.setItem("expires", response.expires);
-    localStorage.setItem("token", response.accessToken);
+    localStorage.setItem("authorizarionToken", response.accessToken);
     localStorage.setItem("refreshToken", response.refreshToken);
     localStorage.setItem("role", response.role);
 
