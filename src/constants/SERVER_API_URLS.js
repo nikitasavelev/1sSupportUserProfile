@@ -14,6 +14,7 @@ export const serverAPIUrls = Object.freeze({
 
   GET_SUPPORT_MESSAGES_TITLES: serverAPIDomain + "/questions/titles",
   QUESTIONS: serverAPIDomain + "/questions/",
+  SOLUTION_NOT_FOUND:  serverAPIDomain + "/questions/not-found",
   RESOLVE_QUESTION: "/resolve",
   MARKS: "/marks",
   GET_SEARCH: serverAPIDomain + "/searching/search/",
