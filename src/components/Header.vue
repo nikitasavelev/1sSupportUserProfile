@@ -2,10 +2,10 @@
   <nav class="border" role="navigation">
     <header role="banner"> 
       <v-tabs
-        centered
         color="white"
         dark
         class="header"
+        centered
         v-model="active"        
       >
         <v-tabs-slider color="#003399"></v-tabs-slider>
@@ -17,10 +17,12 @@
            >
           {{page.caption}}
         </v-tab>
+      </v-tabs>
+      <div class="right-icons">
         <span class="exit pa-2 ml-5 mt-1 mr-2" @click="logout">
           <v-icon dark class="dark">exit_to_app</v-icon>
         </span>
-      </v-tabs>
+      </div>
     </header>    
   </nav>
 </template>
@@ -78,9 +80,13 @@ export default {
 nav header .link.pa-0 {
   color: black;
 }
-
+nav {
+  position: relative;
+}
 header {
   border-bottom: 1px solid gray;
+  display: flex;
+  justify-content: center;
 }
 
 nav header .isActive.link.pa-0 {
@@ -100,11 +106,18 @@ nav header .isActive.link.pa-0 {
 
 .link.pa-0.isNews {
   margin-right: 0;
-  margin-left: 40%;
+  align-self: flex-end;
+}
+
+.right-icons {
+  position: absolute;
+  right: 0px;
+  top: 0.5rem;
 }
 
 .exit {
   cursor: pointer;
+  justify-self: flex-end;
 }
 
 .exit.pa-2 .dark {

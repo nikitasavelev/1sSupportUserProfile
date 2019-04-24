@@ -62,15 +62,16 @@
                     required
                 ></v-text-field>
                 <v-text-field
-                    v-model="partnerLogin"
+                    v-model="secretKey"
                     type="text"
-                    label="Логин компании"
+                    label="Секретный ключ"
                     required
                 ></v-text-field>
-                 <v-text-field
-                    v-model="partnerPassword"
-                    type="password"
-                    label="Пароль компании"
+                <v-text-field
+                    v-if="isProvider"
+                    v-model="crmLogin"
+                    type="text"
+                    label="Имя входа в 1С CRM"
                     required
                 ></v-text-field>
                 <v-btn color="primary" class="text-uppercase" type="submit">Зарегистрироваться</v-btn>
@@ -96,13 +97,14 @@ export default {
       secondName: "",
       password: "",
       confirmPassword: "",
-      partnerLogin: "",
-      partnerPassword: "",
+      secretKey: "",
+      crmLogin: "",
       passwordRules: [
         v => !!v || "Пароль не может быть пуст",
         v => v.length >= 6 || "Пароль должен быть длиннее 6 символов"
       ],
-      isSent: false
+      isSent: false,
+      isProvider: false
     };
   },
   methods: {
@@ -116,10 +118,29 @@ export default {
         this.password,
         this.confirmPassword,
         this.phone,
-        this.partnerLogin,
-        this.partnerPassword
+        this.secretKey,
+        this.crmLogin
       );
       this.isSent = true;
+    },
+    defineRole(valueAfterColon) {
+      if (valueAfterColon != null && valueAfterColon.length > 0) {
+        return `${valueAfterColon[2]}${valueAfterColon[6]}${
+          valueAfterColon[12]
+        }${valueAfterColon[20]}`;
+      }
+      return "";
+    }
+  },
+  watch: {
+    secretKey(value) {
+      const valueAfterColon = value.split(":")[1];
+      console.log(this.defineRole(valueAfterColon) === "prov");
+      if (this.defineRole(valueAfterColon) === "prov") {
+        this.isProvider = true;
+      } else {
+        this.isProvider = false;
+      }
     }
   }
 };

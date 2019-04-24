@@ -111,14 +111,12 @@ export default {
     setCurrentVersion(index) {
       this.currentArticle = this.article[index];
     },
-    goBack(){
-       window.history.length > 1
-        ? this.$router.go(-1)
-        : this.$router.push('/')
+    goBack() {
+      window.history.length > 1 ? this.$router.go(-1) : this.$router.push("/");
     }
   },
   async mounted() {
-    this.token = localStorage.token;
+    this.token = localStorage.getItem("authorizationToken");
     this.article = await ArticlesService.getArticle(this.articleId);
     this.currentArticle = this.article[0];
   },
@@ -394,7 +392,7 @@ export default {
   color: #004eeb;
 }
 
-.goBack{
+.goBack {
   cursor: pointer;
 }
 </style>

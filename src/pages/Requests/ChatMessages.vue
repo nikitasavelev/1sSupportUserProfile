@@ -28,29 +28,57 @@
             </v-card> 
         </v-layout>
     </v-container>
-     <v-layout v-else justify-center mt-5>
-            <v-progress-circular
-              :size="70"
-              :width="7"
-              color="primary"
-              indeterminate
-              ></v-progress-circular>
-        </v-layout>
+    <v-layout v-else justify-center mt-5>
+      <v-progress-circular
+        :size="70"
+        :width="7"
+        color="primary"
+        indeterminate
+        ></v-progress-circular>
+     </v-layout>
 </template>
 <script>
 import QuestionsService from "Services/QuestionsService.js";
+import NotificationsService from "Services/NotificationsService.js";
+import formatDate from "Constants/FORMAT_DATE.js";
 export default {
   name: "ChatMessages",
   props: { questionId: Number },
   data() {
     return {
       messages: [],
-      isLoaded: false
+      isLoaded: false,
+      notificationsConnection: null
     };
   },
   async mounted() {
     this.messages = await QuestionsService.getMessages(this.questionId);
     this.isLoaded = true;
+    this.notificationsConnection = await NotificationsService.connectToNotificationsHub();
+    this.notificationsConnection
+      .start()
+      .then(() => {
+        this.notificationsConnection.invoke(
+          "connect",
+          this.$store.getters.getAuthorizationToken
+        );
+      })
+      .catch(err => console.log(err));
+
+    this.notificationsConnection.on("message_added", data => {
+      data.isMe = false;
+      data.createdAt = formatDate(data.createdAt);
+      this.messages.push(data);
+    });
+  },
+  async beforeDestroy() {
+    this.notificationsConnection.stop();
+  },
+  methods: {
+    sendOwnMessage(message) {
+      message.isMe = true;
+      this.messages.push(message);
+    }
   }
 };
 </script>
@@ -66,11 +94,11 @@ export default {
 }
 
 .left {
-    float: left !important;
+  float: left !important;
 }
 
 .right {
-    float: right !important;
+  float: right !important;
 }
 
 .chat-message-name {
