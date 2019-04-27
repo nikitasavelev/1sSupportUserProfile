@@ -1,57 +1,62 @@
 <template>
   <main>
     <v-container>
-        <router-link :to="'/requests'" style="min-width: 120px;">
+        <router-link :to="'/requests'" style="min-width: 120px;" class="pl-5">
                   Все обращения
         </router-link>
+        
         <div v-if="isLoaded">
-          <div v-if="this.$route.params.id !== '0'">
-              <span class="request-number">Обращение №{{this.$route.params.id}}</span>
-              <span class="right request-created-date">{{request.updatedAt}}</span>
-              <div class="request-title">{{request.title}}</div>
-          </div>
-          <hr>
-          <chat-messages v-if="this.$route.params.id !== '0'"
-           :questionId="Number(questionId)" ref="chatMessages"/>
-          <form @submit="formSubmit">
-            <v-textarea
-              solo
-              class="mt-3"
-              label="Solo textarea"
-              required
-              v-model="message"
-              placeholder="Напишите сообщение"
-            ></v-textarea>
-            <v-text-field
-                v-if="this.questionId === '0'"
-                v-model="title"
-                label="Напишите тему"
-                class="mt-2 choose-title"
+          <v-container class="px-5 pt-1">
+            <div v-if="this.$route.params.id !== '0'">
+                <span class="request-number">Обращение №{{this.$route.params.id}}</span>
+                <span class="right request-created-date">{{request.updatedAt}}</span>
+                <div class="request-title">{{request.title}}</div>
+            </div>
+            <hr>
+          
+            <chat-messages v-if="this.$route.params.id !== '0'"
+            :questionId="Number(questionId)" ref="chatMessages"/>
+            <form @submit="formSubmit">
+              <v-textarea
+                solo
+                class="mt-3"
+                label="Solo textarea"
                 required
-            ></v-text-field>
-            <v-btn 
-              class="d-block right"
-              color="primary"
-              type="submit"
-              v-if="!isResolved">Отправить</v-btn>
-          </form>
+                v-model="message"
+                @keydown.enter="formSubmit"
+                placeholder="Напишите сообщение"
+              ></v-textarea>
+              <v-text-field
+                  v-if="this.questionId === '0'"
+                  v-model="title"
+                  label="Напишите тему"
+                  class="mt-2 choose-title"
+                  required
+              ></v-text-field>
+              <v-btn 
+                class="d-block right"
+                color="primary"
+                type="submit"
+                v-if="!isResolved">Отправить</v-btn>
+            </form>
+          </v-container>
           <v-layout justify-center align-center column v-if="this.questionId !== '0'">
-              <v-btn
-              class="d-block mt-5 resolve-question-btn"
-              color="#27ae60"
-              @click="resolveQuestion"
-              v-if="!isResolved">
-                Вопрос решен
-              </v-btn>
-              <div class="question-resolved" v-if="isResolved || request.mark > 0">Вопрос решен</div>
-              <v-rating
-                  v-model="request.mark"
-                  :hover="true"
-                  :readonly="isClosed"
-                  color="#003399"
-                  v-if="isResolved || request.mark > 0"
-                  large          
-                ></v-rating>
+            <v-btn
+            class="d-block mt-5 resolve-question-btn"
+            color="#27ae60"
+            @click="resolveQuestion"
+            v-if="!isResolved">
+              Вопрос решен
+            </v-btn>
+            <div class="question-resolved" v-if="isResolved || request.mark > 0">Вопрос решен</div>
+            <v-rating
+                v-model="request.mark"
+                :hover="true"
+                :readonly="isClosed"
+                color="#003399"
+                v-if="isResolved || request.mark > 0"
+                large          
+            ></v-rating>
           </v-layout>
         </div>
         <v-layout v-else justify-center mt-5>

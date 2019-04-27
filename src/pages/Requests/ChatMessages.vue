@@ -1,5 +1,5 @@
 <template>
-    <v-container v-if="isLoaded">
+    <v-layout column v-if="isLoaded">
         <v-layout
             column
             v-for="(message, index) in messages"
@@ -27,7 +27,7 @@
                 </div>
             </v-card> 
         </v-layout>
-    </v-container>
+    </v-layout>
     <v-layout v-else justify-center mt-5>
       <v-progress-circular
         :size="70"
