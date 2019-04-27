@@ -1,38 +1,10 @@
 <template>
     <v-layout v-if="analytics" column class="px-5 py-2">
-        <div>
-          <span>Закрытых заявок</span>
-          <span class="right">{{analytics.resolvedQuestionsCount}}</span>
-        </div>
-        <div>
-          <span>Принятых звонков</span>
-          <span class="right">{{analytics.incomeCallsCount}}</span>
-        </div>
-        <div>
-          <span>Общее время разговоров</span>
-          <span class="right">{{analytics.allCallDuration}}</span>
-        </div>
-        <div>
-          <span>Средняя оценка</span>
-          <span class="right">{{analytics.averageMark}}</span>
-        </div>
-        <div>
-          <span>Среднее время телефонного разговора</span>
-          <span class="right">{{analytics.averageCallDuration}}</span>
-        </div>
-        <div>
-          <span>Среднее время закрытия заявки</span>
-          <span class="right">{{analytics.averageResolvedQuestionsTimeDuration}}</span>
-        </div>
-        <div>
-          <span>Время в статусе "Свободен"</span>
-          <span class="right">{{analytics.timeInFreeState}}</span>
-        </div>
-        <div>
-          <span>Время в статусе "Занят"</span>
-          <span class="right">{{analytics.timeInBusyState}}</span>
-        </div>
-      </v-layout>
+      <div v-for="param in parameters" :key="param.name">
+        <span>{{param.name}}</span>
+        <span class="right">{{param.analytics}}</span>
+      </div>
+    </v-layout>
     <v-layout v-else justify-center mt-5>
         <v-progress-circular
             :size="70"
@@ -43,9 +15,52 @@
     </v-layout>
 </template>
 <script>
+import UsersService from "Services/UsersService.js";
+
 export default {
   name: "OperatorAnalytics",
-  props: { analytics: Object }
+  props: { analytics: Object },
+  data(){
+    return {
+      parameters:[]
+    }
+  },
+  async created() {
+    this.parameters = [
+      {
+        name: "Закрытых заявок",
+        analytics: this.analytics.resolvedQuestionsCount
+      },
+      {
+        name: "Принятых звонков",
+        analytics: this.analytics.incomeCallsCount
+      },
+      {
+        name: "Общее время разговоров",
+        analytics: this.analytics.allCallDuration
+      },
+      {
+        name: "Средняя оценка",
+        analytics: this.analytics.averageMark
+      },
+      {
+        name: "Среднее время телефонного разговора",
+        analytics: this.analytics.averageCallDuration
+      },
+      {
+        name: "Среднее время закрытия заявки",
+        analytics: this.analytics.averageResolvedQuestionsTimeDuration
+      },
+      {
+        name: 'Время в статусе "Свободен"',
+        analytics: this.analytics.timeInFreeState
+      },
+      {
+        name: 'Время в статусе "Занят"',
+        analytics: this.analytics.timeInBusyState
+      },
+    ];
+  }
 };
 </script>
 <style scoped>
