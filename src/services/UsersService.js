@@ -17,7 +17,16 @@ class UsersService {
   }
 
   async getOperatorsAnalytics() {
-    return requestToAPI({ url: serverAPIUrls.GET_OPERATORS_ANALYTICS });
+    return requestToAPI({
+      url: serverAPIUrls.GET_OPERATORS_ANALYTICS,
+      modifyDataCallback: analytics => {
+        analytics.operators.forEach(operator => {
+          operator.caption = `${operator.firstName} ${operator.lastName} ${operator.secondName}`;
+        });
+        analytics.averageAnalytics.caption = "Средний показатель";
+        return analytics;
+      }
+    });
   }
 }
 export default new UsersService();
