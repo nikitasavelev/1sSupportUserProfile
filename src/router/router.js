@@ -15,6 +15,8 @@ import RequestPage from "Pages/Requests/RequestPage";
 import NewsPage from "Pages/News/NewsPage";
 import SpecificNewsPage from "Pages/News/SpecificNewsPage";
 
+import KpiPage from "Pages/KPI/KpiPage";
+
 Vue.use(Router);
 
 const router = new Router({
@@ -53,6 +55,11 @@ const router = new Router({
       path: "/profile",
       component: ProfilePage,
       name: "ProfilePage"
+    },
+    {
+      path: "/kpi",
+      component: KpiPage,
+      name: "KpiPage"
     },
 
     /* Requests */

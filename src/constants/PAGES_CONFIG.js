@@ -35,6 +35,10 @@ export const pagesConfig = {
     {
       link: "/requests",
       caption:"Обращения"
-    }
+    },
+    {
+      link: "/kpi",
+      caption:"Показатели"
+    },
   ]
 };
