@@ -74,8 +74,10 @@ export default {
       if (this.serverResponse.accessToken && this.serverResponse.role) {
         this.accessToken = this.serverResponse.accessToken;
         this.role = this.serverResponse.role;
+        this.userId = this.serverResponse.userId;
         this.$store.dispatch("updateAuthorizationToken", this.accessToken);
         this.$store.dispatch("updateRole", this.role);
+        this.$store.dispatch("updateUserId", this.userId);
         this.redirectToStartPageForRole(this.role);
       } else {
         this.isAlertShown = true;

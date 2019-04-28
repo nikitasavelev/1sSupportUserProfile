@@ -44,6 +44,9 @@ export default new Vuex.Store({
     },
     updateRole(context, newRole) {
       context.commit("setRole", newRole);
+    },
+    updateUserId(context, newUserId) {
+      context.commit("setUserid", newUserId);
     }
   }
 });
