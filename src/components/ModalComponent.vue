@@ -33,18 +33,13 @@
                 </v-flex>
 
                 <v-flex xs12>
-                  <v-select
-                    v-model="theme"
-                    color="#003399"
-                    :append-icon="null"
-                    :items="themes"                    
-                    label="Тема обращения"
-                    ref="theme"
-                    return-object
-                    :rules="[() => !!theme || 'Пожалуйста, укажите тему обращения']"
-                    :error-messages="errorMessages"
-                    required
-                  ></v-select>
+                   <v-text-field
+                      v-model="theme"
+                      ref="theme"
+                      label="Напишите тему"
+                      class="mt-2 choose-title"
+                      required
+                  ></v-text-field>
                 </v-flex>
 
                 <v-flex xs12>
@@ -173,16 +168,17 @@ export default {
     },
     closeAndSend: async function() {
       this.modlst = 2;
+      debugger;
       let axiosConfig = {
         method: "post",
-        url: serverAPIUrls.QUESTIONS,
+        url: serverAPIUrls.SOLUTION_NOT_FOUND,
         headers: {
           Authorization: "Bearer " + this.token
         },
         data: {
           contactdata: this.phone,
           text: this.probl,
-          titleId: this.theme.id
+          title: this.theme
         }
       };
       await axios(axiosConfig);

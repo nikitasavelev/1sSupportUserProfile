@@ -15,17 +15,14 @@
                 <th v-for="header in headers" :key="header" class="pa-3">{{header}}</th>
             </thead>
             <tbody v-if="operatorsAnalytics">
-                <tr v-for="operator in operatorsAnalytics" :key="operator.firstName">
-                  <td class="pa-3">{{operator.firstName}} {{operator.lastName}} {{operator.secondName}}</td>
-                  <td class="pa-3">{{operator.analytics.resolvedQuestionsCount}}</td>
-                  <td class="pa-3">{{operator.analytics.incomeCallsCount}}</td>
-                  <td class="pa-3">{{operator.analytics.allCallDuration}}</td> 
-                  <td class="pa-3">{{operator.analytics.averageMark}}</td> 
-                  <td class="pa-3">{{operator.analytics.averageCallDuration}}</td> 
-                  <td class="pa-3">{{operator.analytics.averageResolvedQuestionsTimeDuration}}</td> 
-                  <td class="pa-3">{{operator.analytics.timeInFreeState}}</td> 
-                  <td class="pa-3">{{operator.analytics.timeInBusyState}}</td>                                 
-                </tr>
+                <table-for-operator-analytics
+                 v-for="operator in operatorsAnalytics"
+                 :info="operator"
+                 :key="operator.firstName"/>
+
+                <table-for-operator-analytics
+                 :info="averageAnalytics"
+                />
             </tbody>
         </table>
         <v-layout v-if="!isLoaded" justify-center mt-5>
@@ -41,10 +38,11 @@
 <script>
 import DatePickers from "Components/DatePickers";
 import UsersService from "Services/UsersService";
+import TableForOperatorAnalytics from "./TableForOperatorAnalytics";
 
 export default {
   name: "AdminProfilePage",
-  components: { DatePickers },
+  components: { DatePickers, TableForOperatorAnalytics },
   data() {
     return {
       dateFrom: "",
@@ -52,12 +50,14 @@ export default {
       arePickersShown: false,
       headers: ["ФИО Агента", "1", "2", "3", "4", "5", "6", "7", "8"],
       operatorsAnalytics: [],
+      averageAnalytics: {},
       isLoaded: false
     };
   },
   async mounted() {
-    this.operatorsAnalytics = await UsersService.getOperatorsAnalytics();
-    this.operatorsAnalytics = this.operatorsAnalytics.operators;
+    const response = await UsersService.getOperatorsAnalytics();
+    this.operatorsAnalytics = response.operators;
+    this.averageAnalytics = response.averageAnalytics;
     this.isLoaded = true;
   }
 };

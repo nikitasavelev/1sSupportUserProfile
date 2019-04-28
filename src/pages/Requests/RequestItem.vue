@@ -10,6 +10,15 @@
       <div class="request-text">
         {{request.text}}
       </div>
+      <div v-if="$store.getters.getRole !== 'Client'" class="request-text">
+        <span>
+          {{request.fullName}}
+        </span>
+        -
+        <span>
+          {{request.companyName}}
+        </span>
+      </div>
     </v-flex>
     <v-flex xs3 class="request-create-date">
         <v-rating

@@ -1,6 +1,7 @@
 <template>
   <v-app id="app" style="background-color:white">
-    <header-component v-if="this.$store.getters.getAuthorizationToken">
+    <header-component
+       v-if="this.$store.getters.getAuthorizationToken && this.$store.getters.getAuthorizationToken != 'null'">
     </header-component>
     <keep-alive include="DefaultPage">
       <router-view/>
