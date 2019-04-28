@@ -25,41 +25,53 @@ export default {
       parameters:[]
     }
   },
-  async created() {
-    this.parameters = [
-      {
-        name: "Закрытых заявок",
-        analytics: this.analytics.resolvedQuestionsCount
-      },
-      {
-        name: "Принятых звонков",
-        analytics: this.analytics.incomeCallsCount
-      },
-      {
-        name: "Общее время разговоров",
-        analytics: this.analytics.allCallDuration
-      },
-      {
-        name: "Средняя оценка",
-        analytics: this.analytics.averageMark
-      },
-      {
-        name: "Среднее время телефонного разговора",
-        analytics: this.analytics.averageCallDuration
-      },
-      {
-        name: "Среднее время закрытия заявки",
-        analytics: this.analytics.averageResolvedQuestionsTimeDuration
-      },
-      {
-        name: 'Время в статусе "Свободен"',
-        analytics: this.analytics.timeInFreeState
-      },
-      {
-        name: 'Время в статусе "Занят"',
-        analytics: this.analytics.timeInBusyState
-      },
-    ];
+  created() {
+    this.setParameters(this.analytics);
+  },
+  watch: {
+    analytics(value) {
+      this.setParameters(value)
+    },
+  },
+  methods:{
+    setParameters(analytics){
+      if (analytics) {
+        this.parameters = [
+          {
+            name: "Закрытых заявок",
+            analytics: analytics.resolvedQuestionsCount
+          },
+          {
+            name: "Принятых звонков",
+            analytics: analytics.incomeCallsCount
+          },
+          {
+            name: "Общее время разговоров",
+            analytics: analytics.allCallDuration
+          },
+          {
+            name: "Средняя оценка",
+            analytics: analytics.averageMark
+          },
+          {
+            name: "Среднее время телефонного разговора",
+            analytics: analytics.averageCallDuration
+          },
+          {
+            name: "Среднее время закрытия заявки",
+            analytics: analytics.averageResolvedQuestionsTimeDuration
+          },
+          {
+            name: 'Время в статусе "Свободен"',
+            analytics: analytics.timeInFreeState
+          },
+          {
+            name: 'Время в статусе "Занят"',
+            analytics: analytics.timeInBusyState
+          },
+        ];
+      }
+    }
   }
 };
 </script>
