@@ -35,7 +35,7 @@ export default {
     return {
       currentLink: "",
       active: null,
-      role: "",
+      roleType: 0,
       pages: []
     };
   },
@@ -60,8 +60,8 @@ export default {
   },
   mounted() {
     /*after page is reloaded current selected tab is reset. This code sets current tab*/
-    this.role = this.$store.getters.getRole;
-    this.pages = pagesConfig[this.role];
+    this.roleType = this.$store.getters.getRoleType;
+    this.pages = pagesConfig[this.roleType];
     this.currentLink = `/${this.$router.history.current.path.split("/")[1]}`;
     this.setActive();
   },

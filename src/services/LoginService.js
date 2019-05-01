@@ -103,12 +103,12 @@ class LoginService {
       // TO DO: refactor this to one function
       localStorage.removeItem("refreshToken");
       localStorage.removeItem("expires");
-      localStorage.removeItem("role");
+      localStorage.removeItem("roleType");
       localStorage.removeItem("token");
       localStorage.removeItem("userId");
 
       Store.dispatch("updateAuthorizationToken", null);
-      Store.dispatch("updateRole", null);
+      Store.dispatch("updateRoleType", null);
     } catch (error) {
       return error;
     }

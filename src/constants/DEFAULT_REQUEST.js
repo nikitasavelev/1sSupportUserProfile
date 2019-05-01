@@ -37,14 +37,14 @@ export async function requestToAPI(options) {
 }
 
 function updateStateAndLocalStorage(response) {
-  if (response.expires && response.accessToken && response.refreshToken && response.role) {
+  if (response.expires && response.accessToken && response.refreshToken && response.roleType) {
     localStorage.setItem("expires", response.expires);
     localStorage.setItem("authorizarionToken", response.accessToken);
     localStorage.setItem("refreshToken", response.refreshToken);
-    localStorage.setItem("role", response.role);
+    localStorage.setItem("roleType", response.roleType);
 
     Store.dispatch("updateAuthorizationToken", response.accessToken);
-    Store.dispatch("updateRole", response.role);
+    Store.dispatch("updateRoleType", response.roleType);
   }
 }
 

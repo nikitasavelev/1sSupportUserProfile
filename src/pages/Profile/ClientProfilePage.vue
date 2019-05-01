@@ -55,7 +55,7 @@ export default {
     return {
       profileData: {},
       news: {},
-      role: "",
+      roleType: 0,
       imgRefs: this.$refs
     };
   },
@@ -66,7 +66,7 @@ export default {
   },
   async mounted() {
     this.profileData = await UsersService.getUserInfo();
-    this.role = Store.getters.getRole;
+    this.roleType = Store.getters.getRoleType;
   }
 };
 </script>

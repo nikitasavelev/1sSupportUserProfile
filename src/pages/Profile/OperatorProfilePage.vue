@@ -23,7 +23,7 @@ export default {
   data() {
     return {
       operatorAnalytics: {},
-      role: "",
+      roleType: 0,
       dateFrom: "",
       dateTo: "",
       arePickersShown: false

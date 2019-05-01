@@ -1,8 +1,8 @@
 <template>
     <div class="pa-2 px-5">
-      <client-profile-page v-if="role === 'Client'"></client-profile-page>
-      <operator-profile-page v-if="role === 'Operator'"></operator-profile-page>
-      <admin-profile-page v-if="role === 'Admin'"></admin-profile-page>
+      <client-profile-page v-if="roleType === roleTypes.Client"></client-profile-page>
+      <operator-profile-page v-if="roleType === roleTypes.Operator"></operator-profile-page>
+      <admin-profile-page v-if="roleType === roleTypes.Admin"></admin-profile-page>
     </div>
 </template>
 <script>
@@ -10,6 +10,7 @@ import Store from "Store/store.js";
 import ClientProfilePage from "./ClientProfilePage";
 import OperatorProfilePage from "./OperatorProfilePage";
 import AdminProfilePage from "./AdminProfilePage";
+import { roleTypes } from "Constants/ROLE_TYPES.js";
 
 export default {
   name: "ProfilePage",
@@ -23,12 +24,13 @@ export default {
     return {
       profileData: {},
       news: {},
-      role: ""
+      roleType: 0,
+      roleTypes: roleTypes,
     };
   },
   methods: {},
   async mounted() {
-    this.role = Store.getters.getRole;
+    this.roleType = Store.getters.getRoleType;
   }
 };
 </script>
