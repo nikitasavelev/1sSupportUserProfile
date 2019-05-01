@@ -1,5 +1,5 @@
 <template>
-    <v-container @click="arePickersShown = !arePickersShown">
+    <v-container @click="arePickersShown = !arePickersShown" align-center>
         <hr>
         <date-pickers
             :are-pickers-shown="arePickersShown"
@@ -7,24 +7,26 @@
             @update:dateTo="dateTo = $event">
         </date-pickers>
         <hr>
-        <table
-            rules="rows"
-            cellspacing="5"
-        >
-            <thead>
-                <th v-for="header in headers" :key="header" class="pa-3">{{header}}</th>
-            </thead>
-            <tbody v-if="operatorsAnalytics">
-                <table-for-operator-analytics
-                 v-for="operator in operatorsAnalytics"
-                 :info="operator"
-                 :key="operator.firstName"/>
+        <v-container align-center class="pr-3">
+          <table
+              rules="rows"
+              cellspacing="5"
+          >
+              <thead>
+                  <th v-for="header in headers" :key="header" class="pa-3">{{header}}</th>
+              </thead>
+              <tbody v-if="operatorsAnalytics">
+                  <table-for-operator-analytics
+                  v-for="operator in operatorsAnalytics"
+                  :info="operator"
+                  :key="operator.firstName"/>
 
-                <table-for-operator-analytics
-                 :info="averageAnalytics"
-                />
-            </tbody>
-        </table>
+                  <table-for-operator-analytics
+                  :info="averageAnalytics"
+                  />
+              </tbody>
+          </table>
+        </v-container>
         <v-layout v-if="!isLoaded" justify-center mt-5>
               <v-progress-circular
                 :size="70"
