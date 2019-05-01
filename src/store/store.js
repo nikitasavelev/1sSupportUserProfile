@@ -7,7 +7,7 @@ export default new Vuex.Store({
   state: {
     authorizationToken: "",
     sessionId: "",
-    roleType: 0,
+    roleType: "",
     userId: ""
   },
   mutations: {

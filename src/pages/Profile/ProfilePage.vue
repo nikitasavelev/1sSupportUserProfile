@@ -1,8 +1,8 @@
 <template>
     <div class="pa-2 px-5">
-      <client-profile-page v-if="roleType === roleTypes.Client"></client-profile-page>
-      <operator-profile-page v-if="roleType === roleTypes.Operator"></operator-profile-page>
-      <admin-profile-page v-if="roleType === roleTypes.Admin"></admin-profile-page>
+      <client-profile-page v-if="Number(roleType) === roleTypes.Client"></client-profile-page>
+      <operator-profile-page v-if="Number(roleType) === roleTypes.Operator"></operator-profile-page>
+      <admin-profile-page v-if="Number(roleType) === roleTypes.Admin"></admin-profile-page>
     </div>
 </template>
 <script>
@@ -11,6 +11,7 @@ import ClientProfilePage from "./ClientProfilePage";
 import OperatorProfilePage from "./OperatorProfilePage";
 import AdminProfilePage from "./AdminProfilePage";
 import { roleTypes } from "Constants/ROLE_TYPES.js";
+import { debuglog } from 'util';
 
 export default {
   name: "ProfilePage",
