@@ -3,10 +3,10 @@
     <v-layout class="px-5 requests-page" row wrap>
       <v-flex xs9 class="left-side pr-2 pl-5"> 
         <div class="clearfix">
-          <router-link :to="'/requests/0'">
+          <router-link :to="'/requests/0'" aria-label="Задать вопрос">
             <v-btn
              class="ask-question btn ma-0 mt-4 clearfix"
-             v-if="$store.getters.getRoleType === roleTypes.Client">Задать вопрос</v-btn>
+             v-if="Number($store.getters.getRoleType) === Number(roleTypes.Client)">Задать вопрос</v-btn>
           </router-link> 
         </div>   
         <v-flex xs-8 class="text-uppercase requests-header mt-2">Активные {{activeQuestions.length}}</v-flex> 

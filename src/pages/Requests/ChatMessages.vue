@@ -89,7 +89,7 @@ export default {
 }
 
 .chat-message-time {
-  color: gray;
+  color: #757575;
   font-size: 0.6rem;
 }
 
