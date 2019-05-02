@@ -84,8 +84,19 @@ class LoginService {
 
   async logout() {
     try {
+      const refreshToken = localStorage.getItem("refreshToken");
+      // TO DO: refactor this to one function
+      localStorage.removeItem("refreshToken");
+      localStorage.removeItem("expires");
+      localStorage.removeItem("roleType");
+      localStorage.removeItem("token");
+      localStorage.removeItem("userId");
+
+      Store.dispatch("updateAuthorizationToken", null);
+      Store.dispatch("updateRoleType", null);
+      
       const revokeRefreshToken = await requestToAPI({
-        url: `${serverAPIUrls.REFRESH_TOKENS}/${localStorage.getItem("refreshToken")}/${serverAPIUrls.REVOKE_TOKEN}`,
+        url: `${serverAPIUrls.REFRESH_TOKENS}/${refreshToken}/${serverAPIUrls.REVOKE_TOKEN}`,
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -100,15 +111,7 @@ class LoginService {
         },
         body: {}
       });
-      // TO DO: refactor this to one function
-      localStorage.removeItem("refreshToken");
-      localStorage.removeItem("expires");
-      localStorage.removeItem("role");
-      localStorage.removeItem("token");
-      localStorage.removeItem("userId");
-
-      Store.dispatch("updateAuthorizationToken", null);
-      Store.dispatch("updateRole", null);
+      
     } catch (error) {
       return error;
     }

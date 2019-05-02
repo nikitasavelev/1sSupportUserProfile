@@ -3,10 +3,10 @@
     <v-layout class="px-5 requests-page" row wrap>
       <v-flex xs9 class="left-side pr-2 pl-5"> 
         <div class="clearfix">
-          <router-link :to="'/requests/0'">
+          <router-link :to="'/requests/0'" aria-label="Задать вопрос">
             <v-btn
              class="ask-question btn ma-0 mt-4 clearfix"
-             v-if="$store.getters.getRole === 'Client'">Задать вопрос</v-btn>
+             v-if="$store.getters.getRoleType === roleTypes.Client">Задать вопрос</v-btn>
           </router-link> 
         </div>   
         <v-flex xs-8 class="text-uppercase requests-header mt-2">Активные {{activeQuestions.length}}</v-flex> 
@@ -25,6 +25,7 @@ import { serverAPIUrls } from "Constants/SERVER_API_URLS.js";
 import RequestItem from "./RequestItem";
 import QuestionsService from "Services/QuestionsService.js";
 import SideNews from "Components/SideNews";
+import { roleTypes } from "Constants/ROLE_TYPES.js";
 
 export default {
   name: "RequestsPage",
@@ -35,7 +36,8 @@ export default {
       page: 1,
       news: [],
       activeQuestions: [],
-      closedQuestions: []
+      closedQuestions: [],
+      roleTypes: roleTypes
     };
   },
   methods: {

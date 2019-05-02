@@ -10,7 +10,7 @@
       <div class="request-text">
         {{request.text}}
       </div>
-      <div v-if="$store.getters.getRole !== 'Client'" class="request-text">
+      <div v-if="$store.getters.getRoleType !== roleTypes.Client" class="request-text">
         <span>
           {{request.fullName}}
         </span>
@@ -40,6 +40,7 @@
 import axios from "axios";
 import { serverAPIUrls } from "Constants/SERVER_API_URLS.js";
 import QuestionsService from "Services/QuestionsService.js";
+import { roleTypes } from "Constants/ROLE_TYPES.js";
 
 export default {
   name: "RequestItem",
@@ -72,7 +73,8 @@ export default {
       rating: 0,
       title: "",
       isLoaded: false,
-      isDescriptionShown: false
+      isDescriptionShown: false,
+      roleTypes: roleTypes
     };
   },
   methods: {

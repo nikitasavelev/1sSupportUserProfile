@@ -1,5 +1,6 @@
+import { roleTypes } from "Constants/ROLE_TYPES.js";
 export const pagesConfig = {
-  Client: [
+  [roleTypes.Client]: [
     {
       link: "/",
       caption: "Поиск"
@@ -17,7 +18,7 @@ export const pagesConfig = {
       caption: "Новости"
     }
   ],
-  Operator: [
+  [roleTypes.Operator]: [
     {
       link: "/requests",
       caption: "Обращения"
@@ -31,7 +32,7 @@ export const pagesConfig = {
       caption: "Справочник"
     }
   ],
-  Admin: [
+  [roleTypes.Admin]: [
     {
       link: "/profile",
       caption:"Профиль"
