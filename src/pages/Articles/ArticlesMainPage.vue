@@ -4,13 +4,13 @@
       <v-flex xs9 class="left-side pr-2 pl-5 pt-5">
           <v-list class="list">
             <v-list-group
-              v-for="(i, index) in items"
+              v-for="i in items"
               :key="i.id"
               :prepend-icon="i.icon"
             >
 
               <template slot="activator">
-                <v-list-tile @click="getChildren(index)">
+                <v-list-tile>
                   <v-list-tile-content>
                     <v-list-tile-title>{{ i.name }}</v-list-tile-title>
                   </v-list-tile-content>
@@ -18,14 +18,14 @@
               </template>
 
                <v-list-group
-                v-for="(child, index) in i.children"
+                v-for="child in i.children"
                 :key="child.id"
                 sub-group
                 class="ml-4"
               >
 
                 <template slot="activator">
-                  <v-list-tile @click="getGrandChildren(index)">
+                  <v-list-tile>
                     <v-list-tile-content>
                       <v-list-tile-title>{{ child.name }}</v-list-tile-title>
                     </v-list-tile-content>
@@ -70,25 +70,22 @@ export default {
     ]
   }),   
   methods: {
-    async getChildren(index){
-      const c = await ArticlesService.getFolders(index+1);
-      this.items[index].children = c;
-      this.$forceUpdate();
-    },
-    async getGrandChildren(index){
-      const c = await ArticlesService.getFolders(index+1);
-      this.items[0].children[index].children = c;
-      this.$forceUpdate();
-    },
-    setIcons(){
+    async getItems(){
+      this.items = await ArticlesService.getFolders(0);
       for (let i = 0; i < this.items.length; i++){
         this.items[i].icon = this.icons[i];
       }
-    }
+      for (let i = 0; i < this.items.length; i++){
+        this.items[i].children = await ArticlesService.getFolders(this.items[i].id);
+        for (let j = 0; j < this.items[i].children.length; j++){
+          this.items[i].children[j].children = await ArticlesService.getFolders(this.items[i].children[j].id);
+          this.$forceUpdate();  
+        }
+      }
+    },
   },
   async mounted(){
-    this.items = await ArticlesService.getFolders(0);
-      this.setIcons();
+    await this.getItems();
   }
 };
 </script>
