@@ -23,7 +23,9 @@ export default {
     marks: {}
   },
   mounted() {
-    this.drawChart();
+    if (this.marks.average !== 0 && this.marks.average != null){
+      this.drawChart();
+    }
   },
   methods: {
     drawChart() {
@@ -55,7 +57,9 @@ export default {
   watch: {
     marks(value) {
       this.marks = value;
-      this.drawChart();
+      if (this.marks.average !== 0 && this.marks.average != null){
+        this.drawChart();
+      }
     }
   }
 };

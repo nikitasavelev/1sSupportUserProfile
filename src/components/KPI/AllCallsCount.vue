@@ -17,7 +17,9 @@ export default {
   name:"AllCallsCount",
   props: {allCallsCount : Object},
   mounted() {
-    this.drawChart();
+    if (this.allCallsCount.total > 0){
+      this.drawChart();
+    }
   },
   methods: {
     drawChart(){
@@ -51,7 +53,9 @@ export default {
   watch: {
     allCallsCount(value){
       this.allCallsCount = value;
-      this.drawChart();
+      if (this.allCallsCount.total > 0){
+        this.drawChart();
+      }
     }
   }
 }
