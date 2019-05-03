@@ -38,8 +38,16 @@ export const pagesConfig = {
       caption:"Профиль"
     },
     {
+      link: "/set-kpi",
+      caption: "KPI"
+    },
+    {
       link: "/requests",
       caption:"Обращения"
+    },
+    {
+      link: "/kpi",
+      caption:"Показатели"
     },
     {
       link: "/articles",

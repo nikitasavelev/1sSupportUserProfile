@@ -17,12 +17,13 @@
               </thead>
               <tbody v-if="operatorsAnalytics">
                   <table-for-operator-analytics
-                  v-for="operator in operatorsAnalytics"
-                  :info="operator"
-                  :key="operator.firstName"/>
+                    v-for="operator in operatorsAnalytics"
+                    :info="operator"
+                    :key="operator.employeeId"
+                  />
 
                   <table-for-operator-analytics
-                  :info="averageAnalytics"
+                  :info="averageKpi"
                   />
               </tbody>
           </table>
@@ -50,16 +51,16 @@ export default {
       dateFrom: "",
       dateTo: "",
       arePickersShown: false,
-      headers: ["ФИО Агента", "1", "2", "3", "4", "5", "6", "7", "8"],
+      headers: ["ФИО Агента", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"],
       operatorsAnalytics: [],
-      averageAnalytics: {},
+      averageKpi: {},
       isLoaded: false
     };
   },
   async mounted() {
     const response = await UsersService.getOperatorsAnalytics();
     this.operatorsAnalytics = response.operators;
-    this.averageAnalytics = response.averageAnalytics;
+    this.averageKpi = response.averageKpi;
     this.isLoaded = true;
   }
 };

@@ -12,8 +12,8 @@ class UsersService {
       }
     });
   }
-  async getOperatorAnalytics() {
-    return requestToAPI({ url: serverAPIUrls.GET_OPERATOR_ANALYTICS });
+  async getOperatorAnalytics(operatorId) {
+    return requestToAPI({ url: `${serverAPIUrls.GET_OPERATOR_ANALYTICS}/${operatorId}` });
   }
 
   async getOperatorsAnalytics() {
@@ -23,10 +23,33 @@ class UsersService {
         analytics.operators.forEach(operator => {
           operator.caption = `${operator.firstName} ${operator.lastName} ${operator.secondName}`;
         });
-        analytics.averageAnalytics.caption = "Средний показатель";
+        analytics.averageKpi.caption = "Средний показатель";
         return analytics;
       }
     });
+  }
+
+  async setKpi(
+    kpiType,
+    kpiValue,
+    employeeIds,
+    fromDate = new Date().toISOString().substr(0, 10),
+    toDate = new Date(Date.now() + 1000*60*60*24).toISOString().substr(0, 10)
+    ){
+    return requestToAPI({
+      url: serverAPIUrls.SET_KPI,
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: {
+        kpiType,
+        kpiValue,
+        employeeIds,
+        fromDate,
+        toDate
+      }
+    })
   }
 }
 export default new UsersService();
