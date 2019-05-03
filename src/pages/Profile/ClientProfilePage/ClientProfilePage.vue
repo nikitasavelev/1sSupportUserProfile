@@ -71,7 +71,7 @@ export default {
 };
 </script>
 <style scoped>
-@import "../../../node_modules/css-aspect-ratio/css-aspect-ratio.css";
+@import "../../../../node_modules/css-aspect-ratio/css-aspect-ratio.css";
 hr {
   height: 1px;
 }

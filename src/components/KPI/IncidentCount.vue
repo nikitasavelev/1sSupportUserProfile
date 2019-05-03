@@ -1,6 +1,15 @@
 <template>
-    <div id="incident_count">        
+    <div 
+      v-if="hasDataToShow()"
+      id="incident_count"
+    >        
     </div>
+    <v-container
+      v-else
+      class="text-xs-center"
+      >
+        Нет данных за этот период
+    </v-container>
 </template>
 
 <script>
@@ -9,9 +18,17 @@ export default {
   name:"IncidentCount",
   props: {incidentCount : Object}, 
   mounted() {
-    this.drawChart();
+    if (this.hasDataToShow()) {
+      this.drawChart();
+    }
   },
   methods: {
+    hasDataToShow(){
+      // includes NaN check
+      return (this.incidentCount.fromMango + this.incidentCount.fromSystem !== 0) &&
+        this.incidentCount.fromMango != null &&
+        this.incidentCount.fromSystem != null
+    },
     drawChart() {
       GoogleCharts.load(drawChart);    
       const fromMango = this.incidentCount.fromMango;
@@ -23,7 +40,6 @@ export default {
           ["Через систему", fromSystem],
           ["Через Манго", fromMango],
         ]);
-
         const options = {
           title: `Общее количество обращений ${total}`,
           is3D: true,
@@ -43,7 +59,9 @@ export default {
   watch: {
     incidentCount(value){
       this.incidentCount = value;
-      this.drawChart();
+      if (this.hasDataToShow()) {
+        this.drawChart();
+      }
     }
   }
 }

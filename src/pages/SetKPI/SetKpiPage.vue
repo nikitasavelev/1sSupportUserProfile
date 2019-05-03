@@ -1,5 +1,6 @@
 <template>
     <table
+        v-if="isLoaded"
         rules="rows"
         cellspacing="5"
     >
@@ -78,6 +79,14 @@
             </tr>
         </tbody>
     </table>
+    <v-layout v-else justify-center mt-5>
+            <v-progress-circular
+              :size="70"
+              :width="7"
+              color="primary"
+              indeterminate
+              ></v-progress-circular>
+          </v-layout>
 </template>
 
 <script>
@@ -103,11 +112,13 @@ export default {
             kpiType: 3,
         }
       ],
-      operators: []
+      operators: [],
+      isLoaded: false,
     };
   },
   async mounted() {
     const analytics = await UsersService.getOperatorsAnalytics();
+    this.isLoaded = true;
     this.operators = analytics.operators;
     this.operators.forEach(operator => {
       operator.isChecked = false;

@@ -1,6 +1,14 @@
 <template>
-    <div id="all_calls_count">        
-    </div>
+  <div 
+    id="all_calls_count"
+    v-if="allCallsCount.total > 0">
+  </div>
+  <v-container
+    v-else
+    class="text-xs-center"
+    >
+      Нет данных за этот период
+  </v-container>
 </template>
 
 <script>
@@ -9,7 +17,9 @@ export default {
   name:"AllCallsCount",
   props: {allCallsCount : Object},
   mounted() {
-    this.drawChart();
+    if (this.allCallsCount.total > 0){
+      this.drawChart();
+    }
   },
   methods: {
     drawChart(){
@@ -43,7 +53,9 @@ export default {
   watch: {
     allCallsCount(value){
       this.allCallsCount = value;
-      this.drawChart();
+      if (this.allCallsCount.total > 0){
+        this.drawChart();
+      }
     }
   }
 }

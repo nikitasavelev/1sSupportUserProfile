@@ -7,6 +7,7 @@
             @update:dateTo="dateTo = $event">
         </date-pickers>
         <hr>
+        <table-info/>
         <v-container align-center class="pr-3">
           <table
               rules="rows"
@@ -42,10 +43,10 @@
 import DatePickers from "Components/DatePickers";
 import UsersService from "Services/UsersService";
 import TableForOperatorAnalytics from "./TableForOperatorAnalytics";
-
+import TableInfo from "./TableInfo";
 export default {
   name: "AdminProfilePage",
-  components: { DatePickers, TableForOperatorAnalytics },
+  components: { DatePickers, TableForOperatorAnalytics, TableInfo },
   data() {
     return {
       dateFrom: "",

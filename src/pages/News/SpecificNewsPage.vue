@@ -27,7 +27,7 @@
               color="primary"
               indeterminate
               ></v-progress-circular>
-        </v-layout>
+          </v-layout>
         </main>
     </v-container>
 </template>
