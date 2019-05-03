@@ -1,14 +1,17 @@
 <template>
     <tr v-if="info">
         <td class="pa-3">{{info.caption}}</td>
-        <td class="pa-3">{{analytics.resolvedQuestionsCount}}</td>
-        <td class="pa-3">{{analytics.incomeCallsCount}}</td>
-        <td class="pa-3">{{analytics.allCallDuration}}</td> 
-        <td class="pa-3">{{analytics.averageMark}}</td> 
-        <td class="pa-3">{{analytics.averageCallDuration}}</td> 
-        <td class="pa-3">{{analytics.averageResolvedQuestionsTimeDuration}}</td> 
-        <td class="pa-3">{{analytics.timeInFreeState}}</td> 
-        <td class="pa-3">{{analytics.timeInBusyState}}</td>                                 
+        <td class="pa-3">{{analytics.questions.createdCounts.fromMango}}</td>
+        <td class="pa-3">{{analytics.questions.createdCounts.fromSystem}}</td>
+        <td class="pa-3">{{analytics.calls.durations.perDayAverage}}</td>
+        <td class="pa-3">{{analytics.calls.durations.average}}</td>
+        <td class="pa-3">{{analytics.calls.durations.max}}</td> 
+        <td class="pa-3">{{analytics.calls.durations.onLinePerDayAverage}}</td> 
+        <td class="pa-3">{{analytics.questions.resolvedCounts.total}}</td> 
+        <td class="pa-3">{{analytics.calls.counts.total}}</td> 
+        <td class="pa-3">{{analytics.calls.counts.incomes}}</td> 
+        <td class="pa-3">{{analytics.calls.counts.outcomes}}</td> 
+        <td class="pa-3">{{analytics.questions.marks.average}}</td>                                   
     </tr>
 </template>
 
@@ -17,11 +20,11 @@ export default {
     name: "TableForOperatorAnalytics",
     props: {info: Object},
     created() {
-        this.analytics = this.info.analytics ? this.info.analytics : this.info;
+        this.analytics = this.info.kpi ? this.info.kpi : this.info;
     },
     watch: {
         info() {
-            this.analytics = this.info.analytics ? this.info.analytics : this.info;
+            this.analytics = this.info.kpi ? this.info.kpi : this.info;
         }
     }
 }

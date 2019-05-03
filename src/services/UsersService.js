@@ -23,7 +23,7 @@ class UsersService {
         analytics.operators.forEach(operator => {
           operator.caption = `${operator.firstName} ${operator.lastName} ${operator.secondName}`;
         });
-        // analytics.operators.averageAnalytics.caption = "Средний показатель";
+        analytics.averageKpi.caption = "Средний показатель";
         return analytics;
       }
     });
