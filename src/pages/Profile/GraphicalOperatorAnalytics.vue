@@ -10,14 +10,14 @@
 
 <script>
 import AverageMark from "Components/KPI/AverageMark";
-import AverageCallTime from "Components/KPI/AverageCallTime";
+import AverageCallTime from "Components/KPI//AverageCallTime";
 import AverageOnlineTimePerDay from "Components/KPI/AverageOnlineTimePerDay";
 import AllCallsCount from "Components/KPI/AllCallsCount";
 import IncidentCount from "Components/KPI/IncidentCount";
-import UsersService from "Services/UsersService";
 
 export default {
-    name: "KpiPage",
+    name: "GraphicalOperatorAnalytics",
+    props: {analytics: Object},
     components: {AverageMark, AverageCallTime, AverageOnlineTimePerDay, AllCallsCount, IncidentCount},
     data(){
         return {
@@ -27,18 +27,11 @@ export default {
             incidentCount: {},
         }
     },
-    async mounted(){
-        const response = await UsersService.getOperatorAnalytics(this.$route.params.id);
-        this.marks = response.kpi.questions.marks;
-        this.averageCallTime = response.kpi.calls.durations.average;
-        this.allCallsCount = response.kpi.calls.counts;
-        this.incidentCount = response.kpi.questions.createdCounts;
+    mounted(){
+        this.marks = this.analytics.kpi.questions.marks;
+        this.averageCallTime = this.analytics.kpi.calls.durations.average;
+        this.allCallsCount = this.analytics.kpi.calls.counts;
+        this.incidentCount = this.analytics.kpi.questions.createdCounts;
     }
 }
 </script>
-
-<style scoped>
-.average-call-time{
-    max-width: 50vw;
-}
-</style>

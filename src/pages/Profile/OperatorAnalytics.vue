@@ -38,36 +38,76 @@ export default {
       if (analytics) {
         this.parameters = [
           {
-            name: "Закрытых заявок",
-            analytics: analytics.resolvedQuestionsCount
+            name: "Входящих звонков",
+            analytics: analytics.calls.counts.incomes
           },
           {
-            name: "Принятых звонков",
-            analytics: analytics.incomeCallsCount
+            name: "Исходящих звонков",
+            analytics: analytics.calls.counts.outcomes
           },
           {
-            name: "Общее время разговоров",
-            analytics: analytics.allCallDuration
-          },
-          {
-            name: "Средняя оценка",
-            analytics: analytics.averageMark
+            name: "Всего звонков",
+            analytics: analytics.calls.counts.total
           },
           {
             name: "Среднее время телефонного разговора",
-            analytics: analytics.averageCallDuration
+            analytics: analytics.calls.durations.average
           },
           {
-            name: "Среднее время закрытия заявки",
-            analytics: analytics.averageResolvedQuestionsTimeDuration
+            name: "Максимальное время телефонного разговора",
+            analytics: analytics.calls.durations.max
           },
           {
-            name: 'Время в статусе "Свободен"',
-            analytics: analytics.timeInFreeState
+            name: 'Длительность в статусе "на линии" в среднем за рабочий день',
+            analytics: analytics.calls.durations.onLinePerDayAverage
           },
           {
-            name: 'Время в статусе "Занят"',
-            analytics: analytics.timeInBusyState
+            name: 'Среднее время за день',
+            analytics: analytics.calls.durations.perDayAverage
+          },
+          {
+            name: 'Количество созданных вопросов через Манго',
+            analytics: analytics.questions.createdCounts.fromMango
+          },
+          {
+            name: 'Количество созданных вопросов через Систему',
+            analytics: analytics.questions.createdCounts.fromSystem
+          },
+          {
+            name: 'Средняя оценка',
+            analytics: analytics.questions.marks.average
+          },
+          {
+            name: 'Оценок "1"',
+            analytics: analytics.questions.marks.counts.units
+          },
+          {
+            name: 'Оценок "2"',
+            analytics: analytics.questions.marks.counts.twos
+          },
+          {
+            name: 'Оценок "3"',
+            analytics: analytics.questions.marks.counts.threes
+          },
+          {
+            name: 'Оценок "4"',
+            analytics: analytics.questions.marks.counts.fours
+          },
+          {
+            name: 'Оценок "5"',
+            analytics: analytics.questions.marks.counts.fives
+          },
+          {
+            name: 'Разрешенных вопросов клиентом',
+            analytics: analytics.questions.resolvedCounts.byClient
+          },
+          {
+            name: 'Разрешенных вопросов оператором',
+            analytics: analytics.questions.resolvedCounts.byOperator
+          },
+          {
+            name: 'Всего разрешенных вопросов',
+            analytics: analytics.questions.resolvedCounts.total
           },
         ];
       }

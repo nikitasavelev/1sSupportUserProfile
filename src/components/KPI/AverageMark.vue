@@ -31,7 +31,7 @@ export default {
         ]);
 
         const options = {
-          title: "My Daily Activities",
+          title: "Полученные оценки",
           pieHole: 0.5,
           pieSliceText: "value"
         };
