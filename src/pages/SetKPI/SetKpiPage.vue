@@ -4,12 +4,19 @@
         cellspacing="5"
     >
         <thead>
+            <th colspan="2">
+                <v-btn
+                 class="save-kpi btn ml-0 pa-1 px-3 text-capitalize"
+                 @click="saveKpi">
+                    Сохранить установленные KPI
+                </v-btn>
+            </th>
             <th v-for="(header, index) in headers"
                 :key="index"
-                :colspan="header.isEmpty ? 1 : 3"
+                :colspan="3"
                 align="center">
                 <v-text-field
-                    v-if="!header.isEmpty"
+                    :ref="header.ref"
                     :label="header.label"
                 ></v-text-field>                
             </th>
@@ -26,7 +33,8 @@
             </tr>
             <tr v-for="operator in operators" :key="operator.employeeId">
                 <td class="pa-2">
-                    <v-checkbox                        
+                    <v-checkbox
+                        v-model="operator.isChecked"                        
                     ></v-checkbox>
                 </td>
                 <td align="center">
@@ -75,46 +83,67 @@
 <script>
 import UsersService from "Services/UsersService";
 export default {
-    name: "SetKpiPage",
-    data(){
-        return {
-            headers: [
-                {
-                    isEmpty: true,
-                    label: ""
-                },
-                {
-                    isEmpty: true,
-                    label: ""
-                },
-                {
-                    isEmpty: false,
-                    label: "KPI по времени на линии"
-                },
-                {
-                    isEmpty: false,
-                    label: "KPI по времени на звонка"
-                },
-                {
-                    isEmpty: false,
-                    label: "KPI по оценке"
-                },
-            ],
-            operators:[]
+  name: "SetKpiPage",
+  data() {
+    return {
+      headers: [
+        {
+            ref: "timeOnline",
+            label: "KPI по времени на линии",
+            kpiType: 1,
+        },
+        {
+            ref: "callDuration",
+            label:"KPI по времени на звонка",
+            kpiType: 2,
+        },
+        {
+            ref: "averageMark",
+            label:"KPI по оценке",
+            kpiType: 3,
+        }
+      ],
+      operators: []
+    };
+  },
+  async mounted() {
+    const analytics = await UsersService.getOperatorsAnalytics();
+    this.operators = analytics.operators;
+    this.operators.forEach(operator => {
+      operator.isChecked = false;
+    });
+  },
+  methods: {
+    async saveKpi(){
+        const operatorsIds = this.operators.reduce((ids, operator) => {
+            return operator.isChecked ? ids.concat(operator.employeeId) : ids;
+        },[]);
+        for (const input of this.headers) {
+            if (this.hasText(input.ref)) {
+                await UsersService.setKpi(
+                    input.kpiType,
+                    Number(this.$refs[input.ref][0].lazyValue),
+                    operatorsIds
+                )
+            }
         }
     },
-    async mounted(){
-        const analytics = await UsersService.getOperatorsAnalytics();
-        this.operators = analytics.operators;
+    hasText(ref){
+        return this.$refs[ref][0].lazyValue && this.$refs[ref][0].lazyValue.length > 0;
     }
-}
+  }
+};
 </script>
 
 <style scoped>
-    table {
-        empty-cells: show;
-    }
-    .right-border{
-        border-right: 1px solid gray;
-    }
+table {
+  empty-cells: show;
+}
+.right-border {
+  border-right: 1px solid gray;
+}
+.save-kpi.btn.ml-0.pa-1 {
+  background-color: #003399;
+  color: #fff;
+}
 </style>

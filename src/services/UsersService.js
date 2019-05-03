@@ -28,5 +28,28 @@ class UsersService {
       }
     });
   }
+
+  async setKpi(
+    kpiType,
+    kpiValue,
+    employeeIds,
+    fromDate = new Date().toISOString().substr(0, 10),
+    toDate = new Date(Date.now() + 1000*60*60*24).toISOString().substr(0, 10)
+    ){
+    return requestToAPI({
+      url: serverAPIUrls.SET_KPI,
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: {
+        kpiType,
+        kpiValue,
+        employeeIds,
+        fromDate,
+        toDate
+      }
+    })
+  }
 }
 export default new UsersService();
