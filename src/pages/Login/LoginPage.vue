@@ -43,6 +43,8 @@
 <script>
 import LoginService from "Services/LoginService.js";
 import ImageWithAspectRatio from "Components/ImageWithAspectRatio";
+import { roleTypes } from "Constants/ROLE_TYPES.js";
+
 export default {
   name: "LoginPage",
   components: { ImageWithAspectRatio },
@@ -50,7 +52,7 @@ export default {
     return {
       serverResponse: {},
       accessToken: "",
-      role: "",
+      roleType: "",
       email: "",
       password: "",
       isAlertShown: false,
@@ -71,27 +73,29 @@ export default {
         this.email,
         this.password
       );
-      if (this.serverResponse.accessToken && this.serverResponse.role) {
+      if (this.serverResponse.accessToken && this.serverResponse.roleType) {
         this.accessToken = this.serverResponse.accessToken;
-        this.role = this.serverResponse.role;
+        this.roleType = this.serverResponse.roleType;
+        this.userId = this.serverResponse.userId;
         this.$store.dispatch("updateAuthorizationToken", this.accessToken);
-        this.$store.dispatch("updateRole", this.role);
-        this.redirectToStartPageForRole(this.role);
+        this.$store.dispatch("updateRoleType", this.roleType);
+        this.$store.dispatch("updateUserId", this.userId);
+        this.redirectToStartPageForRole(this.roleType);
       } else {
         this.isAlertShown = true;
       }
     },
-    redirectToStartPageForRole(role) {
-      switch (role) {
-        case "Client":
+    redirectToStartPageForRole(roleType) {
+      switch (roleType) {
+        case roleTypes.Client:
           this.$router.push({ name: "MainPage" });
           break;
-        case "Operator":
-        case "Admin":
+        case roleTypes.Operator:
+        case roleTypes.Admin:
           this.$router.push({ name: "ProfilePage" });
           break;
       }
-    }
+    },
   }
 };
 </script>

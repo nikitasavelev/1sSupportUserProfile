@@ -2,6 +2,7 @@ import { serverAPIUrls } from "Constants/SERVER_API_URLS.js";
 import { requestToAPI } from "Constants/DEFAULT_REQUEST.js";
 import formatDate from "Constants/FORMAT_DATE.js";
 import Store from "Store/store.js";
+import { roleTypes } from "Constants/ROLE_TYPES.js";
 
 class QuestionsService {
   // async getTitles() {
@@ -74,7 +75,12 @@ class QuestionsService {
       modifyDataCallback: data => {
         data.forEach(message => {
           message.createdAt = formatDate(message.createdAt);
-          message.isMe = Number(Store.getters.getUserId) === Number(message.authorId);
+          if (Number(Store.getters.getRoleType) === Number(roleTypes.Admin)) {
+            // operator is aligned to the right
+            message.isMe = message.roleType === roleTypes.Operator
+          } else {
+            message.isMe = Number(Store.getters.getUserId) === Number(message.authorId);
+          }
         });
         return data;
       }

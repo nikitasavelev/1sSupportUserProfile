@@ -43,7 +43,7 @@
           <v-layout justify-center align-center column v-if="this.questionId !== '0'">
             <v-btn
             class="d-block mt-5 resolve-question-btn"
-            color="#27ae60"
+            color="#2E7D32"
             @click="resolveQuestion"
             v-if="!isResolved">
               Вопрос решен
