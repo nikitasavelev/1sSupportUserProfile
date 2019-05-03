@@ -15,6 +15,8 @@ import RequestPage from "Pages/Requests/RequestPage";
 import NewsPage from "Pages/News/NewsPage";
 import SpecificNewsPage from "Pages/News/SpecificNewsPage";
 
+import ArticlesMainPage from "Pages/Articles/ArticlesMainPage"
+
 Vue.use(Router);
 
 const router = new Router({
@@ -78,6 +80,11 @@ const router = new Router({
       path: "/news/:id",
       component: SpecificNewsPage,
       name: "SpecificNewsPage"
+    },
+    {
+      path: "/articles",
+      component: ArticlesMainPage,
+      name: "ArticlesMainPage"
     }
   ]
 });

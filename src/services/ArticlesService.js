@@ -8,6 +8,12 @@ class ArticlesService {
     });
   }
 
+  async getFolders(folderId) {
+    return requestToAPI({
+      url: `${serverAPIUrls.GET_FOLDERS}/${folderId}`
+    });
+  }
+
   async sendArticlerating(articleId, rating) {
     return requestToAPI({
       url: serverAPIUrls.SET_ARTICLES_MARKS,
