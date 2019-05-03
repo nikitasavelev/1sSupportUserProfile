@@ -1,6 +1,14 @@
 <template>
-    <div id="all_calls_count">        
-    </div>
+  <div 
+    id="all_calls_count"
+    v-if="allCallsCount.total > 0">
+  </div>
+  <v-container
+    v-else
+    class="text-xs-center"
+    >
+      Нет данных за этот период
+  </v-container>
 </template>
 
 <script>

@@ -1,12 +1,15 @@
 <template>
     <tr v-if="info && analytics.calls && analytics.questions">
         <td class="pa-3">
-            <router-link :to="{
+            <router-link
+                v-if="info.caption !== 'Средний показатель'" 
+                :to="{
                   name: 'KpiPage',
                   params: {id: String(employeeId)}
                 }">
                 {{info.caption}}
             </router-link>
+            <span v-else>{{info.caption}}</span>
         </td>
         <td class="pa-3">{{analytics.questions.createdCounts.fromMango}}</td>
         <td class="pa-3">{{analytics.questions.createdCounts.fromSystem}}</td>

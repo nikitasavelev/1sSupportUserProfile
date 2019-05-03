@@ -1,6 +1,15 @@
 <template>
-    <div id="incident_count">        
+    <div 
+      v-if="Number(incidentCount.fromMango) + Number(incidentCount.fromSystem) !== 0"
+      id="incident_count"
+    >        
     </div>
+    <v-container
+      v-else
+      class="text-xs-center"
+      >
+        Нет данных за этот период
+    </v-container>
 </template>
 
 <script>
@@ -9,7 +18,9 @@ export default {
   name:"IncidentCount",
   props: {incidentCount : Object}, 
   mounted() {
-    this.drawChart();
+    if (this.){
+      this.drawChart();
+    }
   },
   methods: {
     drawChart() {

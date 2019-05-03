@@ -1,6 +1,15 @@
 <template>
-    <div id="average_call_time">        
+    <div
+      v-if="Number(averageCallTime.substring(3,5)) !== 0"
+      id="average_call_time"
+    >        
     </div>
+    <v-container
+      v-else
+      class="text-xs-center"
+      >
+        Нет данных за этот период
+    </v-container>
 </template>
 
 <script>

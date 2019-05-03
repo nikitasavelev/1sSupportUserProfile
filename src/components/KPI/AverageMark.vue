@@ -1,9 +1,18 @@
 <template>
-  <div class="average-mark-wrapper" style="width: 700px; height: 500px;">
+  <div 
+    class="average-mark-wrapper" style="width: 700px; height: 500px;"
+    v-if="marks.average !== 0"
+  >
     <div id="average_mark" style="width: 700px; height: 500px;">
     </div>
     <div class="average-mark">{{this.marks.average}}</div>
   </div>
+  <v-container
+    v-else
+    class="text-xs-center"
+    >
+      Нет данных за этот период
+  </v-container>
 </template>
 
 <script>
