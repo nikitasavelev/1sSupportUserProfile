@@ -73,16 +73,9 @@ export default {
     async getItems(){
       this.items = await ArticlesService.getFolders(0);
       for (let i = 0; i < this.items.length; i++){
-        this.items[i].icon = this.icons[i];
+        this.items[i].icon = this.icons[i]; 
       }
-      for (let i = 0; i < this.items.length; i++){
-        this.items[i].children = await ArticlesService.getFolders(this.items[i].id);
-        for (let j = 0; j < this.items[i].children.length; j++){
-          this.items[i].children[j].children = await ArticlesService.getFolders(this.items[i].children[j].id);
-          this.$forceUpdate();  
-        }
-      }
-    },
+    }
   },
   async mounted(){
     await this.getItems();
