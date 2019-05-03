@@ -39,7 +39,7 @@
                 </td>
 
                 <td align="center">
-                    {{operator.targetKpi[0].callsAverageDuration}}
+                    {{operator.targetKpi[0] ?  operator.targetKpi[0].callsAverageDuration : 0}}
                 </td>
                 <td align="center">
                     {{operator.kpi.calls.durations.onLinePerDayAverage}}
@@ -49,7 +49,7 @@
                 </td>
 
                 <td align="center">
-                    {{operator.targetKpi[0].onLinePerDayAverageDuration}}
+                    {{operator.targetKpi[0] ? operator.targetKpi[0].onLinePerDayAverageDuration : 0}}
                 </td>
                 <td align="center">
                     {{operator.kpi.calls.durations.average}}
@@ -59,7 +59,7 @@
                 </td>
 
                 <td align="center">
-                    {{operator.targetKpi[0].questionsAverageMark}}
+                    {{operator.targetKpi[0] ? operator.targetKpi[0].questionsAverageMark : 0}}
                 </td> 
                 <td align="center">
                     {{operator.kpi.questions.marks.average}}

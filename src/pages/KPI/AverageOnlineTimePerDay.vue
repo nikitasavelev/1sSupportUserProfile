@@ -6,10 +6,14 @@
 import {GoogleCharts} from 'google-charts';
 export default {
   name: "AverageOnlineTimePerDay",
+  props: {averageOnlineTimePerDay : Object},  
   mounted() {
-    GoogleCharts.load(drawVisualization);
-
-    function drawVisualization() {
+    this.drawChart();
+  },
+  methods: {
+    drawChart(){
+      GoogleCharts.load(drawVisualization);
+      function drawVisualization() {
         // Some raw data (not necessarily accurate)
         const data = google.visualization.arrayToDataTable([
           ['Month', 'Иванов И.И.',  'Целевой показатель', 'Средний показатель'],
@@ -31,6 +35,13 @@ export default {
         const chart = new google.visualization.ComboChart(document.getElementById('chart'));
         chart.draw(data, options);
       }
+    }
+  },
+  watch: {
+    averageOnlineTimePerDay(value){
+      this.averageOnlineTimePerDay = value;
+      this.drawChart();
+    }
   }
 };
 </script>

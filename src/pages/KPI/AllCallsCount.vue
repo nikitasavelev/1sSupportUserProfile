@@ -6,30 +6,44 @@
 <script>
 import { GoogleCharts } from "google-charts";
 export default {
-    name:"AllCallsCount",
-    mounted() {
-    GoogleCharts.load(drawChart);
-    const number = 13;
-    function drawChart() {
-      const data = google.visualization.arrayToDataTable([
-        ["Тип звонка", "Количество"],
-        ["Исходящие", 11],
-        ["Входящие", 2],
-      ]);
+  name:"AllCallsCount",
+  props: {allCallsCount : Object},
+  mounted() {
+    this.drawChart();
+  },
+  methods: {
+    drawChart(){
+      GoogleCharts.load(drawChart);
+      const total = this.allCallsCount.total;
+      const income = this.allCallsCount.income;
+      const outcome = this.allCallsCount.outcome;
+      function drawChart() {
+        const data = google.visualization.arrayToDataTable([
+          ["Тип звонка", "Количество"],
+          ["Исходящие", income],
+          ["Входящие", outcome],
+        ]);
 
-      const options = {
-        title: `Общее количество звонков ${number}`,
-        is3D: true,
-        pieSliceText:"value",
-        legend: {
-          alignment: 'center'
-        }
-      };
+        const options = {
+          title: `Общее количество звонков ${total}`,
+          is3D: true,
+          pieSliceText:"value",
+          legend: {
+            alignment: 'center'
+          }
+        };
 
-      const chart = new google.visualization.PieChart(
-        document.getElementById("all_calls_count")
-      );
-      chart.draw(data, options);
+        const chart = new google.visualization.PieChart(
+          document.getElementById("all_calls_count")
+        );
+        chart.draw(data, options);
+      }
+    }
+  },
+  watch: {
+    allCallsCount(value){
+      this.allCallsCount = value;
+      this.drawChart();
     }
   }
 }

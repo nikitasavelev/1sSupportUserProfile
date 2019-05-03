@@ -10,11 +10,11 @@ export default {
   props: { averageCallTime: String },
   mounted() {
     GoogleCharts.load(drawChart, {packages: ["gauge"]});
-
+    const averageTime = Number(this.averageCallTime.substring(3,5));
     function drawChart() {
       const data = google.visualization.arrayToDataTable([
         ["Время", "Значение"],
-        ["Время", 13]
+        ["Время", averageTime]
       ]);
 
       const options = {

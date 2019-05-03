@@ -1,10 +1,10 @@
 <template>
     <div>
         <average-mark class="ml-5 mt-5" :marks="marks"/>
-        <average-call-time class="average-call-time ml-5" :average-call-time="'2'"/>
-        <average-online-time-per-day />
-        <all-calls-count/>
-        <incident-count/>
+        <average-call-time class="average-call-time ml-5" :average-call-time="averageCallTime"/>
+        <average-online-time-per-day  />
+        <all-calls-count :all-calls-count="allCallsCount"/>
+        <incident-count :incident-count="incidentCount"/>
     </div>
 </template>
 
@@ -22,11 +22,17 @@ export default {
     data(){
         return {
             marks: {},
+            averageCallTime: "",
+            allCallsCount: {},
+            incidentCount: {},
         }
     },
     async mounted(){
         const response = await UsersService.getOperatorAnalytics(this.$route.params.id);
         this.marks = response.kpi.questions.marks;
+        this.averageCallTime = response.kpi.calls.durations.average;
+        this.allCallsCount = response.kpi.calls.counts;
+        this.incidentCount = response.kpi.questions.createdCounts;
     }
 }
 </script>
