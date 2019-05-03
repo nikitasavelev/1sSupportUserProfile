@@ -75,7 +75,7 @@ class QuestionsService {
       modifyDataCallback: data => {
         data.forEach(message => {
           message.createdAt = formatDate(message.createdAt);
-          if (Store.getters.getRoleType === roleTypes.Admin) {
+          if (Number(Store.getters.getRoleType) === Number(roleTypes.Admin)) {
             // operator is aligned to the right
             message.isMe = message.roleType === roleTypes.Operator
           } else {
