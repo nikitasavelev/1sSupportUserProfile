@@ -4,7 +4,7 @@
       <v-layout column justify-center align-center>
         <image-with-aspect-ratio class="v-img-logo img-logo-login mb-5" :source="'/logo.jpeg'">
         </image-with-aspect-ratio>
-        <form class="login-form pa-5" @submit="signIn">
+        <form v-if="!isLoading" class="login-form pa-5" @submit="signIn">
           <v-layout align-center column class="pa-4">
             <div class="login-system">Вход в систему</div>
             <v-text-field
@@ -35,6 +35,14 @@
               </router-link>
             </v-layout>
         </form>
+        <v-layout v-else justify-center mt-5>
+          <v-progress-circular
+            :size="70"
+            :width="7"
+            color="primary"
+            indeterminate
+          ></v-progress-circular>
+        </v-layout>
       </v-layout>
     </v-container>
   </main>
@@ -63,16 +71,19 @@ export default {
       passwordRules: [
         v => !!v || "Пароль не может быть пуст",
         v => v.length >= 6 || "Слабый пароль"
-      ]
+      ],
+      isLoading: false,
     };
   },
   methods: {
     async signIn(event) {
       event.preventDefault();
+      this.isLoading = true;
       this.serverResponse = await LoginService.signIn(
         this.email,
         this.password
       );
+      this.isLoading = false;
       if (this.serverResponse.accessToken && this.serverResponse.roleType) {
         this.accessToken = this.serverResponse.accessToken;
         this.roleType = this.serverResponse.roleType;
