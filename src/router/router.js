@@ -18,6 +18,8 @@ import SpecificNewsPage from "Pages/News/SpecificNewsPage";
 import KpiPage from "Pages/KPI/KpiPage";
 import SetKpiPage from "Pages/SetKPI/SetKpiPage";
 
+import ArticlesMainPage from "Pages/Articles/ArticlesMainPage"
+
 Vue.use(Router);
 
 const router = new Router({
@@ -91,6 +93,11 @@ const router = new Router({
       path: "/news/:id",
       component: SpecificNewsPage,
       name: "SpecificNewsPage"
+    },
+    {
+      path: "/articles",
+      component: ArticlesMainPage,
+      name: "ArticlesMainPage"
     }
   ]
 });
