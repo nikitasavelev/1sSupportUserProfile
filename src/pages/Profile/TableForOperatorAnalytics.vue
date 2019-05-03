@@ -1,6 +1,13 @@
 <template>
-    <tr v-if="info">
-        <td class="pa-3">{{info.caption}}</td>
+    <tr v-if="info && analytics.calls && analytics.questions">
+        <td class="pa-3">
+            <router-link :to="{
+                  name: 'KpiPage',
+                  params: {id: String(employeeId)}
+                }">
+                {{info.caption}}
+            </router-link>
+        </td>
         <td class="pa-3">{{analytics.questions.createdCounts.fromMango}}</td>
         <td class="pa-3">{{analytics.questions.createdCounts.fromSystem}}</td>
         <td class="pa-3">{{analytics.calls.durations.perDayAverage}}</td>
@@ -19,12 +26,19 @@
 export default {
     name: "TableForOperatorAnalytics",
     props: {info: Object},
+    data(){
+        return {
+            employeeId: ""
+        }
+    },
     created() {
         this.analytics = this.info.kpi ? this.info.kpi : this.info;
+        this.employeeId = this.info.employeeId;
     },
     watch: {
         info() {
             this.analytics = this.info.kpi ? this.info.kpi : this.info;
+            this.employeeId = this.info.employeeId;
         }
     }
 }

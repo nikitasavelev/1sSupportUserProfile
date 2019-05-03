@@ -12,8 +12,8 @@ class UsersService {
       }
     });
   }
-  async getOperatorAnalytics() {
-    return requestToAPI({ url: serverAPIUrls.GET_OPERATOR_ANALYTICS });
+  async getOperatorAnalytics(operatorId) {
+    return requestToAPI({ url: `${serverAPIUrls.GET_OPERATOR_ANALYTICS}/${operatorId}` });
   }
 
   async getOperatorsAnalytics() {

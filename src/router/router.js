@@ -58,7 +58,7 @@ const router = new Router({
       name: "ProfilePage"
     },
     {
-      path: "/kpi",
+      path: "/kpi/:id",
       component: KpiPage,
       name: "KpiPage"
     },

@@ -30,7 +30,12 @@
                     ></v-checkbox>
                 </td>
                 <td align="center">
-                    {{operator.caption}}
+                    <router-link :to="{
+                        name: 'KpiPage',
+                        params: {id: String(operator.employeeId)}
+                        }">
+                        {{operator.caption}}
+                    </router-link>
                 </td>
 
                 <td align="center">
