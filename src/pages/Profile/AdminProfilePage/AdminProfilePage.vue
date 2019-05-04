@@ -8,10 +8,11 @@
         </date-pickers>
         <hr>
         <table-info/>
-        <v-container align-center class="pr-3">
+        <v-container align-center justify-center class="pr-3">
           <table
               rules="rows"
               cellspacing="5"
+              style="margin: auto"
           >
               <thead>
                   <th v-for="header in headers" :key="header" class="pa-3">{{header}}</th>

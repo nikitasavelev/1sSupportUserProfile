@@ -48,30 +48,30 @@
                 </td>
 
                 <td align="center">
-                    {{operator.targetKpi[0] ?  operator.targetKpi[0].callsAverageDuration : 0}}
+                    {{operator.kpi.callsAverageDurationInSeconds.target}}
                 </td>
                 <td align="center">
-                    {{operator.kpi.calls.durations.onLinePerDayAverage}}
+                    {{operator.kpi.callsAverageDurationInSeconds.result}}
                 </td>
                 <td align="center" class="right-border">
                     0
                 </td>
 
                 <td align="center">
-                    {{operator.targetKpi[0] ? operator.targetKpi[0].onLinePerDayAverageDuration : 0}}
+                    {{operator.kpi.onLinePerDayAverageDurationInSeconds.target}}
                 </td>
                 <td align="center">
-                    {{operator.kpi.calls.durations.average}}
+                    {{operator.kpi.onLinePerDayAverageDurationInSeconds.result}}
                 </td>
                 <td align="center" class="right-border">
                     0
                 </td>
 
                 <td align="center">
-                    {{operator.targetKpi[0] ? operator.targetKpi[0].questionsAverageMark : 0}}
+                    {{operator.kpi.questionsAverageMark.target}}
                 </td> 
                 <td align="center">
-                    {{operator.kpi.questions.marks.average}}
+                    {{operator.kpi.questionsAverageMark.result}}
                 </td>
                 <td align="center">
                     0
@@ -117,7 +117,7 @@ export default {
     };
   },
   async mounted() {
-    const analytics = await UsersService.getOperatorsAnalytics();
+    const analytics = await UsersService.getPreviousKPI();
     this.isLoaded = true;
     this.operators = analytics.operators;
     this.operators.forEach(operator => {

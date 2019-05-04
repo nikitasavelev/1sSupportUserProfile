@@ -13,6 +13,18 @@ class UsersService {
     });
   }
 
+  async getPreviousKPI(){
+    return requestToAPI({ 
+      url: `${serverAPIUrls.GET_PREVIOUS_KPI}`,
+      modifyDataCallback: analytics => {
+        analytics.operators.forEach(operator => {
+          operator.caption = `${operator.firstName} ${operator.lastName} ${operator.secondName}`;
+        });
+        return analytics;
+      } 
+    });
+  }
+
   async getOperatorAnalytics(operatorId) {
     return requestToAPI({ url: `${serverAPIUrls.GET_OPERATOR_ANALYTICS}/${operatorId}` });
   }

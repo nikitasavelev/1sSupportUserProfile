@@ -1,7 +1,5 @@
 <template>
-    <tr v-if="info &&
-     (analytics.calls && analytics.questions) ||
-     (analytics[0].calls && analytics[0].questions) ">
+    <tr v-if="info && hasDataToShow()">
         <td class="pa-3">
             <router-link
                 v-if="info.caption !== 'Средний показатель'" 
@@ -35,14 +33,31 @@ export default {
       employeeId: ""
     };
   },
-  created() {
+  created(){
     this.analytics = this.info.kpi ? this.info.kpi : this.info;
     this.employeeId = this.info.employeeId;
+    // analytics for operator and it's not empty
+    if (Array.isArray(this.analytics) && this.analytics.length > 0) {
+      // calculate here
+      this.analytics = this.analytics[0]
+    }
   },
   watch: {
-    info() {
-      this.analytics = this.info.kpi[0] ? this.info.kpi[0] : this.info;
+    info(){
+      this.analytics = this.info.kpi ? this.info.kpi : this.info;
       this.employeeId = this.info.employeeId;
+    }
+  },
+  methods: {
+    hasDataToShow() {
+      if (this.analytics.calls && this.analytics.questions){
+        if (Array.isArray(this.analytics)) {
+          return this.analytics.length > 0;
+        } else {
+          return true;
+        }
+      }
+      return false;
     }
   }
 };
