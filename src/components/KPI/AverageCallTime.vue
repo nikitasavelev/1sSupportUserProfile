@@ -1,6 +1,6 @@
 <template>
     <div
-      v-if="Number(averageCallTime.substring(3,5)) !== 0"
+      v-if="Number(averageCallTime) !== 0"
       id="average_call_time"
     >        
     </div>
@@ -14,39 +14,50 @@
 
 <script>
 import { GoogleCharts } from "google-charts";
+
 export default {
   name: "AverageCallTime",
-  props: { averageCallTime: String },
+  props: { averageCallTime: Number },
   mounted() {
-    if (Number(this.averageCallTime.substring(3,5)) !== 0){
-      GoogleCharts.load(drawChart, {packages: ["gauge"]});
-      const averageTime = Number(this.averageCallTime.substring(3,5));
-      function drawChart() {
-        const data = google.visualization.arrayToDataTable([
-          ["Время", "Значение"],
-          ["Время", averageTime]
-        ]);
+    this.drawChart();
+  },
+  methods: {
+    drawChart(){
+      if (Number(this.averageCallTime) !== 0) {
+        GoogleCharts.load(drawChart, {packages: ["gauge"]});
+        const averageTime = Number(this.averageCallTime);
+        function drawChart() {
+          const data = google.visualization.arrayToDataTable([
+            ["Время", "Значение"],
+            ["Время", averageTime / 60]
+          ]);
 
-        const options = {
-          width: 500,
-          height: 300,
-          redFrom: 15,
-          redTo: 10,
-          yellowFrom: 10,
-          yellowTo: 5,
-          greenFrom:5,
-          greenTo: 0,
-          minorTicks: 5,
-          min: 15,
-          max: 0
-        };
+          const options = {
+            width: 500,
+            height: 300,
+            redFrom: 15,
+            redTo: 10,
+            yellowFrom: 10,
+            yellowTo: 5,
+            greenFrom:5,
+            greenTo: 0,
+            minorTicks: 5,
+            min: 15,
+            max: 0
+          };
 
-        const chart = new google.visualization.Gauge(
-          document.getElementById("average_call_time")
-        );
-        chart.draw(data, options);
+          const chart = new google.visualization.Gauge(
+            document.getElementById("average_call_time")
+          );
+          chart.draw(data, options);
+        }
       }
     }
+  },
+  watch: {
+      averageCallTime(value) {
+        this.drawChart();
+      }
   }
 };
 </script>

@@ -40,7 +40,7 @@
 <script>
 import QuestionsService from "Services/QuestionsService.js";
 import NotificationsService from "Services/NotificationsService.js";
-import formatDate from "Constants/FORMAT_DATE.js";
+import formatDate from "Constants/COMMON_METHODS.js";
 export default {
   name: "ChatMessages",
   props: { questionId: Number },

@@ -1,5 +1,5 @@
 <template>
-    <div class="wrapper pb-0 px-5 pt-3">
+    <v-container class="wrapper pb-0 px-5 pt-3">
         <div
             v-for="(i,index) in info"
             class="width-50"
@@ -7,7 +7,7 @@
             >
             {{index+1}} - {{i}}
         </div>
-    </div>
+    </v-container>
 </template>
 <script>
 export default {
@@ -38,7 +38,8 @@ export default {
 }
 .width-50 {
   display: inline-block;  
-  width: 50%;
+  width: 40%;
+  margin-left: 10%; 
   overflow: hidden;
   text-overflow: ellipsis;
 }

@@ -25,8 +25,8 @@ export default {
     drawChart(){
       GoogleCharts.load(drawChart);
       const total = this.allCallsCount.total;
-      const income = this.allCallsCount.income;
-      const outcome = this.allCallsCount.outcome;
+      const income = this.allCallsCount.incomes;
+      const outcome = this.allCallsCount.outcomes;
       function drawChart() {
         const data = google.visualization.arrayToDataTable([
           ["Тип звонка", "Количество"],

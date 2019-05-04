@@ -1,6 +1,6 @@
 import { serverAPIUrls } from "Constants/SERVER_API_URLS.js";
 import { requestToAPI } from "Constants/DEFAULT_REQUEST.js";
-import formatDate from "Constants/FORMAT_DATE.js";
+import formatDate from "Constants/COMMON_METHODS.js";
 
 class NewsService {
   async getNews() {

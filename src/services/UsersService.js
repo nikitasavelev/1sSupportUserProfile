@@ -1,6 +1,6 @@
 import { serverAPIUrls } from "Constants/SERVER_API_URLS.js";
 import { requestToAPI } from "Constants/DEFAULT_REQUEST.js";
-import formatDate from "Constants/FORMAT_DATE.js";
+import formatDate from "Constants/COMMON_METHODS.js";
 
 class UsersService {
   async getUserInfo() {
@@ -13,17 +13,29 @@ class UsersService {
     });
   }
 
+  async getPreviousKPI() {
+    return requestToAPI({
+      url: `${serverAPIUrls.GET_PREVIOUS_KPI}`,
+      modifyDataCallback: analytics => {
+        analytics.operators.forEach(operator => {
+          operator.caption = `${operator.firstName} ${operator.lastName} ${operator.secondName}`;
+        });
+        return analytics;
+      }
+    });
+  }
+
   async getOperatorAnalytics(operatorId) {
     return requestToAPI({ url: `${serverAPIUrls.GET_OPERATOR_ANALYTICS}/${operatorId}` });
   }
 
-  async getMyAnalytics(){
+  async getMyAnalytics() {
     return requestToAPI({ url: `${serverAPIUrls.ANALYTICS}/me` });
   }
-  
+
   async getOperatorsAnalytics() {
     return requestToAPI({
-      url: serverAPIUrls.GET_OPERATORS_ANALYTICS,
+      url: serverAPIUrls.GET_OPERATORS_ANALYTICS+"?fromDate=01.01.2019",
       modifyDataCallback: analytics => {
         analytics.operators.forEach(operator => {
           operator.caption = `${operator.firstName} ${operator.lastName} ${operator.secondName}`;
@@ -39,8 +51,8 @@ class UsersService {
     kpiValue,
     employeeIds,
     fromDate = new Date().toISOString().substr(0, 10),
-    toDate = new Date(Date.now() + 1000*60*60*24).toISOString().substr(0, 10)
-    ){
+    toDate = new Date(Date.now() + 1000 * 60 * 60 * 24).toISOString().substr(0, 10)
+  ) {
     return requestToAPI({
       url: serverAPIUrls.SET_KPI,
       method: "POST",
@@ -54,7 +66,7 @@ class UsersService {
         fromDate,
         toDate
       }
-    })
+    });
   }
 }
 export default new UsersService();

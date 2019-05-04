@@ -40,5 +40,6 @@ export const serverAPIUrls = Object.freeze({
   MESSAGES: "/messages",
   NOTIFICATIONS: serverAPIDomain + "/notifications/ocs-notifications-hub",
 
-  SET_KPI: serverAPIDomain + "/analytics"
+  SET_KPI: serverAPIDomain + "/analytics",
+  GET_PREVIOUS_KPI: serverAPIDomain + "/analytics/target/operators"
 });
