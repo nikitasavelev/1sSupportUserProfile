@@ -44,6 +44,14 @@
               </v-list-group>
             </v-list-group>
           </v-list>
+      <v-layout v-if="!isLoaded" justify-center mt-5>
+              <v-progress-circular
+                :size="70"
+                :width="7"
+                color="primary"
+                indeterminate
+                ></v-progress-circular>
+      </v-layout>
       </v-flex>
       <side-news></side-news>
     </v-layout>
@@ -58,7 +66,6 @@ export default {
   name: "ArticlesMainPage",
   components: { SideNews },
   data: () => ({
-    tree: [],
     items: [],
     icons: [
       "assignment_turned_in",
@@ -67,7 +74,8 @@ export default {
       "bookmark",
       "info",
       "description"
-    ]
+    ],
+    isLoaded: false
   }),   
   methods: {
     async getItems(){
@@ -79,6 +87,7 @@ export default {
   },
   async mounted(){
     await this.getItems();
+    this.isLoaded = true;
   }
 };
 </script>
