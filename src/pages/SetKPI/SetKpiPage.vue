@@ -133,7 +133,7 @@ export default {
             if (this.hasText(input.ref)) {
                 await UsersService.setKpi(
                     input.kpiType,
-                    Number(this.$refs[input.ref][0].lazyValue),
+                    Number(this.$refs[input.ref][0].lazyValue.replace(",",".")),
                     operatorsIds
                 )
             }

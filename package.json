@@ -21,7 +21,7 @@
     "@vue/cli-plugin-babel": "^3.2.0",
     "@vue/cli-plugin-eslint": "^3.2.0",
     "@vue/cli-plugin-unit-mocha": "^3.2.0",
-    "@vue/cli-service": "^3.6.0",
+    "@vue/cli-service": "^3.7.0",
     "@vue/test-utils": "^1.0.0-beta.20",
     "babel-eslint": "^10.0.1",
     "chai": "^4.1.2",
@@ -30,6 +30,7 @@
     "eslint-plugin-vue": "^5.0.0-0",
     "google-charts": "^2.0.0",
     "sass-loader": "^7.0.1",
+    "tar": "^4.4.8",
     "vue-template-compiler": "^2.5.17"
   },
   "eslintConfig": {
