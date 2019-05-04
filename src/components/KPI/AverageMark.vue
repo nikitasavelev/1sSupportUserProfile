@@ -24,6 +24,7 @@ export default {
   },
   mounted() {
     if (this.marks.average !== 0 && this.marks.average != null){
+      this.marks.average = this.marks.average.toFixed(2)
       this.drawChart();
     }
   },
@@ -58,6 +59,7 @@ export default {
     marks(value) {
       this.marks = value;
       if (this.marks.average !== 0 && this.marks.average != null){
+        this.marks.average = this.marks.average.toFixed(2)
         this.drawChart();
       }
     }
@@ -72,7 +74,7 @@ export default {
 .average-mark {
   position: absolute;
   top: 45%;
-  left: 36%;
+  left: 33.5%;
   font-size: 2rem;
 }
 </style>

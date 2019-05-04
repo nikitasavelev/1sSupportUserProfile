@@ -13,9 +13,9 @@
         </td>
         <td class="pa-3">{{analytics.questions.createdCounts.fromMango.toFixed(2)}}</td>
         <td class="pa-3">{{analytics.questions.createdCounts.fromSystem.toFixed(2)}}</td>
-        <td class="pa-3">{{analytics.calls.durations.averageInSeconds.toFixed(2)}}</td>
-        <td class="pa-3">{{analytics.calls.durations.maxInSeconds.toFixed(2)}}</td> 
-        <td class="pa-3">{{analytics.calls.durations.onLineAverageInSeconds.toFixed(2)}}</td> 
+        <td class="pa-3">{{(analytics.calls.durations.averageInSeconds/60).toFixed(2)}}</td>
+        <td class="pa-3">{{(analytics.calls.durations.maxInSeconds/60).toFixed(2)}}</td> 
+        <td class="pa-3">{{(analytics.calls.durations.onLineAverageInSeconds/60).toFixed(2)}}</td> 
         <td class="pa-3">{{analytics.questions.resolvedCounts.total.toFixed(2)}}</td> 
         <td class="pa-3">{{analytics.calls.counts.total.toFixed(2)}}</td> 
         <td class="pa-3">{{analytics.calls.counts.incomes.toFixed(2)}}</td> 

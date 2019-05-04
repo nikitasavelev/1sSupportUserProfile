@@ -35,7 +35,7 @@ class UsersService {
 
   async getOperatorsAnalytics() {
     return requestToAPI({
-      url: serverAPIUrls.GET_OPERATORS_ANALYTICS,
+      url: serverAPIUrls.GET_OPERATORS_ANALYTICS+"?fromDate=01.01.2019",
       modifyDataCallback: analytics => {
         analytics.operators.forEach(operator => {
           operator.caption = `${operator.firstName} ${operator.lastName} ${operator.secondName}`;

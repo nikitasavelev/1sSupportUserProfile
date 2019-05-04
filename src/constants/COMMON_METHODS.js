@@ -14,13 +14,20 @@ export function assignVariables(
     resolvedQuestionsCount,
     callsOutcomeCount,
     callsIncomeCount,
-    averageMark
+    averageMark,
+    //specifically for graphs
+    unitsAmount,
+    twosAmount,
+    threesAmount,
+    foursAmount,
+    fivesAmount
   ) {
     operator.calculatedKPI = {};
     operator.calculatedKPI.questions = {};
     operator.calculatedKPI.questions.createdCounts = {};
     operator.calculatedKPI.questions.resolvedCounts = {};
     operator.calculatedKPI.questions.marks = {};
+    operator.calculatedKPI.questions.marks.counts = {};
     operator.calculatedKPI.calls = {};
     operator.calculatedKPI.calls.durations = {};
     operator.calculatedKPI.calls.counts = {};
@@ -35,6 +42,13 @@ export function assignVariables(
     operator.calculatedKPI.calls.counts.outcomes = callsOutcomeCount;
     operator.calculatedKPI.calls.counts.incomes = callsIncomeCount;
     operator.calculatedKPI.questions.marks.average = averageMark;
+
+    //specifically for graphs
+    operator.calculatedKPI.questions.marks.counts.units = unitsAmount;
+    operator.calculatedKPI.questions.marks.counts.twos = twosAmount;
+    operator.calculatedKPI.questions.marks.counts.threes = threesAmount;
+    operator.calculatedKPI.questions.marks.counts.fours = foursAmount;
+    operator.calculatedKPI.questions.marks.counts.fives = fivesAmount;
   }
 
   export function calculateAnalytics(operatorsAnalytics) {
@@ -51,6 +65,13 @@ export function assignVariables(
       let averageMark = 0;
       let marksSum = 0;
       let daysAmount = operator.kpi.length;
+
+      // specifically for graphs
+      let unitsAmount = 0;
+      let twosAmount = 0;
+      let threesAmount = 0;
+      let foursAmount = 0;
+      let fivesAmount = 0;
 
       operator.kpi.forEach(kpi => {
         sumFromMango += kpi.questions.createdCounts.fromMango;
@@ -74,9 +95,17 @@ export function assignVariables(
           kpi.questions.marks.counts.threes * 3 +
           kpi.questions.marks.counts.fours * 4 +
           kpi.questions.marks.counts.fives * 5;
+
+        // specifically for graphs
+        unitsAmount += kpi.questions.marks.counts.units;
+        twosAmount += kpi.questions.marks.counts.twos;
+        threesAmount += kpi.questions.marks.counts.threes;
+        foursAmount += kpi.questions.marks.counts.fours;
+        fivesAmount += kpi.questions.marks.counts.fives;
+
       });
       // averages
-      averageCallsDuration = (daysAmount - 1) === 0 ? 0 : averageCallsDuration / (daysAmount - 1);
+      averageCallsDuration = (allCallsCount) === 0 ? 0 : averageCallsDuration / allCallsCount;
       averageOnlineTimePerDay = (daysAmount - 1) === 0 ? 0 : averageOnlineTimePerDay / (daysAmount - 1);
       averageMark = marksSum === 0 ? 0 : (averageMark / marksSum);
       // assignments
@@ -91,7 +120,13 @@ export function assignVariables(
         resolvedQuestionsCount,
         callsOutcomeCount,
         callsIncomeCount,
-        averageMark
+        averageMark,
+        //specifically for graphs
+        unitsAmount,
+        twosAmount,
+        threesAmount,
+        foursAmount,
+        fivesAmount
       );
     });
   }
