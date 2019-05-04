@@ -52,7 +52,7 @@ export default {
       dateFrom: "",
       dateTo: "",
       arePickersShown: false,
-      headers: ["ФИО Агента", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"],
+      headers: ["ФИО Агента", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10",],
       operatorsAnalytics: [],
       averageKpi: {},
       isLoaded: false

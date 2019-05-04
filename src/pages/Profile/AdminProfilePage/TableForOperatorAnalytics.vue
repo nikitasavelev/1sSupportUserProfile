@@ -1,5 +1,7 @@
 <template>
-    <tr v-if="info && analytics.calls && analytics.questions">
+    <tr v-if="info &&
+     (analytics.calls && analytics.questions) ||
+     (analytics[0].calls && analytics[0].questions) ">
         <td class="pa-3">
             <router-link
                 v-if="info.caption !== 'Средний показатель'" 
@@ -13,10 +15,9 @@
         </td>
         <td class="pa-3">{{analytics.questions.createdCounts.fromMango}}</td>
         <td class="pa-3">{{analytics.questions.createdCounts.fromSystem}}</td>
-        <td class="pa-3">{{analytics.calls.durations.perDayAverage}}</td>
-        <td class="pa-3">{{analytics.calls.durations.average}}</td>
-        <td class="pa-3">{{analytics.calls.durations.max}}</td> 
-        <td class="pa-3">{{analytics.calls.durations.onLinePerDayAverage}}</td> 
+        <td class="pa-3">{{analytics.calls.durations.averageInSeconds}}</td>
+        <td class="pa-3">{{analytics.calls.durations.maxInSeconds}}</td> 
+        <td class="pa-3">{{analytics.calls.durations.onLineAverageInSeconds}}</td> 
         <td class="pa-3">{{analytics.questions.resolvedCounts.total}}</td> 
         <td class="pa-3">{{analytics.calls.counts.total}}</td> 
         <td class="pa-3">{{analytics.calls.counts.incomes}}</td> 
@@ -27,22 +28,22 @@
 
 <script>
 export default {
-    name: "TableForOperatorAnalytics",
-    props: {info: Object},
-    data(){
-        return {
-            employeeId: ""
-        }
-    },
-    created() {
-        this.analytics = this.info.kpi ? this.info.kpi : this.info;
-        this.employeeId = this.info.employeeId;
-    },
-    watch: {
-        info() {
-            this.analytics = this.info.kpi ? this.info.kpi : this.info;
-            this.employeeId = this.info.employeeId;
-        }
+  name: "TableForOperatorAnalytics",
+  props: { info: Object },
+  data() {
+    return {
+      employeeId: ""
+    };
+  },
+  created() {
+    this.analytics = this.info.kpi ? this.info.kpi : this.info;
+    this.employeeId = this.info.employeeId;
+  },
+  watch: {
+    info() {
+      this.analytics = this.info.kpi[0] ? this.info.kpi[0] : this.info;
+      this.employeeId = this.info.employeeId;
     }
-}
+  }
+};
 </script>
