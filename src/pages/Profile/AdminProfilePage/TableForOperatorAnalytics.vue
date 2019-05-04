@@ -11,16 +11,16 @@
             </router-link>
             <span v-else>{{info.caption}}</span>
         </td>
-        <td class="pa-3">{{analytics.questions.createdCounts.fromMango}}</td>
-        <td class="pa-3">{{analytics.questions.createdCounts.fromSystem}}</td>
-        <td class="pa-3">{{analytics.calls.durations.averageInSeconds}}</td>
-        <td class="pa-3">{{analytics.calls.durations.maxInSeconds}}</td> 
-        <td class="pa-3">{{analytics.calls.durations.onLineAverageInSeconds}}</td> 
-        <td class="pa-3">{{analytics.questions.resolvedCounts.total}}</td> 
-        <td class="pa-3">{{analytics.calls.counts.total}}</td> 
-        <td class="pa-3">{{analytics.calls.counts.incomes}}</td> 
-        <td class="pa-3">{{analytics.calls.counts.outcomes}}</td> 
-        <td class="pa-3">{{analytics.questions.marks.average}}</td>                                   
+        <td class="pa-3">{{analytics.questions.createdCounts.fromMango.toFixed(2)}}</td>
+        <td class="pa-3">{{analytics.questions.createdCounts.fromSystem.toFixed(2)}}</td>
+        <td class="pa-3">{{analytics.calls.durations.averageInSeconds.toFixed(2)}}</td>
+        <td class="pa-3">{{analytics.calls.durations.maxInSeconds.toFixed(2)}}</td> 
+        <td class="pa-3">{{analytics.calls.durations.onLineAverageInSeconds.toFixed(2)}}</td> 
+        <td class="pa-3">{{analytics.questions.resolvedCounts.total.toFixed(2)}}</td> 
+        <td class="pa-3">{{analytics.calls.counts.total.toFixed(2)}}</td> 
+        <td class="pa-3">{{analytics.calls.counts.incomes.toFixed(2)}}</td> 
+        <td class="pa-3">{{analytics.calls.counts.outcomes.toFixed(2)}}</td> 
+        <td class="pa-3">{{analytics.questions.marks.average.toFixed(2)}}</td>                                   
     </tr>
 </template>
 
@@ -34,7 +34,7 @@ export default {
     };
   },
   created(){
-    this.analytics = this.info.kpi ? this.info.kpi : this.info;
+    this.analytics = this.info.calculatedKPI ? this.info.calculatedKPI : this.info;
     this.employeeId = this.info.employeeId;
     // analytics for operator and it's not empty
     if (Array.isArray(this.analytics) && this.analytics.length > 0) {
@@ -44,7 +44,7 @@ export default {
   },
   watch: {
     info(){
-      this.analytics = this.info.kpi ? this.info.kpi : this.info;
+      this.analytics = this.info.calculatedKPI ? this.info.calculatedKPI : this.info;
       this.employeeId = this.info.employeeId;
     }
   },

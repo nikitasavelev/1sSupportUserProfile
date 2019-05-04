@@ -1,6 +1,6 @@
 import { serverAPIUrls } from "Constants/SERVER_API_URLS.js";
 import { requestToAPI } from "Constants/DEFAULT_REQUEST.js";
-import formatDate from "Constants/FORMAT_DATE.js";
+import formatDate from "Constants/COMMON_METHODS.js";
 import Store from "Store/store.js";
 import { roleTypes } from "Constants/ROLE_TYPES.js";
 
@@ -77,7 +77,7 @@ class QuestionsService {
           message.createdAt = formatDate(message.createdAt);
           if (Number(Store.getters.getRoleType) === Number(roleTypes.Admin)) {
             // operator is aligned to the right
-            message.isMe = message.roleType === roleTypes.Operator
+            message.isMe = message.roleType === roleTypes.Operator;
           } else {
             message.isMe = Number(Store.getters.getUserId) === Number(message.authorId);
           }

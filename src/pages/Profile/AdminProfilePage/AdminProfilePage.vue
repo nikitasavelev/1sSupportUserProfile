@@ -45,6 +45,8 @@ import DatePickers from "Components/DatePickers";
 import UsersService from "Services/UsersService";
 import TableForOperatorAnalytics from "./TableForOperatorAnalytics";
 import TableInfo from "./TableInfo";
+import {calculateAnalytics} from "Constants/COMMON_METHODS.js";
+
 export default {
   name: "AdminProfilePage",
   components: { DatePickers, TableForOperatorAnalytics, TableInfo },
@@ -53,7 +55,19 @@ export default {
       dateFrom: "",
       dateTo: "",
       arePickersShown: false,
-      headers: ["ФИО Агента", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10",],
+      headers: [
+        "ФИО Агента",
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "10"
+      ],
       operatorsAnalytics: [],
       averageKpi: {},
       isLoaded: false
@@ -64,7 +78,9 @@ export default {
     this.operatorsAnalytics = response.operators;
     this.averageKpi = response.averageKpi;
     this.isLoaded = true;
-  }
+    calculateAnalytics(this.operatorsAnalytics);
+  },
+  methods: {}
 };
 </script>
 
