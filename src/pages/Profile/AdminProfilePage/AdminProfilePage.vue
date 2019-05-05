@@ -84,7 +84,6 @@ export default {
       this.averageKpi = response.averageKpi;
       this.isLoaded = true;
       calculateAnalytics(this.operatorsAnalytics);
-      console.log(this.operatorsAnalytics);
     }
   },
   watch: {

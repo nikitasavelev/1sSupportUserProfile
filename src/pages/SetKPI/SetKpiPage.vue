@@ -3,14 +3,16 @@
         v-if="isLoaded"
         rules="rows"
         cellspacing="5"
+        @click="arePickersShown = !arePickersShown"
     >
         <thead>
             <th colspan="2">
-                <v-btn
-                 class="save-kpi btn ml-0 pa-1 px-3 text-capitalize"
-                 @click="saveKpi">
-                    Сохранить установленные KPI
-                </v-btn>
+                <date-pickers
+                    class="pl-3"
+                    :are-pickers-shown="arePickersShown"
+                    @update:fromDate="fromDate = $event"
+                    @update:toDate="toDate = $event">
+                </date-pickers>
             </th>
             <th v-for="(header, index) in headers"
                 :key="index"
@@ -24,8 +26,16 @@
         </thead>
         <tbody>
             <tr>                
-                <td></td>
-                <td></td>
+                <td colspan="2"
+                    align="center"
+                    >
+                    <v-btn
+                        class="save-kpi btn ml-0 pa-1 px-3 text-capitalize"
+                        @click="saveKpi"
+                    >
+                        Сохранить установленные KPI
+                    </v-btn>
+                </td>                
                 <template v-for="c in [1,2,3]">
                     <td align="center" class="pa-2">Прошлый KPI</td>
                     <td align="center" class="pa-2">Прошлый результат</td>
@@ -91,8 +101,11 @@
 
 <script>
 import UsersService from "Services/UsersService";
+import DatePickers from "Components/DatePickers";
+
 export default {
   name: "SetKpiPage",
+  components: {DatePickers},
   data() {
     return {
       headers: [
@@ -114,6 +127,9 @@ export default {
       ],
       operators: [],
       isLoaded: false,
+      fromDate: new Date().toISOString().substr(0, 10),
+      toDate: new Date(Date.now() + 1000*60*60*24*7).toISOString().substr(0, 10),
+      arePickersShown: false,
     };
   },
   async mounted() {
@@ -134,7 +150,9 @@ export default {
                 await UsersService.setKpi(
                     input.kpiType,
                     Number(this.$refs[input.ref][0].lazyValue.replace(",",".")),
-                    operatorsIds
+                    operatorsIds,
+                    this.fromDate,
+                    this.toDate
                 )
             }
         }

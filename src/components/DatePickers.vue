@@ -9,6 +9,7 @@
               @click="toggleDatePickerFrom"
               name="date from"
               aria-label="start date"
+              autocomplete="off"
               > 
           </label> 
           <v-date-picker 
@@ -28,6 +29,7 @@
               @click="toggleDatePickerTo"
               name="date to"
               aria-label="end date"
+              autocomplete="off"
               > 
           </label> 
           <v-date-picker 
@@ -92,6 +94,7 @@ export default {
   position: absolute;
   top: 35px;
   left: 5px;
+  z-index: 1;
 }
 
 .datepicker-wrapper {
