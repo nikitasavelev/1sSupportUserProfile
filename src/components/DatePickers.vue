@@ -4,7 +4,7 @@
         <div class="datepicker-wrapper">
           <label>
             <input
-              v-model="dateFrom"
+              v-model="fromDate"
               class="datepicker-input ml-2 pa-1"
               @click="toggleDatePickerFrom"
               name="date from"
@@ -12,7 +12,7 @@
               > 
           </label> 
           <v-date-picker 
-            v-model="dateFrom"
+            v-model="fromDate"
             v-if="showDatePickerFrom"
             @input="showDatePickerFrom = false"
             class="datepicker"            
@@ -23,7 +23,7 @@
         <div class="datepicker-wrapper">
           <label>
             <input
-              v-model="dateTo"
+              v-model="toDate"
               class="datepicker-input pa-1"
               @click="toggleDatePickerTo"
               name="date to"
@@ -31,7 +31,7 @@
               > 
           </label> 
           <v-date-picker 
-            v-model="dateTo"
+            v-model="toDate"
             v-if="showDatePickerTo"
             @input="showDatePickerTo = false"
             class="datepicker"
@@ -51,8 +51,8 @@ export default {
     return {
       showDatePickerFrom: false,
       showDatePickerTo: false,
-      dateFrom: new Date().toISOString().substr(0, 10),
-      dateTo: new Date().toISOString().substr(0, 10)
+      fromDate: new Date(Date.now() - 1000*60*60*24*7).toISOString().substr(0, 10),
+      toDate: new Date().toISOString().substr(0, 10)
     };
   },
   methods: {
@@ -72,11 +72,11 @@ export default {
       this.showDatePickerFrom = false;
       this.showDatePickerTo = false;
     },
-    dateFrom() {
-      this.$emit("update:dateFrom", this.dateFrom);
+    fromDate() {
+      this.$emit("update:fromDate", this.fromDate);
     },
-    dateTo() {
-      this.$emit("update:dateTo", this.dateTo);
+    toDate() {
+      this.$emit("update:toDate", this.toDate);
     }
   }
 };

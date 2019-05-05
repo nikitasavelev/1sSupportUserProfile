@@ -3,8 +3,8 @@
         <hr>
         <date-pickers
             :are-pickers-shown="arePickersShown"
-            @update:dateFrom="dateFrom = $event"
-            @update:dateTo="dateTo = $event">
+            @update:fromDate="fromDate = $event"
+            @update:toDate="toDate = $event">
         </date-pickers>
         <hr>
         <table-info/>
@@ -52,8 +52,8 @@ export default {
   components: { DatePickers, TableForOperatorAnalytics, TableInfo },
   data() {
     return {
-      dateFrom: "",
-      dateTo: "",
+      fromDate: new Date(Date.now() - 1000*60*60*24*7).toISOString().substr(0, 10),
+      toDate: new Date().toISOString().substr(0, 10),
       arePickersShown: false,
       headers: [
         "ФИО Агента",
@@ -74,13 +74,27 @@ export default {
     };
   },
   async mounted() {
-    const response = await UsersService.getOperatorsAnalytics();
-    this.operatorsAnalytics = response.operators;
-    this.averageKpi = response.averageKpi;
-    this.isLoaded = true;
-    calculateAnalytics(this.operatorsAnalytics);
+    await this.getOperatorsAnalytics();
   },
-  methods: {}
+  methods: {
+    async getOperatorsAnalytics(fromDate, toDate) {
+      this.isLoaded = false;
+      const response = await UsersService.getOperatorsAnalytics(fromDate, toDate);
+      this.operatorsAnalytics = response.operators;
+      this.averageKpi = response.averageKpi;
+      this.isLoaded = true;
+      calculateAnalytics(this.operatorsAnalytics);
+      console.log(this.operatorsAnalytics);
+    }
+  },
+  watch: {
+    fromDate(value) {
+      this.getOperatorsAnalytics(this.fromDate, this.toDate);
+    },
+    toDate(value) {
+      this.getOperatorsAnalytics(this.fromDate, this.toDate);
+    }
+  }
 };
 </script>
 
