@@ -29,13 +29,19 @@ class UsersService {
     return requestToAPI({ url: `${serverAPIUrls.GET_OPERATOR_ANALYTICS}/${operatorId}` });
   }
 
-  async getMyAnalytics() {
-    return requestToAPI({ url: `${serverAPIUrls.ANALYTICS}/me` });
+  async getMyAnalytics(
+    fromDate = new Date(Date.now() - 1000 * 60 * 60 * 24 * 7).toISOString().substr(0, 10),
+    toDate = new Date().toISOString().substr(0, 10)
+  ) {
+    return requestToAPI({ url: `${serverAPIUrls.ANALYTICS}/me?from=${fromDate}&to=${toDate}` });
   }
 
-  async getOperatorsAnalytics() {
+  async getOperatorsAnalytics(
+    fromDate = new Date(Date.now() - 1000 * 60 * 60 * 24 * 7).toISOString().substr(0, 10),
+    toDate = new Date().toISOString().substr(0, 10)
+  ) {
     return requestToAPI({
-      url: serverAPIUrls.GET_OPERATORS_ANALYTICS+"?fromDate=01.01.2019",
+      url: `${serverAPIUrls.GET_OPERATORS_ANALYTICS}?from=${fromDate}&to=${toDate}`,
       modifyDataCallback: analytics => {
         analytics.operators.forEach(operator => {
           operator.caption = `${operator.firstName} ${operator.lastName} ${operator.secondName}`;

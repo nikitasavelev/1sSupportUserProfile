@@ -9,17 +9,17 @@
       <hr>
       <date-pickers
        :are-pickers-shown="arePickersShown"
-       @update:dateFrom="dateFrom = $event"
-       @update:dateTo="dateTo = $event">
+       @update:fromDate="fromDate = $event"
+       @update:toDate="toDate = $event">
       </date-pickers>
       <hr>
       <graphical-operator-analytics
        v-if="showGraphs"
        :analytics="operatorAnalytics"/>
+
       <operator-analytics
         v-else
-        :analytics="operatorAnalytics.kpi"/>
-        
+        :analytics="operatorAnalytics.calculatedKPI"/>        
     </v-container>
 </template>
 <script>
@@ -27,6 +27,7 @@ import UsersService from "Services/UsersService.js";
 import DatePickers from "Components/DatePickers";
 import OperatorAnalytics from "./OperatorAnalytics";
 import GraphicalOperatorAnalytics from "./GraphicalOperatorAnalytics";
+import {calculateAnalytics} from "Constants/COMMON_METHODS.js";
 
 export default {
   name: "OperatorProfilePage",
@@ -36,15 +37,28 @@ export default {
     return {
       operatorAnalytics: {},
       roleType: 0,
-      dateFrom: "",
-      dateTo: "",
+      fromDate: "",
+      toDate: "",
       arePickersShown: false,
       showGraphs: false,
     };
   },
-  methods: {},
+  methods: {
+    async getAnalytics(fromDate, toDate){
+      this.operatorAnalytics = await UsersService.getMyAnalytics(fromDate, toDate);
+      calculateAnalytics([this.operatorAnalytics]);
+    }
+  },
   async mounted() {
-    this.operatorAnalytics = await UsersService.getMyAnalytics();
+    this.getAnalytics();
+  },
+  watch: {
+    fromDate(value) {
+      this.getAnalytics(this.fromDate, this.toDate);
+    },
+    toDate(value) {
+      this.getAnalytics(this.fromDate, this.toDate);
+    }
   }
 };
 </script>

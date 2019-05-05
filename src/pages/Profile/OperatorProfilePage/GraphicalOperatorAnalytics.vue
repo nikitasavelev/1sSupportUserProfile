@@ -2,7 +2,7 @@
     <div>
         <average-mark class="ml-5 mt-5" :marks="marks"/>
         <average-call-time class="average-call-time ml-5" :average-call-time="averageCallTime"/>
-        <average-online-time-per-day  />
+        <average-online-time-per-day :average-online-time-per-day="averageOnlineTimePerDay"/>
         <all-calls-count :all-calls-count="allCallsCount"/>
         <incident-count :incident-count="incidentCount"/>
     </div>
@@ -22,16 +22,33 @@ export default {
     data(){
         return {
             marks: {},
-            averageCallTime: "",
+            averageCallTime: 0,
             allCallsCount: {},
             incidentCount: {},
+            averageOnlineTimePerDay: {},
         }
     },
-    mounted(){
-        this.marks = this.analytics.kpi.questions.marks;
-        this.averageCallTime = this.analytics.kpi.calls.durations.average;
-        this.allCallsCount = this.analytics.kpi.calls.counts;
-        this.incidentCount = this.analytics.kpi.questions.createdCounts;
+    mounted() {
+       this.setParams();
+    },
+    methods: {
+        setParams(){
+            this.marks = this.analytics.calculatedKPI.questions.marks;
+            this.averageCallTime = Number(this.analytics.calculatedKPI.calls.durations.averageInSeconds);  
+            this.allCallsCount = this.analytics.calculatedKPI.calls.counts;
+            this.incidentCount = this.analytics.calculatedKPI.questions.createdCounts;
+            this.averageOnlineTimePerDay = {
+                targetKPI: this.analytics.targetKpi,
+                onlineAverage: this.analytics.calculatedKPI.calls.durations.onLineAverageInSeconds / 60,
+                kpiForPeriod: this.analytics.kpi
+            }
+        }
+    },
+    watch: {
+        analytics(){
+            this.setParams();
+        }
     }
+
 }
 </script>

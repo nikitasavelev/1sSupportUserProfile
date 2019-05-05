@@ -20,7 +20,10 @@ export function assignVariables(
     twosAmount,
     threesAmount,
     foursAmount,
-    fivesAmount
+    fivesAmount,
+     //specifically for operator
+     resolvedByClient,
+     resolvedByOperator
   ) {
     operator.calculatedKPI = {};
     operator.calculatedKPI.questions = {};
@@ -49,6 +52,9 @@ export function assignVariables(
     operator.calculatedKPI.questions.marks.counts.threes = threesAmount;
     operator.calculatedKPI.questions.marks.counts.fours = foursAmount;
     operator.calculatedKPI.questions.marks.counts.fives = fivesAmount;
+    //specifically for operator
+    operator.calculatedKPI.questions.resolvedCounts.byClient = resolvedByClient;
+    operator.calculatedKPI.questions.resolvedCounts.byOperator = resolvedByOperator;
   }
 
   export function calculateAnalytics(operatorsAnalytics) {
@@ -72,6 +78,10 @@ export function assignVariables(
       let threesAmount = 0;
       let foursAmount = 0;
       let fivesAmount = 0;
+
+      // specifically for operator
+      let resolvedByClient = 0;
+      let resolvedByOperator = 0;
 
       operator.kpi.forEach(kpi => {
         sumFromMango += kpi.questions.createdCounts.fromMango;
@@ -103,6 +113,9 @@ export function assignVariables(
         foursAmount += kpi.questions.marks.counts.fours;
         fivesAmount += kpi.questions.marks.counts.fives;
 
+        // specifically for operator
+        resolvedByClient += kpi.questions.resolvedCounts.byClient;
+        resolvedByOperator += kpi.questions.resolvedCounts.byOperator;  
       });
       // averages
       averageCallsDuration = (allCallsCount) === 0 ? 0 : averageCallsDuration / allCallsCount;
@@ -126,7 +139,10 @@ export function assignVariables(
         twosAmount,
         threesAmount,
         foursAmount,
-        fivesAmount
+        fivesAmount,
+        //specifically for operator
+        resolvedByClient,
+        resolvedByOperator
       );
     });
   }
