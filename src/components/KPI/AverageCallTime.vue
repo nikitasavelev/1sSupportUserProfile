@@ -1,8 +1,13 @@
 <template>
     <div
       v-if="Number(averageCallTime) !== 0"
-      id="average_call_time"
-    >        
+      class="average-call-time-wrapper"
+      >
+      <div class="average-call-time-caption">Среднее время разговора</div>
+      <div
+        id="average_call_time"
+      >        
+      </div>
     </div>
     <v-container
       v-else
@@ -33,7 +38,7 @@ export default {
           ]);
 
           const options = {
-            width: 500,
+            width: 400,
             height: 300,
             redFrom: 15,
             redTo: 10,
@@ -63,5 +68,13 @@ export default {
 </script>
 
 <style scoped>
-
+.average-call-time-caption{
+  text-align: center;
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+}
+.average-call-time-wrapper{
+  position: relative;
+  left: -7rem;
+}
 </style>

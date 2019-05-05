@@ -1,6 +1,7 @@
 <template>
   <div 
     id="all_calls_count"
+    style="width: 700px; height: 300px;"
     v-if="allCallsCount.total > 0">
   </div>
   <v-container
