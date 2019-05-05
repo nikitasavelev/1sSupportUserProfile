@@ -42,7 +42,14 @@ export default {
   methods: {
     goToPage(path) {
       this.currentLink = path;
-      this.$router.push(path);
+      if (this.currentLink === "/kpi") {
+        this.$router.push({
+          name: "KpiPage",
+          params: { id: String(this.$store.getters.getUserId) }
+        });
+      } else {
+        this.$router.push(path);
+      }
     },
     setActive() {
       let index;
