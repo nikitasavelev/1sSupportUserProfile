@@ -1,6 +1,7 @@
 <template>
     <div 
       v-if="hasDataToShow()"
+      style="width: 700px; height: 300px;"
       id="incident_count"
     >        
     </div>

@@ -25,8 +25,12 @@ class UsersService {
     });
   }
 
-  async getOperatorAnalytics(operatorId) {
-    return requestToAPI({ url: `${serverAPIUrls.GET_OPERATOR_ANALYTICS}/${operatorId}` });
+  async getOperatorAnalytics(
+    operatorId,
+    fromDate = new Date(Date.now() - 1000 * 60 * 60 * 24 * 7).toISOString().substr(0, 10),
+    toDate = new Date().toISOString().substr(0, 10)
+  ) {
+    return requestToAPI({ url: `${serverAPIUrls.GET_OPERATOR_ANALYTICS}/${operatorId}?from=${fromDate}&to=${toDate}` });
   }
 
   async getMyAnalytics(
