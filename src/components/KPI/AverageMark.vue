@@ -45,7 +45,14 @@ export default {
         const options = {
           title: "Полученные оценки",
           pieHole: 0.5,
-          pieSliceText: "value"
+          pieSliceText: "value",
+          fontSize: 22,
+          fontName: 'Open Sans',
+          titleTextStyle: {
+            bold: false,
+            color: '#2c3e50'
+
+          }
         };
 
         const chart = new google.visualization.PieChart(
