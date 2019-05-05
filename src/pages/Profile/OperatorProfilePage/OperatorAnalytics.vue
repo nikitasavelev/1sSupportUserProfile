@@ -51,19 +51,15 @@ export default {
           },
           {
             name: "Среднее время телефонного разговора",
-            analytics: analytics.calls.durations.average
+            analytics: (analytics.calls.durations.averageInSeconds / 60).toFixed(2)
           },
           {
             name: "Максимальное время телефонного разговора",
-            analytics: analytics.calls.durations.max
+            analytics: analytics.calls.durations.maxInSeconds
           },
           {
             name: 'Длительность в статусе "на линии" в среднем за рабочий день',
-            analytics: analytics.calls.durations.onLinePerDayAverage
-          },
-          {
-            name: 'Среднее время за день',
-            analytics: analytics.calls.durations.perDayAverage
+            analytics: (analytics.calls.durations.onLineAverageInSeconds / 60).toFixed(2)
           },
           {
             name: 'Количество созданных вопросов через Манго',
@@ -75,7 +71,7 @@ export default {
           },
           {
             name: 'Средняя оценка',
-            analytics: analytics.questions.marks.average
+            analytics: Number(analytics.questions.marks.average).toFixed(2)
           },
           {
             name: 'Оценок "1"',
