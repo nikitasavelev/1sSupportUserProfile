@@ -135,7 +135,6 @@ export default {
   watch: {
     secretKey(value) {
       const valueAfterColon = value.split(":")[1];
-      console.log(this.defineRole(valueAfterColon) === "prov");
       if (this.defineRole(valueAfterColon) === "prov") {
         this.isProvider = true;
       } else {

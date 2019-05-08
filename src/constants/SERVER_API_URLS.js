@@ -30,7 +30,8 @@ export const serverAPIUrls = Object.freeze({
 
   GET_USER_INFO: serverAPIDomain + "/companies/clients/me",
 
-  GET_OPERATOR_ANALYTICS: serverAPIDomain + "/analytics/me",
+  ANALYTICS: serverAPIDomain + "/analytics",
+  GET_OPERATOR_ANALYTICS: serverAPIDomain + "/analytics/operators",
   GET_OPERATORS_ANALYTICS: serverAPIDomain + "/analytics/operators",
 
   GET_NEWS: serverAPIDomain + "/news",
@@ -38,5 +39,8 @@ export const serverAPIUrls = Object.freeze({
   GET_NEWS_PREVIEWS: serverAPIDomain + "/news/previews",
 
   MESSAGES: "/messages",
-  NOTIFICATIONS: serverAPIDomain + "/notifications/ocs-notifications-hub"
+  NOTIFICATIONS: serverAPIDomain + "/notifications/ocs-notifications-hub",
+
+  SET_KPI: serverAPIDomain + "/analytics",
+  GET_PREVIOUS_KPI: serverAPIDomain + "/analytics/target/operators"
 });

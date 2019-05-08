@@ -7,11 +7,10 @@
 </template>
 <script>
 import Store from "Store/store.js";
-import ClientProfilePage from "./ClientProfilePage";
-import OperatorProfilePage from "./OperatorProfilePage";
-import AdminProfilePage from "./AdminProfilePage";
+import ClientProfilePage from "./ClientProfilePage/ClientProfilePage";
+import OperatorProfilePage from "./OperatorProfilePage/OperatorProfilePage";
+import AdminProfilePage from "./AdminProfilePage/AdminProfilePage";
 import { roleTypes } from "Constants/ROLE_TYPES.js";
-import { debuglog } from 'util';
 
 export default {
   name: "ProfilePage",
