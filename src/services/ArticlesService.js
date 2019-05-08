@@ -1,6 +1,5 @@
 import { serverAPIUrls } from "Constants/SERVER_API_URLS.js";
 import { requestToAPI } from "Constants/DEFAULT_REQUEST.js";
-import { get } from "https";
 
 class ArticlesService {
   async getArticle(articleId) {
@@ -30,10 +29,10 @@ class ArticlesService {
       url: serverAPIUrls.FOLDERS,
       method: "POST",
       body: {
-        parentId: parentId,
-        name: name,
-        isBlocked: isBlocked,
-        isAvailable: isAvailable
+        parentId,
+        name,
+        isBlocked,
+        isAvailable
       },
       headers: {
             'Content-Type': 'application/json',

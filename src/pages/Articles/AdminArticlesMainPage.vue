@@ -5,11 +5,11 @@
         <v-btn color="white" dark class="primary--text" @click.stop="addFolderDialog = true">
           <v-icon class="mr-3" color="primary">create_new_folder</v-icon>Новая папка
         </v-btn>
-        <v-list class="list">
+        <v-list style="color: #003399">
           <v-list-group v-for="i in items" :key="i.id" :prepend-icon="i.icon">
             <template slot="activator">
               <v-list-tile>
-                <v-list-tile-content>
+                <v-list-tile-content style="align-items: center; flex-direction: row;">
                   <v-list-tile-title>{{ i.name }}</v-list-tile-title>
                   <v-btn v-if="!i.isBlocked" flat small @click="updateFolder(i)">Редактировать</v-btn>
                   <v-btn
@@ -52,7 +52,7 @@
           </v-list-group>
         </v-list>
         <v-layout v-if="!isLoaded" justify-center mt-5>
-          <v-progress-circular :size="70" :width="7" color="primary" indeterminate></v-progress-circular>
+          <v-progress-circular :size="70" :width="7" color="primary" indeterminate/>
         </v-layout>
       </v-flex>
       <side-news></side-news>
@@ -219,21 +219,8 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .left-side {
   border-right: 1px solid gray;
-}
-
-.list {
-  color: #003399 !important;
-}
-
-.primarycolor {
-  color: #003399;
-}
-
-.v-list__tile__content {
-  align-items: center !important;
-  flex-direction: row !important;
 }
 </style>

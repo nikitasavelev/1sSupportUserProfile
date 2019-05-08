@@ -26,7 +26,7 @@ export default {
     roleTypes: roleTypes
   }),
   methods: {},
-  async mounted() {
+  mounted() {
     this.roleType = Store.getters.getRoleType;
   }
 };

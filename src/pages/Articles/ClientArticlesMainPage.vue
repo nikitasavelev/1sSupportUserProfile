@@ -2,7 +2,7 @@
   <main>
     <v-layout row wrap class="px-5">
       <v-flex xs9 class="left-side pr-2 pl-5 pt-3">
-        <v-list class="list">
+        <v-list style="color: #003399">
           <v-list-group v-for="i in items" :key="i.id" :prepend-icon="i.icon">
             <template slot="activator">
               <v-list-tile>
@@ -34,7 +34,7 @@
           </v-list-group>
         </v-list>
         <v-layout v-if="!isLoaded" justify-center mt-5>
-          <v-progress-circular :size="70" :width="7" color="primary" indeterminate></v-progress-circular>
+          <v-progress-circular :size="70" :width="7" color="primary" indeterminate/>
         </v-layout>
       </v-flex>
       <side-news></side-news>
@@ -79,16 +79,8 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .left-side {
   border-right: 1px solid gray;
-}
-
-.list {
-  color: #003399 !important;
-}
-
-.primarycolor {
-  color: #003399;
 }
 </style>
