@@ -14,6 +14,10 @@ export const pagesConfig = {
       caption: "Профиль"
     },
     {
+      link: "/articles",
+      caption: "Справочник"
+    },
+    {
       link: "/news",
       caption: "Новости"
     }

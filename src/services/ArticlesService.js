@@ -1,5 +1,6 @@
 import { serverAPIUrls } from "Constants/SERVER_API_URLS.js";
 import { requestToAPI } from "Constants/DEFAULT_REQUEST.js";
+import { get } from "https";
 
 class ArticlesService {
   async getArticle(articleId) {
@@ -12,6 +13,16 @@ class ArticlesService {
     return requestToAPI({
       url: `${serverAPIUrls.FOLDERS}/${folderId}`
     });
+  }
+
+  async getAvailableFolders(folderId) {
+    let folders = await this.getFolders(folderId);
+    let availableFolders = [];
+    for (let i = 0; i < folders.length; i++){
+      if (folders[i].isAvailable)
+        availableFolders.push(folders[i]);
+    }
+    return availableFolders;
   }
 
   async addFolder(parentId, name, isBlocked, isAvailable) {
