@@ -25,7 +25,8 @@ export const serverAPIUrls = Object.freeze({
   GET_ARTICLE: serverAPIDomain + "/articles",
   SET_ARTICLES_MARKS: serverAPIDomain + "/articles/marks",
 
-  GET_FOLDERS: serverAPIDomain + "/articles/folders",
+  FOLDERS: serverAPIDomain + "/articles/folders",
+
 
   GET_USER_INFO: serverAPIDomain + "/companies/clients/me",
 
