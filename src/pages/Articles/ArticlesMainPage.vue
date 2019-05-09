@@ -1,8 +1,8 @@
 <template>
   <div>
-    <admin-articles-main-page v-if="Number(roleType) === roleTypes.Admin"></admin-articles-main-page>
-    <operator-articles-main-page v-if="Number(roleType) === roleTypes.Operator"></operator-articles-main-page>
-    <client-articles-main-page v-if="Number(roleType) === roleTypes.Client"></client-articles-main-page>
+    <admin-articles-main-page v-if="Number(roleType) === roleTypes.Admin"/>
+    <operator-articles-main-page v-if="Number(roleType) === roleTypes.Operator"/>
+    <client-articles-main-page v-if="Number(roleType) === roleTypes.Client"/>
   </div>
 </template>
 

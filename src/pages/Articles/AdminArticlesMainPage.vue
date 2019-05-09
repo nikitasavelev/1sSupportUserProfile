@@ -55,7 +55,7 @@
           <v-progress-circular :size="70" :width="7" color="primary" indeterminate/>
         </v-layout>
       </v-flex>
-      <side-news></side-news>
+      <side-news/>
     </v-layout>
     <v-dialog v-model="addFolderDialog" max-width="800">
       <v-card>
@@ -78,6 +78,8 @@
         <v-card-title class="headline">Редактирование папки</v-card-title>
         <v-form ref="form" class="mx-3 pb-3">
           <v-text-field v-model="name" :rules="nameRules" label="Название" required></v-text-field>
+          
+          <change-directory v-bind:items="items"/>
 
           <v-checkbox class="pa-0" v-model="checkboxBlock" label="Заблокирована"></v-checkbox>
 
@@ -99,7 +101,7 @@
     <v-dialog v-model="unlockFolderDialog" max-width="800">
       <v-card>
         <v-card-title class="headline">Вы уверены, что хотите разблокировать папку?</v-card-title>
-        <v-btn color="primary" flat="flat" @click="deleteFolderDialog = false">Отменить</v-btn>
+        <v-btn color="primary" flat="flat" @click="unlockFolderDialog = false">Отменить</v-btn>
         <v-btn color="red" flat="flat" @click="confirmUnlock(true)">Разблокировать</v-btn>
       </v-card>
     </v-dialog>
@@ -109,10 +111,14 @@
 <script>
 import ArticlesService from "Services/ArticlesService.js";
 import SideNews from "Components/SideNews";
+import ChangeDirectory from "./ChangeDirectory";
 
 export default {
   name: "AdminArticlesMainPage",
-  components: { SideNews },
+  components: {
+    SideNews,
+    ChangeDirectory
+    },
   data: () => ({
     items: [],
     icons: [
