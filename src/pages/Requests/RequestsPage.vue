@@ -1,7 +1,7 @@
 <template>
   <main>
     <v-layout class="px-5 requests-page" row wrap>
-      <v-flex xs9 class="left-side pr-2 pl-5"> 
+      <v-flex v-if="isLoaded" xs9 class="left-side pr-2 pl-5"> 
         <div class="clearfix">
           <router-link :to="'/requests/0'" aria-label="Задать вопрос">
             <v-btn
@@ -16,6 +16,9 @@
         <hr>
         <request-item v-for="request in closedQuestions" :request="request" :key="request.id"></request-item>  
       </v-flex>
+      <v-layout v-else justify-center mt-5>
+        <v-progress-circular :size="70" :width="7" color="primary" indeterminate/>
+      </v-layout>
       <side-news></side-news>
     </v-layout>
   </main>
@@ -37,7 +40,8 @@ export default {
       news: [],
       activeQuestions: [],
       closedQuestions: [],
-      roleTypes: roleTypes
+      roleTypes: roleTypes,
+      isLoaded: false,
     };
   },
   methods: {
@@ -47,12 +51,13 @@ export default {
     }
   },
   async mounted() {
-    const allQuestions = await QuestionsService.getQuestions();
+    const allQuestions = await QuestionsService.getQuestions();  
     this.activeQuestions = allQuestions.activeQuestions.map(question => {
       question.isActive = true;
       return question;
     });
     this.closedQuestions = allQuestions.closedQuestions;
+    this.isLoaded = true;
   }
 };
 </script>
