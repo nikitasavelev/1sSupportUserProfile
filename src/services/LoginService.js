@@ -92,9 +92,6 @@ class LoginService {
       localStorage.removeItem("token");
       localStorage.removeItem("userId");
 
-      Store.dispatch("updateAuthorizationToken", null);
-      Store.dispatch("updateRoleType", null);
-      
       const revokeRefreshToken = await requestToAPI({
         url: `${serverAPIUrls.REFRESH_TOKENS}/${refreshToken}/${serverAPIUrls.REVOKE_TOKEN}`,
         method: "POST",
@@ -111,7 +108,8 @@ class LoginService {
         },
         body: {}
       });
-      
+      Store.dispatch("updateAuthorizationToken", null);
+      Store.dispatch("updateRoleType", null);      
     } catch (error) {
       return error;
     }
