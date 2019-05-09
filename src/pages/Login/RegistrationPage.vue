@@ -47,6 +47,7 @@
                 ></v-text-field>
                 <v-text-field
                     v-model="confirmPassword"
+                    class="mt-3"
                     :rules="passwordRules"
                     :type="'password'"
                     label="Подтвердите пароль"
@@ -104,7 +105,7 @@ export default {
       crmLogin: "",
       passwordRules: [
         v => !!v || "Пароль не может быть пуст",
-        v => v.length >= 6 || "Пароль должен быть длиннее 6 символов"
+        v => v.length >= 6 || "Длина пароля менее 6 символов"
       ],
       isSent: false,
       isProvider: false
