@@ -23,7 +23,7 @@ export default {
     marks: {}
   },
   mounted() {
-    if (this.marks.average !== 0 && this.marks.average != null){
+    if (this.marks.average !== 0 && this.marks.average != null) {
       this.marks.average = this.marks.average.toFixed(2)
       this.drawChart();
     }
@@ -65,8 +65,8 @@ export default {
   watch: {
     marks(value) {
       this.marks = value;
-      if (this.marks.average !== 0 && this.marks.average != null){
-        this.marks.average = this.marks.average.toFixed(2)
+      if (this.marks.average !== 0 && this.marks.average != null) {
+        this.marks.average = Number(this.marks.average).toFixed(2)
         this.drawChart();
       }
     }
