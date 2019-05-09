@@ -1,8 +1,11 @@
 <template>
-    <v-container fill-height class="mw-50">
+    <v-container fill-height class="mw-50 pb-0">
         <v-layout column justify-center align-center>
-        <image-with-aspect-ratio class="v-img-logo img-logo-login mb-5" :source="'/logo.jpeg'">
+        <image-with-aspect-ratio class="v-img-logo img-logo-login mb-1" :source="'/logo.jpeg'">
         </image-with-aspect-ratio>
+        <router-link :to="'/login'" style="font-size: 1.5rem;" class="mb-2">
+          Назад
+        </router-link>
         <form class="register-form" @submit="signUp">
             <v-layout align-center column class="pa-3 px-5">
                 <div class="login-system">Регистрация</div>
