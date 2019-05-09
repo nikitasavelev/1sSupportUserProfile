@@ -12,9 +12,9 @@
     "@aspnet/signalr": "^1.1.4",
     "axios": "^0.18.0",
     "material-design-icons-iconfont": "^4.0.3",
-    "vue": "^2.5.17",
+    "vue": "^2.6.10",
     "vue-router": "^3.0.1",
-    "vuetify": "^1.5.12",
+    "vuetify": "^1.5.14",
     "vuex": "^3.0.1"
   },
   "devDependencies": {
@@ -31,7 +31,7 @@
     "google-charts": "^2.0.0",
     "sass-loader": "^7.0.1",
     "tar": "^4.4.8",
-    "vue-template-compiler": "^2.5.17"
+    "vue-template-compiler": "^2.6.10"
   },
   "eslintConfig": {
     "root": true,
