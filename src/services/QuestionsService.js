@@ -69,9 +69,9 @@ class QuestionsService {
     });
   }
 
-  async getMessages(questionId) {
+  async getMessages(questionId, offset=0, count=10) {
     return requestToAPI({
-      url: `${serverAPIUrls.QUESTIONS}${questionId}${serverAPIUrls.MESSAGES}`,
+      url: `${serverAPIUrls.QUESTIONS}${questionId}${serverAPIUrls.MESSAGES}?offset=${offset}&count=${count}`,
       modifyDataCallback: data => {
         data.forEach(message => {
           message.createdAt = formatDate(message.createdAt);

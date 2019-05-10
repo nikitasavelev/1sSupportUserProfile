@@ -1,10 +1,12 @@
 <template>
-    <v-layout column v-if="isLoaded">
+    <v-layout column v-if="isLoaded" class="chat" ref="chat">
+        <div ref="highestElementToDownloadMessages"/>
         <v-layout
             column
             v-for="(message, index) in messages"
             :key="message.id"
             class="clearfix chat-message-and-time"
+            style="min-height: 60px !important;"
             :align-end="message.isMe"
             :align-start="!message.isMe">
             <v-layout                 
@@ -13,7 +15,7 @@
                 class="chat-message-name"
                 align-end
             >
-                {{message.firstName}}
+              {{message.firstName}}
             </v-layout>            
             <v-card
                 class="chat-message pa-2 mt-2"
@@ -48,7 +50,10 @@ export default {
     return {
       messages: [],
       isLoaded: false,
-      notificationsConnection: null
+      notificationsConnection: null,
+      offset: 10,
+      messageHeight: 0,
+      isFirstScroll: true,
     };
   },
   async mounted() {
@@ -64,21 +69,53 @@ export default {
         );
       })
       .catch(err => console.log(err));
-
     this.notificationsConnection.on("message_added", data => {
       data.isMe = false;
       data.createdAt = formatDate(data.createdAt);
       this.messages.push(data);
+    });   
+
+    this.$nextTick(() => {
+      this.observer = new IntersectionObserver(this.intersectionObserverCallback);
+      this.observer.observe(this.$refs.highestElementToDownloadMessages);
+      this.$emit("messagesLoaded");
     });
   },
   async beforeDestroy() {
     this.notificationsConnection.stop();
+    this.observer.unobserve(this.$refs.highestElementToDownloadMessages)
   },
   methods: {
     sendOwnMessage(message) {
       message.isMe = true;
       this.messages.push(message);
-    }
+    },
+    async intersectionObserverCallback(entries) {
+      // if scroll is moving towards top
+      if (entries[0].boundingClientRect.y > 0 && !this.isFirstScroll) {
+        this.messageHeight = this.$root.$el.querySelector(".chat-message-and-time").offsetHeight;
+        this.offset += 5;
+        const newMessages = await QuestionsService.getMessages(this.questionId, this.offset, 5);
+        // if no messages recieved then no messages left
+        if (newMessages.length === 0) {
+          this.observer.unobserve(this.$refs.highestElementToDownloadMessages)
+        } else {
+          this.messages.unshift(...newMessages);
+          this.$refs.chat.scrollBy({ 
+            top: this.messageHeight * 5,
+            left: 0, 
+            behavior: 'auto' 
+          });
+        }
+      }
+      if (this.isFirstScroll) {
+        this.$refs.chat.scrollTo({
+          top: this.$refs.chat.offsetHeight + 50,
+          behavior: 'smooth' 
+        });            
+        this.isFirstScroll = false; 
+      } 
+    }  
   }
 };
 </script>
@@ -86,11 +123,13 @@ export default {
 <style scoped>
 .chat-message {
   max-width: 40vw;
+  min-height: 3rem;
 }
 
 .chat-message-time {
   color: #757575;
   font-size: 0.6rem;
+  min-height: 60px !important;
 }
 
 .left {
@@ -104,5 +143,10 @@ export default {
 .chat-message-name {
   color: blue;
   font-size: 1.2rem;
+}
+
+.chat {
+  overflow-y: scroll;
+  height: 40vh;
 }
 </style>
