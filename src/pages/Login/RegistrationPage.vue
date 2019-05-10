@@ -1,8 +1,11 @@
 <template>
-    <v-container fill-height class="mw-50">
+    <v-container fill-height class="mw-50 pb-0">
         <v-layout column justify-center align-center>
-        <image-with-aspect-ratio class="v-img-logo img-logo-login mb-5" :source="'/logo.jpeg'">
+        <image-with-aspect-ratio class="v-img-logo img-logo-login mb-1" :source="'/logo.jpeg'">
         </image-with-aspect-ratio>
+        <router-link :to="'/login'" style="font-size: 1.5rem;" class="mb-2">
+          Назад
+        </router-link>
         <form class="register-form" @submit="signUp">
             <v-layout align-center column class="pa-3 px-5">
                 <div class="login-system">Регистрация</div>
@@ -44,6 +47,7 @@
                 ></v-text-field>
                 <v-text-field
                     v-model="confirmPassword"
+                    class="mt-3"
                     :rules="passwordRules"
                     :type="'password'"
                     label="Подтвердите пароль"
@@ -101,7 +105,7 @@ export default {
       crmLogin: "",
       passwordRules: [
         v => !!v || "Пароль не может быть пуст",
-        v => v.length >= 6 || "Пароль должен быть длиннее 6 символов"
+        v => v.length >= 6 || "Длина пароля менее 6 символов"
       ],
       isSent: false,
       isProvider: false

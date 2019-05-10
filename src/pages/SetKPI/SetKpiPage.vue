@@ -25,9 +25,13 @@
             </th>
         </thead>
         <tbody>
-            <tr>                
-                <td colspan="2"
-                    align="center"
+            <tr> 
+                <td align="center" class="pa-2">
+                    <v-checkbox
+                        v-model="isAllChecked"                        
+                    ></v-checkbox>
+                </td>               
+                <td align="center"
                     >
                     <v-btn
                         class="save-kpi btn ml-0 pa-1 px-3 text-capitalize"
@@ -130,6 +134,7 @@ export default {
       fromDate: new Date().toISOString().substr(0, 10),
       toDate: new Date(Date.now() + 1000*60*60*24*7).toISOString().substr(0, 10),
       arePickersShown: false,
+      isAllChecked: false,
     };
   },
   async mounted() {
@@ -159,6 +164,11 @@ export default {
     },
     hasText(ref){
         return this.$refs[ref][0].lazyValue && this.$refs[ref][0].lazyValue.length > 0;
+    }
+  },
+  watch:{
+    isAllChecked(){
+        this.operators.forEach(operator => operator.isChecked = this.isAllChecked);
     }
   }
 };
