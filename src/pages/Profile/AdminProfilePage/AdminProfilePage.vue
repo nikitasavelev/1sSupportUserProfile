@@ -21,10 +21,12 @@
                 v-for="operator in operatorsAnalytics"
                 :info="operator"
                 :key="operator.employeeId"
+                :min-max-values="minMaxValues"
               />
 
               <table-for-operator-analytics
               :info="averageKpi"
+              :min-max-values="minMaxValues"
               />
             </tbody>
           </table>
@@ -44,14 +46,16 @@ import DatePickers from "Components/DatePickers";
 import UsersService from "Services/UsersService";
 import TableForOperatorAnalytics from "./TableForOperatorAnalytics";
 import TableInfo from "./TableInfo";
-import {calculateAnalytics} from "Constants/COMMON_METHODS.js";
+import { calculateAnalytics } from "Constants/COMMON_METHODS.js";
 
 export default {
   name: "AdminProfilePage",
   components: { DatePickers, TableForOperatorAnalytics, TableInfo },
   data() {
     return {
-      fromDate: new Date(Date.now() - 1000*60*60*24*7).toISOString().substr(0, 10),
+      fromDate: new Date(Date.now() - 1000 * 60 * 60 * 24 * 7)
+        .toISOString()
+        .substr(0, 10),
       toDate: new Date().toISOString().substr(0, 10),
       arePickersShown: false,
       headers: [
@@ -69,7 +73,8 @@ export default {
       ],
       operatorsAnalytics: [],
       averageKpi: {},
-      isLoaded: false
+      isLoaded: false,
+      minMaxValues: {}
     };
   },
   async mounted() {
@@ -78,11 +83,78 @@ export default {
   methods: {
     async getOperatorsAnalytics(fromDate, toDate) {
       this.isLoaded = false;
-      const response = await UsersService.getOperatorsAnalytics(fromDate, toDate);
+      const response = await UsersService.getOperatorsAnalytics(
+        fromDate,
+        toDate
+      );
       this.operatorsAnalytics = response.operators;
       this.averageKpi = response.averageKpi;
       this.isLoaded = true;
       calculateAnalytics(this.operatorsAnalytics);
+      this.calculateMinMaxAverageStats(this.operatorsAnalytics);
+    },
+    calculateMinMaxAverageStats(analytics) {
+      this.initMinMaxValues(this.minMaxValues);
+      analytics.forEach(operator => {
+        const [valuesAndPaths, propertyNames] = this.initValuesAndPropertyNames(operator);
+        valuesAndPaths.forEach((value, index) => {
+          this.updateMinMaxValue(value, this.minMaxValues, propertyNames[index]);
+        })
+      });
+    },
+    updateMinMaxValue(propertyValue, minMaxValues, minMaxValuesPath) {
+      if (propertyValue > minMaxValues[minMaxValuesPath].max) {
+        minMaxValues[minMaxValuesPath].max = propertyValue;
+      }
+      if (propertyValue < minMaxValues[minMaxValuesPath].min) {
+        minMaxValues[minMaxValuesPath].min = propertyValue;
+      }
+    },
+    initMinMaxValues(minMaxValues = {}) {
+      [
+        "fromMango",
+        "fromSystem",
+        "averageInSeconds",
+        "maxInSeconds",
+        "onLineAverageInSeconds",
+        "resolvedCountsTotal",
+        "total",
+        "incomes",
+        "outcomes",
+        "averageMark",
+      ].forEach(valuePath => {
+        minMaxValues[valuePath] = {
+          min: Number.MAX_SAFE_INTEGER,
+          max: -1
+        }
+      })
+    },
+    initValuesAndPropertyNames(operator) {
+        const valuesAndPaths = [
+          operator.calculatedKPI.questions.createdCounts.fromMango,
+          operator.calculatedKPI.questions.createdCounts.fromSystem,
+          operator.calculatedKPI.calls.durations.averageInSeconds,
+          operator.calculatedKPI.calls.durations.maxInSeconds,
+          operator.calculatedKPI.calls.durations.onLineAverageInSeconds,
+          operator.calculatedKPI.questions.resolvedCounts.total,
+          operator.calculatedKPI.calls.counts.total,
+          operator.calculatedKPI.calls.counts.incomes,
+          operator.calculatedKPI.calls.counts.outcomes,
+          operator.calculatedKPI.questions.marks.average,
+        ];
+        const propertyNames = [
+          "fromMango",
+          "fromSystem",
+          "averageInSeconds",
+          "maxInSeconds",
+          "onLineAverageInSeconds",
+          "resolvedCountsTotal",
+          "total",
+          "incomes",
+          "outcomes",
+          "averageMark"
+        ]
+        return [valuesAndPaths, propertyNames]
     }
   },
   watch: {
