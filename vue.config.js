@@ -11,6 +11,6 @@ module.exports = {
         Store: path.resolve(__dirname, "src/store")
       }
     },
-    devtool: "eval-source-map"
+    devtool: process.env.NODE_ENV === "production" ? "none" : "eval-source-map"
   }
 };
