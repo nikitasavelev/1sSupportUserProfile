@@ -11,7 +11,12 @@
               <v-list-tile>
                 <v-list-tile-content style="align-items: center; flex-direction: row;">
                   <v-list-tile-title>{{ i.name }}</v-list-tile-title>
-                  <v-btn v-if="!i.isBlocked" flat small @click="updateFolder(i)">Редактировать</v-btn>
+                  <v-btn
+                    v-if="!i.isBlocked"
+                    flat
+                    small
+                    @click="updateFolder(i)"
+                  >Редактировать</v-btn>
                   <v-btn
                     v-if="!i.isBlocked"
                     flat
@@ -22,12 +27,26 @@
                 </v-list-tile-content>
               </v-list-tile>
             </template>
-            
+
             <v-list-group v-for="child in i.children" :key="child.id" sub-group class="ml-4">
               <template slot="activator">
                 <v-list-tile>
-                  <v-list-tile-content>
+                  <v-list-tile-content style="align-items: center; flex-direction: row;">
                     <v-list-tile-title>{{ child.name }}</v-list-tile-title>
+                    <v-btn
+                    v-if="!child.isBlocked"
+                    flat
+                    small
+                    @click="updateFolder(child)"
+                    class="mr-5"
+                  >Редактировать</v-btn>
+                  <v-btn
+                    v-if="!child.isBlocked"
+                    flat
+                    small
+                    color="red"
+                    @click="deleteFolder(child.id)"
+                  >Удалить</v-btn>
                   </v-list-tile-content>
                 </v-list-tile>
               </template>
@@ -37,8 +56,21 @@
                 :key="grandchild.id"
                 class="ml-5 pl-5"
               >
-                <v-list-tile-content>
+                <v-list-tile-content style="align-items: center; flex-direction: row;">
                   <v-list-tile-title>{{ grandchild.name }}</v-list-tile-title>
+                  <v-btn
+                    v-if="!grandchild.isBlocked"
+                    flat
+                    small
+                    @click="updateFolder(grandchild)"
+                  >Редактировать</v-btn>
+                  <v-btn
+                    v-if="!grandchild.isBlocked"
+                    flat
+                    small
+                    color="red"
+                    @click="deleteFolder(grandchild.id)"
+                  >Удалить</v-btn>
                 </v-list-tile-content>
               </v-list-tile>
             </v-list-group>
@@ -69,8 +101,12 @@
         <v-card-title class="headline">Редактирование папки</v-card-title>
         <v-form ref="form" class="mx-3 pb-3">
           <v-text-field v-model="name" :rules="nameRules" label="Название" required></v-text-field>
-
-
+          <change-directory
+            @changeDirectory="changeDirectory"
+            v-bind:items="fullItems"
+            v-bind:folderId="folderId"
+            v-bind:parentId="parentId"
+          />
           <v-checkbox class="pa-0" v-model="checkboxAvailable" label="Доступна для клиентов"></v-checkbox>
 
           <v-btn color="red" flat="flat" @click="reset">Отменить</v-btn>
@@ -92,10 +128,15 @@
 <script>
 import ArticlesService from "Services/ArticlesService.js";
 import SideNews from "Components/SideNews";
+import ChangeDirectory from "./ChangeDirectory";
 
 export default {
   name: "ArticlesMainPage",
-  components: { SideNews },
+  components:
+  {
+    SideNews,
+    ChangeDirectory
+  },
   data: () => ({
     items: [],
     icons: [
@@ -106,6 +147,7 @@ export default {
       "info",
       "description"
     ],
+    fullItems: [],
     isLoaded: false,
     addFolderDialog: false,
     updateFolderDialog: false,
@@ -127,12 +169,14 @@ export default {
           this.items[i].icon = "folder";
         }
       }
+      this.fullItems = this.items.slice();
+      this.fullItems.unshift({ id: 0, name: "[Корневой каталог]" });
       this.isLoaded = true;
     },
     reset() {
       this.addFolderDialog = false;
       this.updateFolderDialog = false;
-      this.name = '';
+      this.name = "";
       this.checkboxAvailable = false;
       this.checkboxBlock = false;
       this.valid = false;
@@ -148,6 +192,9 @@ export default {
         await this.getItems();
         this.reset();
       }
+    },
+    changeDirectory(data) {
+      this.parentId = data.parentId;
     },
     updateFolder(folder) {
       this.folderId = folder.id;
