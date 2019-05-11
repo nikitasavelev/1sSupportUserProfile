@@ -3,10 +3,9 @@
         <v-layout column justify-center align-center>
             <div style="text-align:center; font-size: 2rem;">{{operatorsName}}</div>
             <date-pickers
-                :are-pickers-shown="arePickersShown"
-                @update:fromDate="fromDate = $event"
-                @update:toDate="toDate = $event">
-            </date-pickers>
+              :are-pickers-shown="arePickersShown"
+              @update:fromDate="fromDate = $event"
+              @update:toDate="toDate = $event"/>
         </v-layout>
         <v-layout row>            
             <average-mark :marks="marks"/>
@@ -23,7 +22,6 @@
                         {{maxCallTime}} m
                     </div>
                 </div>
-                <div></div>
             </v-layout>
         </v-layout>
         <average-online-time-per-day :average-online-time-per-day="averageOnlineTimePerDay" />

@@ -1,8 +1,7 @@
 <template>
     <v-container fill-height class="mw-50 pb-0">
         <v-layout column justify-center align-center>
-        <image-with-aspect-ratio class="v-img-logo img-logo-login mb-1" :source="'/logo.jpeg'">
-        </image-with-aspect-ratio>
+        <image-with-aspect-ratio class="v-img-logo img-logo-login mb-1" :source="'/logo.jpeg'"/>
         <router-link :to="'/login'" style="font-size: 1.5rem;" class="mb-2">
           Назад
         </router-link>

@@ -2,10 +2,9 @@
     <v-container @click="arePickersShown = !arePickersShown" align-center>
         <hr>
         <date-pickers
-            :are-pickers-shown="arePickersShown"
-            @update:fromDate="fromDate = $event"
-            @update:toDate="toDate = $event">
-        </date-pickers>
+          :are-pickers-shown="arePickersShown"
+          @update:fromDate="fromDate = $event"
+          @update:toDate="toDate = $event"/>
         <hr>
         <table-info/>
         <v-container align-center justify-center class="pr-3">
@@ -14,20 +13,20 @@
               cellspacing="5"
               style="margin: auto"
           >
-              <thead>
-                  <th v-for="header in headers" :key="header" class="pa-3">{{header}}</th>
-              </thead>
-              <tbody v-if="operatorsAnalytics">
-                  <table-for-operator-analytics
-                    v-for="operator in operatorsAnalytics"
-                    :info="operator"
-                    :key="operator.employeeId"
-                  />
+            <thead>
+              <th v-for="header in headers" :key="header" class="pa-3">{{header}}</th>
+            </thead>
+            <tbody v-if="operatorsAnalytics">
+              <table-for-operator-analytics
+                v-for="operator in operatorsAnalytics"
+                :info="operator"
+                :key="operator.employeeId"
+              />
 
-                  <table-for-operator-analytics
-                  :info="averageKpi"
-                  />
-              </tbody>
+              <table-for-operator-analytics
+              :info="averageKpi"
+              />
+            </tbody>
           </table>
         </v-container>
         <v-layout v-if="!isLoaded" justify-center mt-5>
@@ -36,7 +35,7 @@
                 :width="7"
                 color="primary"
                 indeterminate
-                ></v-progress-circular>
+              />
             </v-layout>
     </v-container>
 </template>

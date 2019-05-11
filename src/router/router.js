@@ -103,11 +103,16 @@ const router = new Router({
 });
 
 router.beforeEach((to, from, next) => {
-  if (!Store.getters.getAuthorizationToken && to.path !== "/login" && to.path !== "/register") {
+  if (requiresAuthorization(to)) {
     next({ name: "LoginPage" });
   } else {
     next();
   }
 });
 
+function requiresAuthorization(to) {
+  return (Store.getters.getAuthorizationToken == "null" || !Store.getters.getAuthorizationToken)
+   && to.path !== "/login" && to.path !== "/register"
+  
+}
 export default router;

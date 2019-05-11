@@ -5,10 +5,6 @@ import Store from "Store/store.js";
 import { roleTypes } from "Constants/ROLE_TYPES.js";
 
 class QuestionsService {
-  // async getTitles() {
-  //   return requestToAPI(serverAPIUrls.GET_SUPPORT_MESSAGES_TITLES);
-  // }
-
   async getQuestion(questionId = 1) {
     return requestToAPI({
       url: `${serverAPIUrls.QUESTIONS}${questionId}`,

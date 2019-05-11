@@ -1,8 +1,8 @@
 <template>
     <div class="pa-2 px-5">
-      <client-profile-page v-if="Number(roleType) === roleTypes.Client"></client-profile-page>
-      <operator-profile-page v-if="Number(roleType) === roleTypes.Operator"></operator-profile-page>
-      <admin-profile-page v-if="Number(roleType) === roleTypes.Admin"></admin-profile-page>
+      <client-profile-page v-if="Number(roleType) === roleTypes.Client"/>
+      <operator-profile-page v-if="Number(roleType) === roleTypes.Operator"/>
+      <admin-profile-page v-if="Number(roleType) === roleTypes.Admin"/>
     </div>
 </template>
 <script>

@@ -18,7 +18,7 @@
               <div class="text-uppercase subheader py-2">Мои продукты</div>
               <hr>
               <div v-for="product in profileData.products" :key="product.name" class="d-inline-block mx-2">
-                <image-with-aspect-ratio :source="product.imageUrl" class="product-image"></image-with-aspect-ratio>
+                <image-with-aspect-ratio :source="product.imageUrl" class="product-image"/>
                 <div class="client-profile-page-product-name">{{product.name}}</div>
                 <p class="client-profile-page-check-updates"
                   title="check updates for product"
@@ -29,15 +29,15 @@
               </div>
             </div>
             <v-layout v-else justify-center mt-5>
-                <v-progress-circular
-                    :size="70"
-                    :width="7"
-                    color="primary"
-                    indeterminate
-                    ></v-progress-circular>
+              <v-progress-circular
+                :size="70"
+                :width="7"
+                color="primary"
+                indeterminate
+              />
             </v-layout>
         </v-flex>
-        <side-news></side-news> 
+        <side-news/>
     </v-layout>
   </main>
 </template>

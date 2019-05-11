@@ -70,7 +70,7 @@
               :width="7"
               color="primary"
               indeterminate
-              ></v-progress-circular>
+            />
         </v-layout>
     </v-container>
   </main>
@@ -93,8 +93,7 @@ export default {
     };
   },
   components: { ChatMessages },
-  async mounted() {
-    //this.titles = await QuestionsService.getTitles();    
+  async mounted() {   
     if (this.questionId !== "0") {
       this.request = await QuestionsService.getQuestion(this.questionId);
       // ids 5 and 6 means resolved (by client or by operator)
