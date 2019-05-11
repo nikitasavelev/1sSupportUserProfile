@@ -8,10 +8,9 @@
       </div>
       <hr>
       <date-pickers
-       :are-pickers-shown="arePickersShown"
-       @update:fromDate="fromDate = $event"
-       @update:toDate="toDate = $event">
-      </date-pickers>
+        :are-pickers-shown="arePickersShown"
+        @update:fromDate="fromDate = $event"
+        @update:toDate="toDate = $event"/>
       <hr>
       <graphical-operator-analytics
        v-if="showGraphs"

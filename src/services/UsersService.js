@@ -2,6 +2,10 @@ import { serverAPIUrls } from "Constants/SERVER_API_URLS.js";
 import { requestToAPI } from "Constants/DEFAULT_REQUEST.js";
 import formatDate from "Constants/COMMON_METHODS.js";
 
+const weekBefore = new Date(Date.now() - 1000 * 60 * 60 * 24 * 7).toISOString().substr(0, 10);
+const todayInISOFormat = new Date().toISOString().substr(0, 10);
+const weekAfter = new Date(Date.now() + 1000 * 60 * 60 * 24 * 7).toISOString().substr(0, 10);
+
 class UsersService {
   async getUserInfo() {
     return requestToAPI({
@@ -25,25 +29,15 @@ class UsersService {
     });
   }
 
-  async getOperatorAnalytics(
-    operatorId,
-    fromDate = new Date(Date.now() - 1000 * 60 * 60 * 24 * 7).toISOString().substr(0, 10),
-    toDate = new Date().toISOString().substr(0, 10)
-  ) {
+  async getOperatorAnalytics(operatorId, fromDate = weekBefore, toDate = todayInISOFormat) {
     return requestToAPI({ url: `${serverAPIUrls.GET_OPERATOR_ANALYTICS}/${operatorId}?from=${fromDate}&to=${toDate}` });
   }
 
-  async getMyAnalytics(
-    fromDate = new Date(Date.now() - 1000 * 60 * 60 * 24 * 7).toISOString().substr(0, 10),
-    toDate = new Date().toISOString().substr(0, 10)
-  ) {
+  async getMyAnalytics(fromDate = weekBefore, toDate = todayInISOFormat) {
     return requestToAPI({ url: `${serverAPIUrls.ANALYTICS}/me?from=${fromDate}&to=${toDate}` });
   }
 
-  async getOperatorsAnalytics(
-    fromDate = new Date(Date.now() - 1000 * 60 * 60 * 24 * 7).toISOString().substr(0, 10),
-    toDate = new Date().toISOString().substr(0, 10)
-  ) {
+  async getOperatorsAnalytics(fromDate = weekBefore, toDate = todayInISOFormat) {
     return requestToAPI({
       url: `${serverAPIUrls.GET_OPERATORS_ANALYTICS}?from=${fromDate}&to=${toDate}`,
       modifyDataCallback: analytics => {
@@ -56,13 +50,7 @@ class UsersService {
     });
   }
 
-  async setKpi(
-    kpiType,
-    kpiValue,
-    employeeIds,
-    fromDate = new Date().toISOString().substr(0, 10),
-    toDate = new Date(Date.now() + 1000 * 60 * 60 * 24).toISOString().substr(0, 10)
-  ) {
+  async setKpi(kpiType, kpiValue, employeeIds, fromDate = todayInISOFormat, toDate = weekAfter) {
     return requestToAPI({
       url: serverAPIUrls.SET_KPI,
       method: "POST",

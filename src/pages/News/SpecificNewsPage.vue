@@ -7,7 +7,7 @@
             <p class="specific-news-page-created-date">{{news.createdAt}}</p>
             <div class="specific-news-page-text">{{news.text}}</div>
             <v-layout justify-center class="clearfix">
-            <image-with-aspect-ratio :source="news.imageUrl" class="specific-news-image"></image-with-aspect-ratio>
+            <image-with-aspect-ratio :source="news.imageUrl" class="specific-news-image"/>
             </v-layout>
             <v-layout row justify-center>
               <span class="text-uppercase specific-news-page-mark mt-3">Оцените новость:</span>
@@ -26,7 +26,7 @@
               :width="7"
               color="primary"
               indeterminate
-              ></v-progress-circular>
+            />
           </v-layout>
         </main>
     </v-container>

@@ -1,6 +1,8 @@
 import { serverAPIUrls } from "Constants/SERVER_API_URLS.js";
 import { requestToAPI } from "Constants/DEFAULT_REQUEST.js";
 import Store from "Store/store.js";
+import { setLocalStorageValues, removeLocalStorageValues } from "Constants/COMMON_METHODS.js";
+
 class LoginService {
   async signIn(email, password) {
     try {
@@ -15,10 +17,7 @@ class LoginService {
           password
         }
       });
-      // TO DO: refactor this to one function
-      localStorage.setItem("refreshToken", response.refreshToken);
-      localStorage.setItem("expires", response.expires);
-      localStorage.setItem("userId", response.userId);
+      setLocalStorageValues(["refreshToken", "expires", "userId"], response);
       return response;
     } catch (error) {
       return error;
@@ -85,13 +84,8 @@ class LoginService {
   async logout() {
     try {
       const refreshToken = localStorage.getItem("refreshToken");
-      // TO DO: refactor this to one function
-      localStorage.removeItem("refreshToken");
-      localStorage.removeItem("expires");
-      localStorage.removeItem("roleType");
-      localStorage.removeItem("token");
-      localStorage.removeItem("userId");
-      Store.dispatch("updateRoleType", null); 
+      removeLocalStorageValues(["refreshToken", "expires", "roleType", "token", "userId"]);
+      Store.dispatch("updateRoleType", null);
       const revokeRefreshToken = await requestToAPI({
         url: `${serverAPIUrls.REFRESH_TOKENS}/${refreshToken}/${serverAPIUrls.REVOKE_TOKEN}`,
         method: "POST",
@@ -108,7 +102,7 @@ class LoginService {
         },
         body: {}
       });
-      Store.dispatch("updateAuthorizationToken", null);           
+      Store.dispatch("updateAuthorizationToken", null);
     } catch (error) {
       return error;
     }
