@@ -5,7 +5,11 @@
             <date-pickers
               :are-pickers-shown="arePickersShown"
               @update:fromDate="fromDate = $event"
-              @update:toDate="toDate = $event"/>
+              @update:toDate="toDate = $event"
+              :fromDate="fromDate"
+              :toDate="toDate"
+              :maximumDate="new Date().toISOString().substr(0, 10)"
+              />
         </v-layout>
         <v-layout row>            
             <average-mark :marks="marks"/>
@@ -61,13 +65,17 @@ export default {
       totalCallsDuration: 0,
       maxCallTime: 0,
       operatorsName: "",
-      fromDate: "",
-      toDate: "",
+      fromDate: new Date().toISOString().substr(0, 10),
+      toDate: new Date().toISOString().substr(0, 10),
       arePickersShown: false,
     };
   },
+  created(){
+    this.fromDate = this.$route.params.fromDate || new Date().toISOString().substr(0, 10);
+    this.toDate = this.$route.params.toDate || new Date().toISOString().substr(0, 10);
+  },
   async mounted() {
-    this.drawGraphs();
+    this.drawGraphs();    
   },
   methods: {
     async drawGraphs(fromDate, toDate){

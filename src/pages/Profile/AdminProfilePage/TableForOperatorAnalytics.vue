@@ -5,7 +5,7 @@
                 v-if="info.caption !== 'Средний показатель'" 
                 :to="{
                   name: 'KpiPage',
-                  params: {id: String(employeeId)}
+                  params: {id: String(employeeId), fromDate, toDate}
                 }">
                 {{info.caption}}
             </router-link>
@@ -76,7 +76,20 @@
 <script>
 export default {
   name: "TableForOperatorAnalytics",
-  props: { info: Object, minMaxValues: Object },
+  props: {
+    info: Object,
+    minMaxValues: Object,
+    fromDate: {
+      type: String,
+      default: new Date().toISOString().substr(0, 10),
+      required: false
+    },
+    toDate: {
+      type: String,
+      default: new Date().toISOString().substr(0, 10),
+      required: false
+    }
+  },
   data() {
     return {
       employeeId: ""
@@ -103,7 +116,11 @@ export default {
   },
   methods: {
     hasDataToShow() {
-      if (this.analytics.calls && this.analytics.questions && this.minMaxValues) {
+      if (
+        this.analytics.calls &&
+        this.analytics.questions &&
+        this.minMaxValues
+      ) {
         if (Array.isArray(this.analytics)) {
           return this.analytics.length > 0;
         } else {
@@ -112,21 +129,25 @@ export default {
       }
       return false;
     },
-    moreBetter(value, minMaxValue){
+    moreBetter(value, minMaxValue) {
       return {
-        'best': this.minMaxValues != null && Number(value.toFixed(2)) === 
-          Number(minMaxValue.max.toFixed(2)),
-        'worst': this.minMaxValues != null && Number(value.toFixed(2)) === 
-          Number(minMaxValue.min.toFixed(2)),
-      }
+        best:
+          this.minMaxValues != null &&
+          Number(value.toFixed(2)) === Number(minMaxValue.max.toFixed(2)),
+        worst:
+          this.minMaxValues != null &&
+          Number(value.toFixed(2)) === Number(minMaxValue.min.toFixed(2))
+      };
     },
-    lessBetter(value, minMaxValue){
+    lessBetter(value, minMaxValue) {
       return {
-        'best': this.minMaxValues != null &&
-         Number(value.toFixed(2)) === Number(minMaxValue.min.toFixed(2)),
-        'worst': this.minMaxValues != null &&
-         Number(value.toFixed(2)) === Number(minMaxValue.max.toFixed(2)),        
-      }
+        best:
+          this.minMaxValues != null &&
+          Number(value.toFixed(2)) === Number(minMaxValue.min.toFixed(2)),
+        worst:
+          this.minMaxValues != null &&
+          Number(value.toFixed(2)) === Number(minMaxValue.max.toFixed(2))
+      };
     }
   }
 };

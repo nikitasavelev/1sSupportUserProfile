@@ -11,7 +11,9 @@
                     class="pl-3"
                     :are-pickers-shown="arePickersShown"
                     @update:fromDate="fromDate = $event"
-                    @update:toDate="toDate = $event"/>
+                    @update:toDate="toDate = $event"
+                    :minimumDate="new Date().toISOString().substr(0, 10)"
+                    />
             </th>
             <th v-for="(header, index) in headers"
                 :key="index"

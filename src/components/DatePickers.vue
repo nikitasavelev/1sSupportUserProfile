@@ -4,7 +4,7 @@
         <div class="datepicker-wrapper">
           <label>
             <input
-              v-model="fromDate"
+              v-model="fromDateData"
               class="datepicker-input ml-2 pa-1"
               @click="toggleDatePickerFrom"
               name="date from"
@@ -13,10 +13,11 @@
               > 
           </label> 
           <v-date-picker 
-            v-model="fromDate"
+            v-model="fromDateData"
             v-if="showDatePickerFrom"
             @input="showDatePickerFrom = false"
             class="datepicker"
+            :min="minDate"
             :max="maxDate"            
             >
           </v-date-picker>
@@ -25,7 +26,7 @@
         <div class="datepicker-wrapper">
           <label>
             <input
-              v-model="toDate"
+              v-model="toDateData"
               class="datepicker-input pa-1"
               @click="toggleDatePickerTo"
               name="date to"
@@ -34,10 +35,11 @@
               > 
           </label> 
           <v-date-picker 
-            v-model="toDate"
+            v-model="toDateData"
             v-if="showDatePickerTo"
             @input="showDatePickerTo = false"
             class="datepicker"
+            :min="minDate"
             :max="maxDate"
             >
           </v-date-picker>
@@ -53,27 +55,32 @@ export default {
     fromDate: {
       type: String,
       default: new Date().toISOString().substr(0, 10),
+      required: false,
     },
     toDate: {
       type: String,
-      default: new Date().toISOString().substr(0, 10)
+      default: new Date().toISOString().substr(0, 10),
+      required: false,
     },
-    minDate: {
+    minimumDate: {
       type: String,
       default: '0000-01-01',
-      required: false
+      required: false,
     },
-    maxDate: {
+    maximumDate: {
       type: String,
       default: '2099-01-01',
       required: false
     }
-    // Date.now() - 1000*60*60*24*7
   },
   data() {
     return {
       showDatePickerFrom: false,
       showDatePickerTo: false,
+      minDate: this.minimumDate,
+      maxDate: this.maximumDate,
+      fromDateData: this.fromDate,
+      toDateData: this.toDate,
     };
   },
   methods: {
@@ -93,12 +100,11 @@ export default {
       this.showDatePickerFrom = false;
       this.showDatePickerTo = false;
     },
-    fromDate() {
-      this.$emit("update:fromDate", this.fromDate);
-      console.log(this.$router.history.current.path);
+    fromDateData() {
+      this.$emit("update:fromDate", this.fromDateData);
     },
-    toDate() {
-      this.$emit("update:toDate", this.toDate);
+    toDateData() {
+      this.$emit("update:toDate", this.toDateData);
     }
   }
 };

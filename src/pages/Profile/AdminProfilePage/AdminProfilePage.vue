@@ -4,7 +4,9 @@
         <date-pickers
           :are-pickers-shown="arePickersShown"
           @update:fromDate="fromDate = $event"
-          @update:toDate="toDate = $event"/>
+          @update:toDate="toDate = $event"
+          :maximumDate="new Date().toISOString().substr(0, 10)"
+          />
         <hr>
         <table-info/>
         <v-container align-center justify-center class="pr-3">
@@ -22,6 +24,8 @@
                 :info="operator"
                 :key="operator.employeeId"
                 :min-max-values="minMaxValues"
+                :fromDate="fromDate"
+                :toDate="toDate"
               />
 
               <table-for-operator-analytics
@@ -96,10 +100,16 @@ export default {
     calculateMinMaxAverageStats(analytics) {
       this.initMinMaxValues(this.minMaxValues);
       analytics.forEach(operator => {
-        const [valuesAndPaths, propertyNames] = this.initValuesAndPropertyNames(operator);
+        const [valuesAndPaths, propertyNames] = this.initValuesAndPropertyNames(
+          operator
+        );
         valuesAndPaths.forEach((value, index) => {
-          this.updateMinMaxValue(value, this.minMaxValues, propertyNames[index]);
-        })
+          this.updateMinMaxValue(
+            value,
+            this.minMaxValues,
+            propertyNames[index]
+          );
+        });
       });
     },
     updateMinMaxValue(propertyValue, minMaxValues, minMaxValuesPath) {
@@ -121,40 +131,40 @@ export default {
         "total",
         "incomes",
         "outcomes",
-        "averageMark",
+        "averageMark"
       ].forEach(valuePath => {
         minMaxValues[valuePath] = {
           min: Number.MAX_SAFE_INTEGER,
           max: -1
-        }
-      })
+        };
+      });
     },
     initValuesAndPropertyNames(operator) {
-        const valuesAndPaths = [
-          operator.calculatedKPI.questions.createdCounts.fromMango,
-          operator.calculatedKPI.questions.createdCounts.fromSystem,
-          operator.calculatedKPI.calls.durations.averageInSeconds,
-          operator.calculatedKPI.calls.durations.maxInSeconds,
-          operator.calculatedKPI.calls.durations.onLineAverageInSeconds,
-          operator.calculatedKPI.questions.resolvedCounts.total,
-          operator.calculatedKPI.calls.counts.total,
-          operator.calculatedKPI.calls.counts.incomes,
-          operator.calculatedKPI.calls.counts.outcomes,
-          operator.calculatedKPI.questions.marks.average,
-        ];
-        const propertyNames = [
-          "fromMango",
-          "fromSystem",
-          "averageInSeconds",
-          "maxInSeconds",
-          "onLineAverageInSeconds",
-          "resolvedCountsTotal",
-          "total",
-          "incomes",
-          "outcomes",
-          "averageMark"
-        ]
-        return [valuesAndPaths, propertyNames]
+      const valuesAndPaths = [
+        operator.calculatedKPI.questions.createdCounts.fromMango,
+        operator.calculatedKPI.questions.createdCounts.fromSystem,
+        operator.calculatedKPI.calls.durations.averageInSeconds,
+        operator.calculatedKPI.calls.durations.maxInSeconds,
+        operator.calculatedKPI.calls.durations.onLineAverageInSeconds,
+        operator.calculatedKPI.questions.resolvedCounts.total,
+        operator.calculatedKPI.calls.counts.total,
+        operator.calculatedKPI.calls.counts.incomes,
+        operator.calculatedKPI.calls.counts.outcomes,
+        operator.calculatedKPI.questions.marks.average
+      ];
+      const propertyNames = [
+        "fromMango",
+        "fromSystem",
+        "averageInSeconds",
+        "maxInSeconds",
+        "onLineAverageInSeconds",
+        "resolvedCountsTotal",
+        "total",
+        "incomes",
+        "outcomes",
+        "averageMark"
+      ];
+      return [valuesAndPaths, propertyNames];
     }
   },
   watch: {
