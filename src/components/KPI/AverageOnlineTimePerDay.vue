@@ -39,23 +39,25 @@ export default {
             self.averageOnlineTimePerDay.onlineAverage
           ]);
         }
-        const data = google.visualization.arrayToDataTable([
-          ["Month", "Иванов И.И.", "Целевой показатель", "Средний показатель"],
-          ...daysStats
-        ]);
+        if (daysStats.length !== 0) {
+          const data = google.visualization.arrayToDataTable([
+            ["Month", "Иванов И.И.", "Целевой показатель", "Средний показатель"],
+            ...daysStats
+          ]);
 
-        const options = {
-          title: 'Длительность в статусе "на линии" в среднем за рабочий день',
-          vAxis: { title: 'Время "на линии" в среднем за день' },
-          hAxis: { title: "День" },
-          seriesType: "bars",
-          series: { 1: { type: "line" }, 2: { type: "line" } }
-        };
+          const options = {
+            title: 'Длительность в статусе "на линии" в среднем за рабочий день',
+            vAxis: { title: 'Время "на линии" в среднем за день' },
+            hAxis: { title: "День" },
+            seriesType: "bars",
+            series: { 1: { type: "line" }, 2: { type: "line" } }
+          };
 
-        const chart = new google.visualization.ComboChart(
-          document.getElementById("chart")
-        );
-        chart.draw(data, options);
+          const chart = new google.visualization.ComboChart(
+            document.getElementById("chart")
+          );
+          chart.draw(data, options);
+        }
       }
     },
     getNextDate(index) {
@@ -96,6 +98,7 @@ export default {
       this.days = this.days.map(period => {
         return Number((period / this.daysAmountInPeriod / 60).toFixed(2));
       });
+      this.days = this.days[0] !== this.days[0] ? [0, 0, 0, 0, 0, 0, 0, 0, 0, 0] : this.days;
     },
     calculateTargetKPI() {
       let totalDays = 0;
