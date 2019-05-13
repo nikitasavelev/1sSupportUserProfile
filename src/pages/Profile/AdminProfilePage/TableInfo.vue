@@ -1,13 +1,13 @@
 <template>
-    <v-container class="wrapper pb-0 px-5 pt-3">
-        <div
-            v-for="(i,index) in info"
-            class="width-50"
-            :key="i"
-            >
-            {{index+1}} - {{i}}
-        </div>
-    </v-container>
+  <v-container class="wrapper pb-0 px-5 pt-3">
+    <div
+      v-for="(i,index) in info"
+      class="width-50"
+      :key="i"
+      >
+      {{index+1}} - {{i}}
+    </div>
+  </v-container>
 </template>
 <script>
 export default {

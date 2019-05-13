@@ -14,8 +14,11 @@
             </div>
             <hr>
           
-            <chat-messages v-if="this.$route.params.id !== '0'"
-            :questionId="Number(questionId)" ref="chatMessages"/>
+            <chat-messages
+              v-if="this.$route.params.id !== '0'"
+              :questionId="Number(questionId)"
+              ref="chatMessages"
+              @messagesLoaded="scrollToBottom()"/>
             <form @submit="formSubmit">
               <v-textarea
                 solo
@@ -37,6 +40,7 @@
                 class="d-block right"
                 color="primary"
                 type="submit"
+                ref="lowestElementToScrollDown"
                 v-if="!isResolved">Отправить</v-btn>
             </form>
           </v-container>
@@ -50,6 +54,7 @@
             </v-btn>
             <div class="question-resolved" v-if="isResolved || request.mark > 0">Вопрос решен</div>
             <v-rating
+                ref="lowestElementToScrollDown"
                 v-model="request.mark"
                 :hover="true"
                 :readonly="isClosed"
@@ -65,7 +70,7 @@
               :width="7"
               color="primary"
               indeterminate
-              ></v-progress-circular>
+            />
         </v-layout>
     </v-container>
   </main>
@@ -88,8 +93,7 @@ export default {
     };
   },
   components: { ChatMessages },
-  async mounted() {
-    //this.titles = await QuestionsService.getTitles();
+  async mounted() {   
     if (this.questionId !== "0") {
       this.request = await QuestionsService.getQuestion(this.questionId);
       // ids 5 and 6 means resolved (by client or by operator)
@@ -117,6 +121,9 @@ export default {
     resolveQuestion() {
       QuestionsService.resolveQuestion(this.questionId);
       this.isResolved = true;
+    },
+    scrollToBottom() {
+      this.$refs.lowestElementToScrollDown.$el.scrollIntoView({block: "start", behavior: "smooth"});
     }
   },
   watch: {

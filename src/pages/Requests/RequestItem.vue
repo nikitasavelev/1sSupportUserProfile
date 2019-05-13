@@ -10,7 +10,7 @@
       <div class="request-text">
         {{request.text}}
       </div>
-      <div v-if="$store.getters.getRoleType !== roleTypes.Client" class="request-text">
+      <div v-if="Number($store.getters.getRoleType) !== roleTypes.Client" class="request-text">
         <span>
           {{request.fullName}}
         </span>

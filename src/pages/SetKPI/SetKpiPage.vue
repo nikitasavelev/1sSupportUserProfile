@@ -11,8 +11,7 @@
                     class="pl-3"
                     :are-pickers-shown="arePickersShown"
                     @update:fromDate="fromDate = $event"
-                    @update:toDate="toDate = $event">
-                </date-pickers>
+                    @update:toDate="toDate = $event"/>
             </th>
             <th v-for="(header, index) in headers"
                 :key="index"
@@ -25,9 +24,13 @@
             </th>
         </thead>
         <tbody>
-            <tr>                
-                <td colspan="2"
-                    align="center"
+            <tr> 
+                <td align="center" class="pa-2">
+                    <v-checkbox
+                        v-model="isAllChecked"                        
+                    ></v-checkbox>
+                </td>               
+                <td align="center"
                     >
                     <v-btn
                         class="save-kpi btn ml-0 pa-1 px-3 text-capitalize"
@@ -105,31 +108,34 @@ import DatePickers from "Components/DatePickers";
 
 export default {
   name: "SetKpiPage",
-  components: {DatePickers},
+  components: { DatePickers },
   data() {
     return {
       headers: [
         {
-            ref: "timeOnline",
-            label: "KPI по времени на линии",
-            kpiType: 1,
+          ref: "timeOnline",
+          label: "KPI по времени на линии",
+          kpiType: 1
         },
         {
-            ref: "callDuration",
-            label:"KPI по времени на звонка",
-            kpiType: 2,
+          ref: "callDuration",
+          label: "KPI по времени на звонка",
+          kpiType: 2
         },
         {
-            ref: "averageMark",
-            label:"KPI по оценке",
-            kpiType: 3,
+          ref: "averageMark",
+          label: "KPI по оценке",
+          kpiType: 3
         }
       ],
       operators: [],
       isLoaded: false,
       fromDate: new Date().toISOString().substr(0, 10),
-      toDate: new Date(Date.now() + 1000*60*60*24*7).toISOString().substr(0, 10),
+      toDate: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7)
+        .toISOString()
+        .substr(0, 10),
       arePickersShown: false,
+      isAllChecked: false
     };
   },
   async mounted() {
@@ -141,24 +147,33 @@ export default {
     });
   },
   methods: {
-    async saveKpi(){
-        const operatorsIds = this.operators.reduce((ids, operator) => {
-            return operator.isChecked ? ids.concat(operator.employeeId) : ids;
-        },[]);
-        for (const input of this.headers) {
-            if (this.hasText(input.ref)) {
-                await UsersService.setKpi(
-                    input.kpiType,
-                    Number(this.$refs[input.ref][0].lazyValue.replace(",",".")),
-                    operatorsIds,
-                    this.fromDate,
-                    this.toDate
-                )
-            }
+    async saveKpi() {
+      const operatorsIds = this.operators.reduce((ids, operator) => {
+        return operator.isChecked ? ids.concat(operator.employeeId) : ids;
+      }, []);
+      for (const input of this.headers) {
+        if (this.hasText(input.ref)) {
+          await UsersService.setKpi(
+            input.kpiType,
+            Number(this.$refs[input.ref][0].lazyValue.replace(",", ".")),
+            operatorsIds,
+            this.fromDate,
+            this.toDate
+          );
         }
+      }
     },
-    hasText(ref){
-        return this.$refs[ref][0].lazyValue && this.$refs[ref][0].lazyValue.length > 0;
+    hasText(ref) {
+      return (
+        this.$refs[ref][0].lazyValue && this.$refs[ref][0].lazyValue.length > 0
+      );
+    }
+  },
+  watch: {
+    isAllChecked() {
+      this.operators.forEach(
+        operator => (operator.isChecked = this.isAllChecked)
+      );
     }
   }
 };

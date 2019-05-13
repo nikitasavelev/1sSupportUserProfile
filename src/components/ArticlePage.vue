@@ -123,7 +123,7 @@ export default {
 
   async beforeDestroy() {
     if (rating != 0) {
-      ArticlesService.sendArticlerating(artId, rating);
+      ArticlesService.sendArticleRating(artId, rating);
     }
   }
 };

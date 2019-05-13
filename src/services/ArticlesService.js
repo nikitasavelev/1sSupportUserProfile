@@ -77,12 +77,12 @@ class ArticlesService {
   }
 
 
-  async sendArticlerating(articleId, rating) {
+  async sendArticleRating(articleId, rating) {
     return requestToAPI({
       url: serverAPIUrls.SET_ARTICLES_MARKS,
       method: "POST",
       body: {
-        articleId: articleId,
+        articleId,
         mark: rating
       }
     });
