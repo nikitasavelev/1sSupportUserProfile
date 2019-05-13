@@ -2,23 +2,15 @@
   <main>
     <v-layout row wrap class="px-5">
       <v-flex xs9 class="left-side pr-2 pl-5 pt-3">
-        <v-btn color="white" dark class="primary--text" @click.stop="addFolderDialog = true">
-          <v-icon class="mr-3" color="primary">create_new_folder</v-icon>Новая папка
-        </v-btn>
+        <add-folder @add-folder="getItems"/>
         <v-list style="color: #003399">
           <v-list-group v-for="i in items" :key="i.id" :prepend-icon="i.icon">
             <template slot="activator">
               <v-list-tile>
                 <v-list-tile-content style="align-items: center; flex-direction: row;">
                   <v-list-tile-title>{{ i.name }}</v-list-tile-title>
-                  <v-btn v-if="!i.isBlocked" flat small @click="updateFolder(i)">Редактировать</v-btn>
-                  <v-btn
-                    v-if="!i.isBlocked"
-                    flat
-                    small
-                    color="red"
-                    @click="deleteFolder(i.id)"
-                  >Удалить</v-btn>
+                  <update-folder :i="i" :fullItems="fullItems" @update-folder="getItems"/>
+                  <delete-folder :i="i" @delete-folder="getItems"/>
                 </v-list-tile-content>
               </v-list-tile>
             </template>
@@ -28,20 +20,8 @@
                 <v-list-tile>
                   <v-list-tile-content style="align-items: center; flex-direction: row;">
                     <v-list-tile-title>{{ child.name }}</v-list-tile-title>
-                    <v-btn
-                      v-if="!child.isBlocked"
-                      flat
-                      small
-                      @click="updateFolder(child)"
-                      class="mr-5"
-                    >Редактировать</v-btn>
-                    <v-btn
-                      v-if="!child.isBlocked"
-                      flat
-                      small
-                      color="red"
-                      @click="deleteFolder(child.id)"
-                    >Удалить</v-btn>
+                    <update-folder :i="child" :fullItems="fullItems" @update-folder="getItems"/>
+                    <delete-folder :i="child" @delete-folder="getItems"/>
                   </v-list-tile-content>
                 </v-list-tile>
               </template>
@@ -54,19 +34,8 @@
               >
                 <v-list-tile-content style="align-items: center; flex-direction: row;">
                   <v-list-tile-title>{{ grandchild.name }}</v-list-tile-title>
-                  <v-btn
-                    v-if="!grandchild.isBlocked"
-                    flat
-                    small
-                    @click="updateFolder(grandchild)"
-                  >Редактировать</v-btn>
-                  <v-btn
-                    v-if="!grandchild.isBlocked"
-                    flat
-                    small
-                    color="red"
-                    @click="deleteFolder(grandchild.id)"
-                  >Удалить</v-btn>
+                  <update-folder :i="grandchild" :fullItems="fullItems" @update-folder="getItems"/>
+                  <delete-folder :i="grandchild" @delete-folder="getItems"/>
                 </v-list-tile-content>
               </v-list-tile>
             </v-list-group>
@@ -76,61 +45,25 @@
           <v-progress-circular :size="70" :width="7" color="primary" indeterminate/>
         </v-layout>
       </v-flex>
-      <side-news></side-news>
+      <side-news/>
     </v-layout>
-    <v-dialog v-model="addFolderDialog" max-width="800">
-      <v-card>
-        <v-card-title class="headline">Добавить новую папку</v-card-title>
-        <v-form ref="form" class="mx-3 pb-3">
-          <v-text-field v-model="name" :rules="nameRules" label="Название" required></v-text-field>
-
-          <v-checkbox class="pa-0" v-model="checkboxAvailable" label="Доступна для клиентов"></v-checkbox>
-
-          <v-btn color="red" flat="flat" @click="reset">Отменить</v-btn>
-
-          <v-btn color="primary" flat="flat" @click="addFolder">Сохранить</v-btn>
-        </v-form>
-      </v-card>
-    </v-dialog>
-    <v-dialog v-model="updateFolderDialog" max-width="800">
-      <v-card>
-        <v-card-title class="headline">Редактирование папки</v-card-title>
-        <v-form ref="form" class="mx-3 pb-3">
-          <v-text-field v-model="name" :rules="nameRules" label="Название" required></v-text-field>
-          <change-directory
-            @changeDirectory="changeDirectory"
-            v-bind:items="fullItems"
-            v-bind:folderId="folderId"
-            v-bind:parentId="parentId"
-          />
-          <v-checkbox class="pa-0" v-model="checkboxAvailable" label="Доступна для клиентов"></v-checkbox>
-
-          <v-btn color="red" flat="flat" @click="reset">Отменить</v-btn>
-
-          <v-btn color="primary" flat="flat" @click="confirmUpdateFolder">Сохранить</v-btn>
-        </v-form>
-      </v-card>
-    </v-dialog>
-    <v-dialog v-model="deleteFolderDialog" max-width="800">
-      <v-card>
-        <v-card-title class="headline">Вы уверены, что хотите удалить папку?</v-card-title>
-        <v-btn color="primary" flat="flat" @click="deleteFolderDialog = false">Отменить</v-btn>
-        <v-btn color="red" flat="flat" @click="confirmDeleteFolder(true)">Удалить</v-btn>
-      </v-card>
-    </v-dialog>
   </main>
 </template>
 
 <script>
 import ArticlesService from "Services/ArticlesService.js";
 import SideNews from "Components/SideNews";
-import ChangeDirectory from "./ChangeDirectory";
+import UpdateFolder from "./Actions/UpdateFolder";
+import DeleteFolder from "./Actions/DeleteFolder";
+import AddFolder from "./Actions/AddFolder";
 
 export default {
   name: "ArticlesMainPage",
   components: {
     SideNews,
-    ChangeDirectory
+    AddFolder,
+    UpdateFolder,
+    DeleteFolder
   },
   data: () => ({
     items: [],
@@ -167,61 +100,6 @@ export default {
       this.fullItems = this.items.slice();
       this.fullItems.unshift({ id: 0, name: "[Корневой каталог]" });
       this.isLoaded = true;
-    },
-    reset() {
-      this.addFolderDialog = false;
-      this.updateFolderDialog = false;
-      this.name = "";
-      this.checkboxAvailable = false;
-      this.checkboxBlock = false;
-      this.valid = false;
-    },
-    async addFolder() {
-      if (this.$refs.form.validate()) {
-        await ArticlesService.addFolder(
-          0,
-          this.name,
-          this.checkboxBlock,
-          this.checkboxAvailable
-        );
-        await this.getItems();
-        this.reset();
-      }
-    },
-    changeDirectory(data) {
-      this.parentId = data.parentId;
-    },
-    updateFolder(folder) {
-      this.folderId = folder.id;
-      this.name = folder.name;
-      this.parentId = folder.parentID;
-      this.checkboxAvailable = folder.isAvailable;
-      this.checkboxBlock = false;
-      this.updateFolderDialog = true;
-    },
-    async confirmUpdateFolder() {
-      if (this.$refs.form.validate()) {
-        this.updateFolderDialog = false;
-        this.isLoaded = false;
-        let folder = {};
-        folder.id = this.folderId;
-        folder.parentId = this.parentId;
-        folder.name = this.name;
-        folder.isAvailable = this.checkboxAvailable;
-        await ArticlesService.updateFolder(folder);
-        await this.getItems();
-      }
-      this.reset();
-    },
-    deleteFolder(folderId) {
-      this.folderId = folderId;
-      this.deleteFolderDialog = true;
-    },
-    async confirmDeleteFolder() {
-      this.deleteFolderDialog = false;
-      this.isLoaded = false;
-      await ArticlesService.deleteFolder(this.folderId);
-      await this.getItems();
     },
     openFolder(folderId) {
       this.$router.push({ name: "ArticlesPage", params: { id: folderId } });
