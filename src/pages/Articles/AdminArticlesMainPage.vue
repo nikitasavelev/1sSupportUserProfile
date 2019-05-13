@@ -64,6 +64,7 @@
                 v-for="grandchild in child.children"
                 :key="grandchild.id"
                 class="ml-5 pl-5"
+                @click="openFolder(grandchild.id)"
               >
                 <v-list-tile-content style="align-items: center; flex-direction: row;">
                   <v-list-tile-title>{{ grandchild.name }}</v-list-tile-title>
@@ -228,7 +229,7 @@ export default {
     updateFolder(folder) {
       this.folderId = folder.id;
       this.name = folder.name;
-      this.parentId = folder.parentID;
+      this.parentId = folder.parentId;
       this.checkboxAvailable = folder.isAvailable;
       this.checkboxBlock = folder.isBlocked;
       this.updateFolderDialog = true;
@@ -269,6 +270,9 @@ export default {
       this.isLoaded = false;
       await ArticlesService.updateFolderStatus(this.folderId, false);
       await this.getItems();
+    },
+    openFolder(folderId) {
+      this.$router.push({ name: "ArticlesPage", params: { id: folderId } });
     }
   },
   async mounted() {

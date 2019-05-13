@@ -11,12 +11,7 @@
               <v-list-tile>
                 <v-list-tile-content style="align-items: center; flex-direction: row;">
                   <v-list-tile-title>{{ i.name }}</v-list-tile-title>
-                  <v-btn
-                    v-if="!i.isBlocked"
-                    flat
-                    small
-                    @click="updateFolder(i)"
-                  >Редактировать</v-btn>
+                  <v-btn v-if="!i.isBlocked" flat small @click="updateFolder(i)">Редактировать</v-btn>
                   <v-btn
                     v-if="!i.isBlocked"
                     flat
@@ -34,19 +29,19 @@
                   <v-list-tile-content style="align-items: center; flex-direction: row;">
                     <v-list-tile-title>{{ child.name }}</v-list-tile-title>
                     <v-btn
-                    v-if="!child.isBlocked"
-                    flat
-                    small
-                    @click="updateFolder(child)"
-                    class="mr-5"
-                  >Редактировать</v-btn>
-                  <v-btn
-                    v-if="!child.isBlocked"
-                    flat
-                    small
-                    color="red"
-                    @click="deleteFolder(child.id)"
-                  >Удалить</v-btn>
+                      v-if="!child.isBlocked"
+                      flat
+                      small
+                      @click="updateFolder(child)"
+                      class="mr-5"
+                    >Редактировать</v-btn>
+                    <v-btn
+                      v-if="!child.isBlocked"
+                      flat
+                      small
+                      color="red"
+                      @click="deleteFolder(child.id)"
+                    >Удалить</v-btn>
                   </v-list-tile-content>
                 </v-list-tile>
               </template>
@@ -55,6 +50,7 @@
                 v-for="grandchild in child.children"
                 :key="grandchild.id"
                 class="ml-5 pl-5"
+                @click="openFolder(grandchild.id)"
               >
                 <v-list-tile-content style="align-items: center; flex-direction: row;">
                   <v-list-tile-title>{{ grandchild.name }}</v-list-tile-title>
@@ -132,8 +128,7 @@ import ChangeDirectory from "./ChangeDirectory";
 
 export default {
   name: "ArticlesMainPage",
-  components:
-  {
+  components: {
     SideNews,
     ChangeDirectory
   },
@@ -227,6 +222,9 @@ export default {
       this.isLoaded = false;
       await ArticlesService.deleteFolder(this.folderId);
       await this.getItems();
+    },
+    openFolder(folderId) {
+      this.$router.push({ name: "ArticlesPage", params: { id: folderId } });
     }
   },
   async mounted() {

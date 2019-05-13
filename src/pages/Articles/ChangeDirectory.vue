@@ -8,8 +8,6 @@
         <v-card-title class="headline" color="white">Выберите папку</v-card-title>
         <v-treeview
           :items="items"
-          :search="search"
-          :filter="filter"
 					:active.sync="active"
           v-model="tree"
           activatable
@@ -49,16 +47,15 @@ export default {
     dialog: false,
     tree: [],
     active: [],
-    error: false,
-    caseSensitive: true,
-    search: null
+    open: [],
+    error: false
   }),
   methods: {
     changeDirectory() {
       this.dialog = true;
+      this.active.push(this.parentId);
     },
     reset() {
-			this.active = [];
       this.dialog = false;
     },
     async confirmChangeDirectory() {
@@ -68,13 +65,6 @@ export default {
         });
         this.reset();
       } else this.error = true;
-    }
-  },
-  computed: {
-    filter() {
-      return this.caseSensitive
-        ? (item, search, textKey) => item[textKey].indexOf(search) > -1
-        : undefined;
     }
   }
 };

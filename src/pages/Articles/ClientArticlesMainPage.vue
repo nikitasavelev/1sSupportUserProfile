@@ -25,6 +25,7 @@
                 v-for="grandchild in child.children"
                 :key="grandchild.id"
                 class="ml-5 pl-5"
+                @click="openFolder(grandchild.id)"
               >
                 <v-list-tile-content>
                   <v-list-tile-title>{{ grandchild.name }}</v-list-tile-title>
@@ -71,6 +72,9 @@ export default {
         }
       }
       this.isLoaded = true;
+    },
+    openFolder(folderId) {
+      this.$router.push({ name: "ArticlesPage", params: { id: folderId } });
     }
   },
   async mounted() {
