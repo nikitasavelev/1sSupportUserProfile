@@ -16,7 +16,8 @@
             v-model="fromDate"
             v-if="showDatePickerFrom"
             @input="showDatePickerFrom = false"
-            class="datepicker"            
+            class="datepicker"
+            :max="maxAllowedDate()"            
             >
           </v-date-picker>
         </div>
@@ -37,6 +38,7 @@
             v-if="showDatePickerTo"
             @input="showDatePickerTo = false"
             class="datepicker"
+            :max="maxAllowedDate()"
             >
           </v-date-picker>
         </div>
@@ -53,7 +55,9 @@ export default {
     return {
       showDatePickerFrom: false,
       showDatePickerTo: false,
-      fromDate: new Date(Date.now() - 1000*60*60*24*7).toISOString().substr(0, 10),
+      fromDate: new Date(Date.now() - 1000 * 60 * 60 * 24 * 7)
+        .toISOString()
+        .substr(0, 10),
       toDate: new Date().toISOString().substr(0, 10)
     };
   },
@@ -67,6 +71,11 @@ export default {
       event.stopPropagation();
       this.showDatePickerTo = !this.showDatePickerTo;
       this.showDatePickerFrom = false;
+    },
+    maxAllowedDate() {
+      return this.$router.history.current.path === "/set-kpi"
+        ? "2099-01-01"
+        : new Date().toISOString().substr(0, 10);
     }
   },
   watch: {
@@ -76,6 +85,7 @@ export default {
     },
     fromDate() {
       this.$emit("update:fromDate", this.fromDate);
+      console.log(this.$router.history.current.path);
     },
     toDate() {
       this.$emit("update:toDate", this.toDate);
