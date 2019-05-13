@@ -7,11 +7,11 @@
     </v-layout>
     <v-layout v-else justify-center mt-5>
         <v-progress-circular
-            :size="70"
-            :width="7"
-            color="primary"
-            indeterminate
-            ></v-progress-circular>
+          :size="70"
+          :width="7"
+          color="primary"
+          indeterminate
+        />
     </v-layout>
 </template>
 <script>

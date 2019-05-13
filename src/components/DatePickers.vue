@@ -16,7 +16,8 @@
             v-model="fromDate"
             v-if="showDatePickerFrom"
             @input="showDatePickerFrom = false"
-            class="datepicker"            
+            class="datepicker"
+            :max="maxDate"            
             >
           </v-date-picker>
         </div>
@@ -37,6 +38,7 @@
             v-if="showDatePickerTo"
             @input="showDatePickerTo = false"
             class="datepicker"
+            :max="maxDate"
             >
           </v-date-picker>
         </div>
@@ -84,7 +86,7 @@ export default {
       event.stopPropagation();
       this.showDatePickerTo = !this.showDatePickerTo;
       this.showDatePickerFrom = false;
-    }
+    },
   },
   watch: {
     arePickersShown() {
@@ -93,6 +95,7 @@ export default {
     },
     fromDate() {
       this.$emit("update:fromDate", this.fromDate);
+      console.log(this.$router.history.current.path);
     },
     toDate() {
       this.$emit("update:toDate", this.toDate);

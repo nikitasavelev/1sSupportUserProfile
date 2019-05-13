@@ -24,6 +24,10 @@ export const pagesConfig = {
   ],
   [roleTypes.Operator]: [
     {
+      link: "/",
+      caption: "Поиск"
+    },
+    {
       link: "/requests",
       caption: "Обращения"
     },
@@ -37,6 +41,10 @@ export const pagesConfig = {
     }
   ],
   [roleTypes.Admin]: [
+    {
+      link: "/",
+      caption: "Поиск"
+    },
     {
       link: "/profile",
       caption:"Профиль"

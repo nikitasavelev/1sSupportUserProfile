@@ -30,7 +30,7 @@ export default {
         // Some raw data (not necessarily accurate)
         const daysStats = [];
         for (let i = 0; i < self.barsAmount; i++) {
-          const [startDateForPeriod, endDateForPeriod]= self.getNextDate(i);
+          const [startDateForPeriod, endDateForPeriod] = self.getNextDate(i);
           daysStats.push([
             `с ${startDateForPeriod.toLocaleDateString()}\nпо
             ${endDateForPeriod.toLocaleDateString()}`,
@@ -59,18 +59,17 @@ export default {
       }
     },
     getNextDate(index) {
+      const maxDays = 9 * this.daysAmountInPeriod;
+      let dayIndex = index * this.daysAmountInPeriod + 1;
+      //dayIndex += dayIndex === maxDays ? 0 : 1;
       const startDateForPeriod =
         new Date(
-          this.averageOnlineTimePerDay.kpiForPeriod[
-            index * this.daysAmountInPeriod + 1
-          ].date
-        ).getTime() +
-        1000 * 60 * 60 * 24;
-      const endDateForPeriod = startDateForPeriod + 1000 * 60 * 60 * 24 * (this.daysAmountInPeriod - 1)
-      return [
-        new Date(startDateForPeriod),
-        new Date(endDateForPeriod)
-      ];
+          this.averageOnlineTimePerDay.kpiForPeriod[dayIndex].date
+        ).getTime();
+      const endDateForPeriod =
+        startDateForPeriod +
+        1000 * 60 * 60 * 24 * (this.daysAmountInPeriod - 1);
+      return [new Date(startDateForPeriod), new Date(endDateForPeriod)];
     },
     calculatePeriods() {
       let period = 0;
@@ -80,7 +79,7 @@ export default {
         this.averageOnlineTimePerDay.kpiForPeriod.length - 1 > 10
           ? 10
           : this.averageOnlineTimePerDay.kpiForPeriod.length - 1;
-      this.daysAmountInPeriod = Math.ceil(
+      this.daysAmountInPeriod = Math.floor(
         (this.averageOnlineTimePerDay.kpiForPeriod.length - 1) / this.barsAmount
       );
       this.averageOnlineTimePerDay.kpiForPeriod.forEach((day, index) => {

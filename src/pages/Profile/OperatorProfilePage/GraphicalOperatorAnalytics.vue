@@ -28,7 +28,7 @@
 
 <script>
 import AverageMark from "Components/KPI/AverageMark";
-import AverageCallTime from "Components/KPI//AverageCallTime";
+import AverageCallTime from "Components/KPI/AverageCallTime";
 import AverageOnlineTimePerDay from "Components/KPI/AverageOnlineTimePerDay";
 import AllCallsCount from "Components/KPI/AllCallsCount";
 import IncidentCount from "Components/KPI/IncidentCount";
