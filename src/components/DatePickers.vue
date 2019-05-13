@@ -47,14 +47,31 @@
 export default {
   name: "DatePickers",
   props: {
-    arePickersShown: Boolean
+    arePickersShown: Boolean,
+    fromDate: {
+      type: String,
+      default: new Date().toISOString().substr(0, 10),
+    },
+    toDate: {
+      type: String,
+      default: new Date().toISOString().substr(0, 10)
+    },
+    minDate: {
+      type: String,
+      default: '0000-01-01',
+      required: false
+    },
+    maxDate: {
+      type: String,
+      default: '2099-01-01',
+      required: false
+    }
+    // Date.now() - 1000*60*60*24*7
   },
   data() {
     return {
       showDatePickerFrom: false,
       showDatePickerTo: false,
-      fromDate: new Date(Date.now() - 1000*60*60*24*7).toISOString().substr(0, 10),
-      toDate: new Date().toISOString().substr(0, 10)
     };
   },
   methods: {
