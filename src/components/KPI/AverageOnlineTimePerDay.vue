@@ -4,6 +4,7 @@
 </template>
 <script>
 import { GoogleCharts } from "google-charts";
+import formatDate from "Constants/COMMON_METHODS.js";
 export default {
   name: "AverageOnlineTimePerDay",
   props: { averageOnlineTimePerDay: Object },
@@ -32,8 +33,8 @@ export default {
         for (let i = 0; i < self.barsAmount; i++) {
           const [startDateForPeriod, endDateForPeriod] = self.getNextDate(i);
           daysStats.push([
-            `с ${startDateForPeriod.toLocaleDateString()}\nпо
-            ${endDateForPeriod.toLocaleDateString()}`,
+            `с ${formatDate(startDateForPeriod)}\nпо
+            ${formatDate(endDateForPeriod)}`,
             self.days[i],
             self.targetKPI,
             self.averageOnlineTimePerDay.onlineAverage

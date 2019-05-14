@@ -5,7 +5,11 @@
                 v-if="info.caption !== 'Средний показатель'" 
                 :to="{
                   name: 'KpiPage',
-                  params: {id: String(employeeId), fromDate, toDate}
+                  params: {
+                    id: String(employeeId), 
+                    fromDate: toDateString(fromDate, toDate)[0],
+                    toDate: toDateString(fromDate, toDate)[1]
+                  }
                 }">
                 {{info.caption}}
             </router-link>
@@ -75,6 +79,7 @@
 
 <script>
 import { fractionalHoursToIntegerHoursAndMinutes } from "Constants/COMMON_METHODS.js";
+import {toDateString} from "Constants/COMMON_METHODS.js";
 export default {
   name: "TableForOperatorAnalytics",
   props: {
@@ -97,6 +102,7 @@ export default {
     };
   },
   created() {
+    this.toDateString = toDateString;
     this.analytics = this.info.calculatedKPI
       ? this.info.calculatedKPI
       : this.info;

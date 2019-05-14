@@ -4,12 +4,13 @@
         <div class="datepicker-wrapper">
           <label>
             <input
-              v-model="fromDateData"
+              v-model="localizedFromDateData"
               class="datepicker-input ml-2 pa-1"
               @click="toggleDatePickerFrom"
               name="date from"
               aria-label="start date"
               autocomplete="off"
+              readonly
               > 
           </label> 
           <v-date-picker 
@@ -26,12 +27,13 @@
         <div class="datepicker-wrapper">
           <label>
             <input
-              v-model="toDateData"
+              v-model="localizedToDateData"
               class="datepicker-input pa-1"
               @click="toggleDatePickerTo"
               name="date to"
               aria-label="end date"
               autocomplete="off"
+              readonly
               > 
           </label> 
           <v-date-picker 
@@ -48,6 +50,7 @@
 </template>
 
 <script>
+import formatDate from 'Constants/COMMON_METHODS.js'
 export default {
   name: "DatePickers",
   props: {
@@ -81,6 +84,8 @@ export default {
       maxDate: this.maximumDate,
       fromDateData: this.fromDate,
       toDateData: this.toDate,
+      localizedFromDateData: this.localizeDate(this.fromDate) || this.localizeDate(this.minimumDate),
+      localizedToDateData: this.localizeDate(this.toDate) || this.localizeDate(this.maximumDate),
     };
   },
   methods: {
@@ -94,6 +99,9 @@ export default {
       this.showDatePickerTo = !this.showDatePickerTo;
       this.showDatePickerFrom = false;
     },
+    localizeDate(date){
+      return formatDate(new Date(date));
+    }
   },
   watch: {
     arePickersShown() {
@@ -102,9 +110,11 @@ export default {
     },
     fromDateData() {
       this.$emit("update:fromDate", this.fromDateData);
+      this.localizedFromDateData = this.localizeDate(this.fromDateData);
     },
     toDateData() {
       this.$emit("update:toDate", this.toDateData);
+      this.localizedToDateData = this.localizeDate(this.toDateData);
     }
   }
 };

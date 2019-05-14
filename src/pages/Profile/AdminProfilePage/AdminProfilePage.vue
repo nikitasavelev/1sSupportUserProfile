@@ -51,16 +51,15 @@ import UsersService from "Services/UsersService";
 import TableForOperatorAnalytics from "./TableForOperatorAnalytics";
 import TableInfo from "./TableInfo";
 import { calculateAnalytics } from "Constants/COMMON_METHODS.js";
+import formatDate from "Constants/COMMON_METHODS.js";
 
 export default {
   name: "AdminProfilePage",
   components: { DatePickers, TableForOperatorAnalytics, TableInfo },
   data() {
     return {
-      fromDate: new Date(Date.now() - 1000 * 60 * 60 * 24 * 7)
-        .toISOString()
-        .substr(0, 10),
-      toDate: new Date().toISOString().substr(0, 10),
+      fromDate: formatDate(new Date(Date.now() - 1000 * 60 * 60 * 24 * 7)),
+      toDate: formatDate(new Date()),
       arePickersShown: false,
       headers: [
         "ФИО Агента",
