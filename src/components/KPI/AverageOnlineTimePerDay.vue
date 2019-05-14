@@ -41,14 +41,42 @@ export default {
         }
         if (daysStats.length !== 0) {
           const data = google.visualization.arrayToDataTable([
-            ["Month", "Иванов И.И.", "Целевой показатель", "Средний показатель"],
+            [
+              "Month",
+              "Иванов И.И.",
+              "Целевой показатель",
+              "Средний показатель"
+            ],
             ...daysStats
           ]);
 
           const options = {
-            title: 'Длительность в статусе "на линии" в среднем за рабочий день',
+            title:
+              'Длительность в статусе "на линии" в среднем за рабочий день',
             vAxis: { title: 'Время "на линии" в среднем за день' },
-            hAxis: { title: "День" },
+            hAxis: {
+              title: "День",
+              slantedText: true,
+              slantedTextAngle: 75,
+              textPosition: "in",
+              annotations: {
+                textStyle: {
+                  stroke: "#000",
+                  fontSize: "12"
+                }
+              },
+              textStyle: {
+                color: "black",
+                backgroundColor: "black",
+                fontName: "Open-Sans",
+                fontSize: "12",
+                auraColor: '#000',
+                auraWidth: 0,
+              },
+              bar: {groupWidth: "95%"},
+              legend: { position: "none" },
+            },
+            height: 500,
             seriesType: "bars",
             series: { 1: { type: "line" }, 2: { type: "line" } }
           };
@@ -64,10 +92,9 @@ export default {
       const maxDays = 9 * this.daysAmountInPeriod;
       let dayIndex = index * this.daysAmountInPeriod + 1;
       //dayIndex += dayIndex === maxDays ? 0 : 1;
-      const startDateForPeriod =
-        new Date(
-          this.averageOnlineTimePerDay.kpiForPeriod[dayIndex].date
-        ).getTime();
+      const startDateForPeriod = new Date(
+        this.averageOnlineTimePerDay.kpiForPeriod[dayIndex].date
+      ).getTime();
       const endDateForPeriod =
         startDateForPeriod +
         1000 * 60 * 60 * 24 * (this.daysAmountInPeriod - 1);
@@ -98,7 +125,10 @@ export default {
       this.days = this.days.map(period => {
         return Number((period / this.daysAmountInPeriod / 60).toFixed(2));
       });
-      this.days = this.days[0] !== this.days[0] ? [0, 0, 0, 0, 0, 0, 0, 0, 0, 0] : this.days;
+      this.days =
+        this.days[0] !== this.days[0]
+          ? [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+          : this.days;
     },
     calculateTargetKPI() {
       let totalDays = 0;
@@ -134,3 +164,10 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+text {
+  stroke: #000 !important;
+}
+</style>
+
