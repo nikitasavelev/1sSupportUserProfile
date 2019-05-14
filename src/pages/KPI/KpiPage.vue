@@ -18,8 +18,11 @@
                 <div class="mt-5 analytics">
                     <div class="analytics-caption">Общее время разговоров</div>
                     <div class="analytics-number mb-5">
-                        {{totalCallsDuration.hours}} h
-                        {{totalCallsDuration.minutes}} m
+                        {{totalCallsDuration.hours}} :
+                        {{String(totalCallsDuration.minutes).length == 1 ?
+                         `0${totalCallsDuration.minutes}`:
+                          totalCallsDuration.minutes
+                        }}
                     </div>
                     <div class="analytics-caption">Максимальное время разговоров</div>
                     <div class="analytics-number">
@@ -45,6 +48,7 @@ import IncidentCount from "Components/KPI/IncidentCount";
 import UsersService from "Services/UsersService";
 import { calculateAnalytics } from "Constants/COMMON_METHODS.js";
 import DatePickers from "Components/DatePickers";
+import { fractionalHoursToIntegerHoursAndMinutes } from "Constants/COMMON_METHODS.js";
 export default {
   name: "KpiPage",
   components: {
@@ -73,6 +77,7 @@ export default {
   created(){
     this.fromDate = this.$route.params.fromDate || new Date().toISOString().substr(0, 10);
     this.toDate = this.$route.params.toDate || new Date().toISOString().substr(0, 10);
+    this.fractionalHoursToIntegerHoursAndMinutes = fractionalHoursToIntegerHoursAndMinutes;
   },
   async mounted() {
     this.drawGraphs();    

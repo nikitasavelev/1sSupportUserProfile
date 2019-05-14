@@ -26,19 +26,19 @@
         <td class="pa-3"
           :class="lessBetter((analytics.calls.durations.averageInSeconds), minMaxValues.averageInSeconds)"
         >
-          {{(analytics.calls.durations.averageInSeconds/60).toFixed(2)}}
+          {{fractionalHoursToIntegerHoursAndMinutes((analytics.calls.durations.averageInSeconds/60).toFixed(2))}}
         </td>
 
         <td class="pa-3"
           :class="lessBetter((analytics.calls.durations.maxInSeconds), minMaxValues.maxInSeconds)"
         >
-          {{(analytics.calls.durations.maxInSeconds/60).toFixed(2)}}
+          {{fractionalHoursToIntegerHoursAndMinutes((analytics.calls.durations.maxInSeconds/60).toFixed(2))}}
         </td> 
 
         <td class="pa-3"
           :class="lessBetter((analytics.calls.durations.onLineAverageInSeconds), minMaxValues.onLineAverageInSeconds)"
         >
-          {{(analytics.calls.durations.onLineAverageInSeconds/60).toFixed(2)}}
+          {{fractionalHoursToIntegerHoursAndMinutes((analytics.calls.durations.onLineAverageInSeconds/60).toFixed(2))}}
         </td> 
 
         <td class="pa-3"
@@ -74,6 +74,7 @@
 </template>
 
 <script>
+import { fractionalHoursToIntegerHoursAndMinutes } from "Constants/COMMON_METHODS.js";
 export default {
   name: "TableForOperatorAnalytics",
   props: {
@@ -105,6 +106,7 @@ export default {
       // calculate here
       this.analytics = this.analytics[0];
     }
+    this.fractionalHoursToIntegerHoursAndMinutes = fractionalHoursToIntegerHoursAndMinutes;
   },
   watch: {
     info() {

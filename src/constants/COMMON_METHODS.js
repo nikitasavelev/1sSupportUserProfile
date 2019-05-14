@@ -155,3 +155,10 @@ export function removeLocalStorageValues(namesArray) {
     localStorage.removeItem(name);
   });
 }
+
+export function fractionalHoursToIntegerHoursAndMinutes(fractionalHours){
+  const hours = Math.trunc(fractionalHours);
+  let minutes = ((fractionalHours - hours) * 60).toFixed();
+  if (minutes.length === 1) minutes = `0${minutes}`;
+  return `${hours}:${minutes}`;
+}
