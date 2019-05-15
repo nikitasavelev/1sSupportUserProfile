@@ -69,7 +69,7 @@
                     {{operator.kpi.callsAverageDurationInSeconds.result}}
                 </td>
                 <td align="center" class="right-border">
-                    0
+                    {{operator.kpi.callsAverageDurationInSeconds.newKPI}}
                 </td>
 
                 <td align="center">
@@ -79,7 +79,7 @@
                     {{operator.kpi.onLinePerDayAverageDurationInSeconds.result}}
                 </td>
                 <td align="center" class="right-border">
-                    0
+                    {{operator.kpi.onLinePerDayAverageDurationInSeconds.newKPI}}
                 </td>
 
                 <td align="center">
@@ -89,7 +89,7 @@
                     {{operator.kpi.questionsAverageMark.result}}
                 </td>
                 <td align="center">
-                    0
+                    {{operator.kpi.questionsAverageMark.newKPI}}
                 </td>               
             </tr>
         </tbody>
@@ -144,8 +144,15 @@ export default {
     const analytics = await UsersService.getPreviousKPI();
     this.isLoaded = true;
     this.operators = analytics.operators;
-    this.operators.forEach(operator => {
+    this.operators.forEach((operator, index) => {
       operator.isChecked = false;
+      // adding properties to make them reactive
+      this.$set(
+        this.operators[index].kpi.callsAverageDurationInSeconds, 'newKPI', 0)
+      this.$set(
+        this.operators[index].kpi.onLinePerDayAverageDurationInSeconds, 'newKPI', 0)
+      this.$set(
+        this.operators[index].kpi.questionsAverageMark, 'newKPI', 0)
     });
   },
   methods: {
@@ -155,13 +162,19 @@ export default {
       }, []);
       for (const input of this.headers) {
         if (this.hasText(input.ref)) {
+          const inputValue = Number(this.$refs[input.ref][0].lazyValue.replace(",", "."))
           await UsersService.setKpi(
             input.kpiType,
-            Number(this.$refs[input.ref][0].lazyValue.replace(",", ".")),
+            inputValue,
             operatorsIds,
             this.fromDate,
             this.toDate
           );
+          this.operators.forEach(operator => {            
+            if (operator.isChecked) {
+              operator = this.setKPIForType(input.kpiType, operator, inputValue)
+            }
+          });
         }
       }
     },
@@ -169,6 +182,19 @@ export default {
       return (
         this.$refs[ref][0].lazyValue && this.$refs[ref][0].lazyValue.length > 0
       );
+    },
+    setKPIForType(type, operator, value){
+      switch (type){
+        case 1:
+          operator.kpi.callsAverageDurationInSeconds.newKPI = value;
+          return operator;
+        case 2:
+          operator.kpi.onLinePerDayAverageDurationInSeconds.newKPI = value;
+          return operator;
+        case 3:
+          operator.kpi.questionsAverageMark.newKPI = value;
+          return operator;  
+      }
     }
   },
   watch: {
