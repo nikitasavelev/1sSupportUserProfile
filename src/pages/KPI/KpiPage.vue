@@ -11,10 +11,10 @@
               :maximumDate="new Date().toISOString().substr(0, 10)"
               />
         </v-layout>
-        <v-layout row>            
-            <average-mark :marks="marks"/>
-            <average-call-time class="average-call-time mt-5" :average-call-time="averageCallTime"/>
-            <v-layout column>
+        <v-layout class="grid-container" row>            
+            <average-mark class="average-mark" :marks="marks"/>
+            <average-call-time class="average-call-time" :average-call-time="averageCallTime"/>
+            <div class="both-analytics">
                 <div class="mt-5 analytics">
                     <div class="analytics-caption">Общее время разговоров</div>
                     <div class="analytics-number mb-5">
@@ -29,12 +29,12 @@
                         {{maxCallTime}} m
                     </div>
                 </div>
-            </v-layout>
-        </v-layout>
-        <average-online-time-per-day :average-online-time-per-day="averageOnlineTimePerDay" />
-        <v-layout row align-center justify-center>
-            <all-calls-count :all-calls-count="allCallsCount"/>
-            <incident-count :incident-count="incidentCount"/>
+            </div>
+            <average-online-time-per-day
+             class="average-online-time-per-day"
+             :average-online-time-per-day="averageOnlineTimePerDay" />
+            <all-calls-count class="all-calls-count" :all-calls-count="allCallsCount"/>
+            <incident-count class="incident-count" :incident-count="incidentCount"/>
         </v-layout>
     </div>
 </template>
@@ -71,54 +71,56 @@ export default {
       operatorsName: "",
       fromDate: new Date().toISOString().substr(0, 10),
       toDate: new Date().toISOString().substr(0, 10),
-      arePickersShown: false,
+      arePickersShown: false
     };
   },
-  created(){
-    this.fromDate = this.$route.params.fromDate || new Date().toISOString().substr(0, 10);
-    this.toDate = this.$route.params.toDate || new Date().toISOString().substr(0, 10);
+  created() {
+    this.fromDate =
+      this.$route.params.fromDate || new Date().toISOString().substr(0, 10);
+    this.toDate =
+      this.$route.params.toDate || new Date().toISOString().substr(0, 10);
     this.fractionalHoursToIntegerHoursAndMinutes = fractionalHoursToIntegerHoursAndMinutes;
   },
   async mounted() {
-    this.drawGraphs();    
+    this.drawGraphs();
   },
   methods: {
-    async drawGraphs(fromDate, toDate){
-        const response = await UsersService.getOperatorAnalytics(
-            this.$route.params.id,
-            fromDate,
-            toDate
-        );
-        calculateAnalytics([response]);
-        this.operatorsName = `${response.lastName} ${response.firstName} ${
+    async drawGraphs(fromDate, toDate) {
+      const response = await UsersService.getOperatorAnalytics(
+        this.$route.params.id,
+        fromDate,
+        toDate
+      );
+      calculateAnalytics([response]);
+      this.operatorsName = `${response.lastName} ${response.firstName} ${
         response.secondName
-        }`;
-        this.marks = response.calculatedKPI.questions.marks;
-        this.averageCallTime = Number(
+      }`;
+      this.marks = response.calculatedKPI.questions.marks;
+      this.averageCallTime = Number(
         response.calculatedKPI.calls.durations.averageInSeconds
-        );
-        this.allCallsCount = response.calculatedKPI.calls.counts;
-        this.incidentCount = response.calculatedKPI.questions.createdCounts;
-        this.averageOnlineTimePerDay = {
+      );
+      this.allCallsCount = response.calculatedKPI.calls.counts;
+      this.incidentCount = response.calculatedKPI.questions.createdCounts;
+      this.averageOnlineTimePerDay = {
         targetKPI: response.targetKpi,
         onlineAverage:
-            response.calculatedKPI.calls.durations.onLineAverageInSeconds / 60,
+          response.calculatedKPI.calls.durations.onLineAverageInSeconds / 60,
         kpiForPeriod: response.kpi
-        };
-        const totalCallsDurationInSeconds =
+      };
+      const totalCallsDurationInSeconds =
         this.averageCallTime * this.allCallsCount.total;
-        const totalCallsDurationHours = Math.floor(
+      const totalCallsDurationHours = Math.floor(
         totalCallsDurationInSeconds / 60 / 60
-        );
-        const totalCallsDurationMinutes =
+      );
+      const totalCallsDurationMinutes =
         (totalCallsDurationInSeconds - totalCallsDurationHours * 3600) / 60;
-        this.totalCallsDuration = {
+      this.totalCallsDuration = {
         hours: totalCallsDurationHours,
         minutes: Math.floor(totalCallsDurationMinutes)
-        };
-        this.maxCallTime = Math.floor(
+      };
+      this.maxCallTime = Math.floor(
         response.calculatedKPI.calls.durations.maxInSeconds / 60
-        );
+      );
     }
   },
   watch: {
@@ -146,5 +148,61 @@ export default {
 }
 .analytics {
   margin-right: 2rem;
+}
+
+@media screen and (min-width:1450px) {
+  .grid-container {
+    display: grid;
+    grid-template-rows: auto;
+    grid-template-areas:
+      "average_mark average_mark average_call_time average_call_time analytics analytics"
+      "average_online_time_per_day average_online_time_per_day average_online_time_per_day average_online_time_per_day     average_online_time_per_day average_online_time_per_day"
+      "all_calls_count all_calls_count all_calls_count all_incident_count all_incident_count all_incident_count";
+  }
+}
+
+@media (min-width: 360px) and (max-width: 1449px) {
+  .grid-container {
+    display: grid;
+    grid-template-rows: auto;
+    grid-template-areas:
+      "average_mark average_call_time "
+      "analytics analytics"
+      "average_online_time_per_day average_online_time_per_day"
+      "all_calls_count all_incident_count";
+  }
+  .both-analytics {
+    place-self: center;
+  }
+  .average-call-time {
+    place-self: center;
+  }
+  .average-mark {
+    place-self: center;
+  }
+}
+
+.average-mark {
+  grid-area: average_mark;
+}
+
+.average-call-time {
+  grid-area: average_call_time;
+}
+
+.both-analytics {
+  grid-area: analytics;
+}
+
+.average-online-time-per-day {
+  grid-area: average_online_time_per_day;
+}
+
+.all-calls-count {
+  grid-area: all_calls_count;
+}
+
+.incident-count {
+  grid-area: all_incident_count;
 }
 </style>
