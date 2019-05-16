@@ -2,7 +2,7 @@
   <v-container>
     <v-layout row>
       <v-flex xs12>
-        <v-card v-if="searchResponse != false" flat class="text-xs-left">
+        <v-card v-if="searchResponse" flat class="text-xs-left">
           Результатов найдено: {{ allCount }}
           <div
             class="mui--text-subhead"
@@ -11,11 +11,7 @@
 
         <v-card flat max-width="90%">
           <v-list three-line>
-            <v-layout
-              v-if="searchResponse != false"
-              v-for="hit in searchResponse"
-              :key="hit._source.id"
-            >
+            <v-layout v-if="searchResponse" v-for="hit in searchResponse" :key="hit._source.id">
               <v-list-tile-content>
                 <router-link
                   class="article-title"
