@@ -60,7 +60,6 @@ export default {
       return response.data.data;
     },
     onSearchData(data) {
-      console.log(data);
       this.totalHits = data.totalArticles;
       this.articlesWholeData = data.articlesWholeData;
       this.articlesOffset = data.articlesOffset;
