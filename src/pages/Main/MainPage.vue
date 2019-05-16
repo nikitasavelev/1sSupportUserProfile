@@ -1,12 +1,13 @@
 <template>
   <div>
-    <search-input
-      @search="searchHandler($event)" :marks="articlesMarks"/>
+    <search-input @onSearchData="onSearchData"/>
     <not-found-message v-if="noDataInResponse"/>
     <search-result
-      :searchResponse="searchRequestResponse"
-      :allCount="totalCount"
-      :lastQuery="lastQuery"/>
+      :articlesOffset="articlesOffset"
+      :searchResponse="articlesWholeData"
+      :allCount="totalHits"
+      :lastQuery="lastQuery"
+    />
     <modal-component/>
   </div>
 </template>
@@ -33,7 +34,11 @@ export default {
       totalCount: 0,
       lastQuery: "",
       noDataInResponse: false,
-      articlesMarks: []
+      articlesMarks: [],
+
+      totalHits: 0,
+      articlesWholeData: [],
+      articlesOffset: 0
     };
   },
   methods: {
@@ -54,11 +59,11 @@ export default {
         : (this.noDataInResponse = false);
       return response.data.data;
     },
-    searchHandler: async function(payload) {
-      this.lastQuery = payload;
-      let data = await this.getArticles(payload, this.sessionId);
-      this.searchRequestResponse = data.previews;
-      this.totalCount = data.allCount;
+    onSearchData(data) {
+      console.log(data);
+      this.totalHits = data.totalArticles;
+      this.articlesWholeData = data.articlesWholeData;
+      this.articlesOffset = data.articlesOffset;
     },
     getMarks: async function(token) {
       let axiosConfig = {
@@ -78,7 +83,9 @@ export default {
   async created() {
     // not necessary to have Token and SessionId as data here,
     // but it's easier to debug
-    this.articlesMarks = await this.getMarks(this.$store.getters.getAuthorizationToken)    
+    this.articlesMarks = await this.getMarks(
+      this.$store.getters.getAuthorizationToken
+    );
   }
 };
 </script>

@@ -11,26 +11,21 @@
             <v-layout row wrap>
               <v-flex xs12 sm8>
                 <v-combobox
-                  v-model="searchString"
-                  @change="searchRequest($event)"
-                  no-filter
-                  :items="shownHint"
-                  :search-input.sync="search"
-                  label="Поиск"
-                  hide-no-data
-                  hide-details
-                  solo
-                  append-icon="null"
-                  :menu-props="{ overflowY: false}"
+                  v-model="searchTerm"
+                  type="text"
+                  autocomplete="off"
+                  v-on:click="search()"
+                  :allHit="numHits"
+                  :items="searchResults"
                 >
-                  <template slot="item" slot-scope="{ index, item }">
-                    <v-list-tile-content>{{ item }}</v-list-tile-content>
-                  </template>
+                  <!-- <template slot="item">
+                    <v-list-tile-content>{{ items }}</v-list-tile-content>
+                  </template>-->
                 </v-combobox>
               </v-flex>
               <v-flex xs12 sm2>
                 <v-btn color="#3f66b2" style="height: 47px">
-                  <v-icon medium color="white">search</v-icon>
+                  <v-icon medium color="white" v-on:click="search()">search</v-icon>
                 </v-btn>
               </v-flex>
             </v-layout>
@@ -49,53 +44,51 @@ export default {
     sessionId: {
       required: false,
       type: String
-    },
-    marks: {
-      required: true,
-      type: Array
     }
   },
   data() {
     return {
       searchString: "",
-      search: "",
-      shownHint: []
+      shownHint: [],
+
+      baseUrl: "http://localhost:3000", // API url
+      searchTerm: "2005", // Default search term
+      searchDebounce: null, // Timeout for search bar debounce
+      searchResults: [], // Displayed search results
+      numHits: 0, // Total search results found
+      searchOffset: 0, // Search result pagination offset
+
+      totalArticles: 0,
+
+      selectedArticle: null,
+      info: null
     };
   },
   computed: {},
-  mounted() {
-    this.shownHint = this.marks.slice(0, 5);
-  },
+  mounted() {},
   methods: {
-    searchRequest: function(payload) {
-      this.$emit("search", payload);
+    //this function for suggestions
+    onSearchInput() {
+      clearTimeout(this.searchDebounce);
+      this.searchDebounce = setTimeout(async () => {
+        this.searchOffset = 0;
+        this.searchResults = await this.search();
+      }, 100);
     },
-    newHintMas(query) {
-      var mas = [];
-      var search1 = this.searchString.toLowerCase();
-      for (var i = 0; i < this.marks.length; i++) {
-        var mark = this.marks[i].toLowerCase();
-        if (mark.indexOf(search1) > -1 && mas.length < 5) {
-          mas.push(this.marks[i]);
-        }
-      }
-      return mas;
-    }
-  },
-  watch: {
-    searchString(val, prev) {
-      this.$emit("search", val);
-    },
-    search(val, prev) {
-      val = val || "";
-      this.shownHint = [];
-      var search1 = val.toLowerCase();
-      for (var i = 0; i < this.marks.length; i++) {
-        var mark = this.marks[i].toLowerCase();
-        if (mark.indexOf(search1) > -1 && this.shownHint.length < 5) {
-          this.shownHint.push(this.marks[i]);
-        }
-      }
+    /** Call API to search for inputted term */
+    async search() {
+      const response = await axios.get(`${this.baseUrl}/search`, {
+        params: { term: this.searchTerm, offset: this.searchOffset }
+      });
+
+      this.numHits = response.data.hits.total;
+
+      this.$emit("onSearchData", {
+        totalArticles: this.numHits.value,
+        articlesWholeData: response.data.hits.hits,
+        articlesOffset: this.searchOffset
+      });
+      return response.data.hits.hits;
     }
   }
 };
