@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-btn v-if="!i.isBlocked" flat small color="red" @click="deleteFolder(i.id)">Удалить</v-btn>
+    <v-btn v-if="!i.isBlocked && !i.isArticle" flat small color="red" @click="deleteFolder(i.id)">Удалить</v-btn>
     <v-dialog v-model="deleteFolderDialog" max-width="800">
       <v-card>
         <v-card-title class="headline">Вы уверены, что хотите удалить папку?</v-card-title>

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-btn v-if="!i.isBlocked" flat small @click="updateFolder(i)">Редактировать</v-btn>
+    <v-btn v-if="!i.isBlocked && !i.isArticle" flat small @click="updateFolder(i)">Редактировать</v-btn>
     <v-dialog v-model="updateFolderDialog" max-width="800">
       <v-card>
         <v-card-title class="headline">Редактирование папки</v-card-title>
@@ -8,7 +8,7 @@
           <v-text-field v-model="name" :rules="nameRules" label="Название" required></v-text-field>
 
           <change-directory
-            @changeDirectory="changeDirectory"
+            @change-directory="changeDirectory"
             :items="fullItems"
             :folderId="folderId"
             :parentId="parentId"

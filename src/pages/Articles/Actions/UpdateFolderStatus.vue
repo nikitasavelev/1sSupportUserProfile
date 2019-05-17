@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-btn
-      v-if="i.isBlocked && !i.isDefault"
+      v-if="i.isBlocked && !i.isDefault && !i.isArticle"
       flat
       small
       color="red"

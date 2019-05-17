@@ -1,14 +1,16 @@
 <template>
   <div>
     <v-btn color="white" dark class="primary--text" @click.stop="changeDirectory">
-      <v-icon class="mr-3" color="primary">folder</v-icon>Переместить
+      <v-icon class="mr-3" color="primary">folder</v-icon>Выбрать размещение
     </v-btn>
     <v-dialog v-model="dialog" max-width="800">
       <v-card>
-        <v-card-title class="headline" color="white">Выберите папку</v-card-title>
+        <v-card-title class="headline" color="white">Выберите размещение</v-card-title>
+        
         <v-treeview
           :items="items"
-					:active.sync="active"
+          :active.sync="active"
+          :open.sync="open"
           v-model="tree"
           activatable
           active-class="grey lighten-3 primary--text"
@@ -32,6 +34,12 @@
         <v-btn color="primary" flat="flat" @click="error=false">Ок</v-btn>
       </v-card>
     </v-dialog>
+    <v-dialog v-model="errorEmpty" max-width="800">
+      <v-card>
+        <v-card-title class="headline" color="white">Выберите каталог</v-card-title>
+        <v-btn color="primary" flat="flat" @click="errorEmpty=false">Ок</v-btn>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 
@@ -48,23 +56,32 @@ export default {
     tree: [],
     active: [],
     open: [],
-    error: false
+    error: false,
+    errorEmpty: false
   }),
   methods: {
     changeDirectory() {
       this.dialog = true;
       this.active.push(this.parentId);
+      this.open.push(this.parentId);
     },
     reset() {
+      if (this.parentId != null)
+        this.active.push(this.parentId);      
+      else
+        this.active[0] = '';
+      if (this.isArticle)
+        this.active[0] = '';
       this.dialog = false;
     },
     async confirmChangeDirectory() {
-			if (this.active[0] !== this.folderId) {
-				this.$emit("changeDirectory", {
-					parentId: this.active[0]
+      if (this.active[0] !== this.folderId) {
+        this.$emit("change-directory", {
+          parentId: this.active[0]
         });
         this.reset();
-      } else this.error = true;
+      } else if (this.active[0] == null) this.errorEmpty = true;
+      else this.error = true;
     }
   }
 };

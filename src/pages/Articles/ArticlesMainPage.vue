@@ -8,7 +8,6 @@
 
 <script>
 import Store from "Store/store.js";
-import ArticlesService from "Services/ArticlesService.js";
 import AdminArticlesMainPage from "./AdminArticlesMainPage";
 import OperatorArticlesMainPage from "./OperatorArticlesMainPage";
 import ClientArticlesMainPage from "./ClientArticlesMainPage";

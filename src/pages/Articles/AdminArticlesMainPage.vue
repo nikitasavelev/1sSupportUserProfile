@@ -2,28 +2,39 @@
   <div>
     <v-layout row wrap class="px-5">
       <v-flex xs9 class="left-side pr-2 pl-5 pt-3">
-        <add-folder @add-folder="getItems"/>
-        <v-list style="color: #003399">
+        <div style="display: flex; align-items: center; flex-direction: row;" class="mb-3">
+          <add-article :items="items" @add-article="getItems"/>
+          <add-folder @add-folder="getItems"/>
+          <v-btn v-if="!update" color="white" dark class="primary--text" @click="update = !update">
+            <v-icon class="mr-3" color="primary">edit</v-icon>Редактировать
+          </v-btn>
+          <v-btn v-else color="primary" dark @click="update = !update">
+            <v-icon class="mr-3" color="white">edit</v-icon>Редактировать
+          </v-btn>
+        </div>
+        <update-list
+          v-if="update"
+          :items="items"
+          :fullItems="fullItems"
+          :folderId="folderId"
+          :parentId="parentId"
+          @update-list="getItems"
+        />
+        <v-list v-else style="color: #003399; font-size: 2rem">
           <v-list-group v-for="i in items" :key="i.id" :prepend-icon="i.icon">
             <template slot="activator">
               <v-list-tile>
-                <v-list-tile-content style="align-items: center; flex-direction: row;">
+                <v-list-tile-content>
                   <v-list-tile-title>{{ i.name }}</v-list-tile-title>
-                  <update-folder :i="i" :fullItems="fullItems" @update-folder="getItems"/>
-                  <delete-folder :i="i" @delete-folder="getItems"/>
-                  <update-folder-status :i="i" @update-folder-status="getItems"/>
                 </v-list-tile-content>
               </v-list-tile>
             </template>
 
             <v-list-group v-for="child in i.children" :key="child.id" sub-group class="ml-4">
               <template slot="activator">
-                <v-list-tile @click="openFolder(child)" >
-                  <v-list-tile-content style="align-items: center; flex-direction: row;">
+                <v-list-tile @click="openFolder(child)">
+                  <v-list-tile-content>
                     <v-list-tile-title>{{ child.name }}</v-list-tile-title>
-                    <update-folder :i="child" :fullItems="fullItems" @update-folder="getItems"/>
-                    <delete-folder :i="child" @delete-folder="getItems"/>
-                    <update-folder-status :i="child" @update-folder-status="getItems"/>
                   </v-list-tile-content>
                 </v-list-tile>
               </template>
@@ -34,15 +45,8 @@
                   class="ml-5 pl-5"
                   @click="openFolder(grandchild)"
                 >
-                  <v-list-tile-content style="align-items: center; flex-direction: row;">
+                  <v-list-tile-content>
                     <v-list-tile-title>{{ grandchild.name }}</v-list-tile-title>
-                    <update-folder
-                      :i="grandchild"
-                      :fullItems="fullItems"
-                      @update-folder="getItems"
-                    />
-                    <delete-folder :i="grandchild" @delete-folder="getItems"/>
-                    <update-folder-status :i="grandchild" @update-folder-status="getItems"/>
                   </v-list-tile-content>
                 </v-list-tile>
               </div>
@@ -61,19 +65,17 @@
 <script>
 import ArticlesService from "Services/ArticlesService.js";
 import SideNews from "Components/SideNews";
-import UpdateFolder from "./Actions/UpdateFolder";
-import DeleteFolder from "./Actions/DeleteFolder";
-import UpdateFolderStatus from "./Actions/UpdateFolderStatus";
 import AddFolder from "./Actions/AddFolder";
+import AddArticle from "./Actions/AddArticle";
+import UpdateList from "./Actions/UpdateList";
 
 export default {
   name: "AdminArticlesMainPage",
   components: {
     SideNews,
+    AddArticle,
     AddFolder,
-    UpdateFolder,
-    UpdateFolderStatus,
-    DeleteFolder
+    UpdateList
   },
   data: () => ({
     items: [],
@@ -89,6 +91,7 @@ export default {
     isLoaded: false,
     addFolderDialog: false,
     updateFolderDialog: false,
+    update: false,
     unlockFolderDialog: false,
     deleteFolderDialog: false,
     folderId: "",
@@ -115,7 +118,10 @@ export default {
     },
     openFolder(folder) {
       if (folder.hasArticle)
-        this.$router.push({ name: "ArticlesPage", params: { id: folder.id } });
+        this.$router.push({
+          name: "ArticlesPage",
+          params: { id: folder.parentId }
+        });
     }
   },
   async mounted() {
