@@ -83,6 +83,8 @@ export default {
       this.checkboxBlock = false;
       this.valid = false;
       this.file="";
+      this.fileName = "";
+      this.folderId = "";
     },
     pickFile() {
       this.$refs.inputFile.click();
@@ -94,7 +96,7 @@ export default {
 
     async addArticle() {
       if (this.$refs.form.validate() && this.folderId != "") {
-        var form = new FormData();
+        let form = new FormData();
         form.append("Title", this.name);
         form.append("IsBlocked", this.checkboxBlock);
         form.append("IsAvailable", this.checkboxAvailable);
@@ -104,10 +106,11 @@ export default {
         this.reset();
         this.$emit("add-article");
       }
-      else
+      else {
         this.errorEmpty = true;
+        return;
+      }
       this.reset();
-      return;
     }
   }
 };

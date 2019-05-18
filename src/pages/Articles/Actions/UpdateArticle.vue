@@ -79,11 +79,13 @@ export default {
         form.append("Title", this.name);
         form.append("IsAvailable", this.checkboxAvailable);
         form.append("FolderId", this.folderId);
-        if(this.file[0] != null)
+        if(this.file[0] != null) {
             form.append("ArticleFile", this.file[0]);
+        }
         await ArticlesService.updateArticle(form, this.articleId);
-        if (this.checkboxBlock)
+        if (this.checkboxBlock) {
             await ArticlesService.updateArticleStatus(this.articleId, true)
+        }
         this.reset();
         this.$emit("update-article");
       }

@@ -110,11 +110,12 @@ export default {
       this.isLoaded = true;
     },
     openFolder(folder) {
-      if (folder.hasArticle)
+      if (folder.hasArticle){
         this.$router.push({
           name: "ArticlesPage",
           params: { id: folder.parentId }
         });
+      }
     }
   },
   async mounted() {

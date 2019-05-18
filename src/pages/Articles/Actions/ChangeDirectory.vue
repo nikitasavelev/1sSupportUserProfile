@@ -66,12 +66,12 @@ export default {
       this.open.push(this.parentId);
     },
     reset() {
-      if (this.parentId != null)
+      if (this.parentId != null){
         this.active.push(this.parentId);      
-      else
-        this.active[0] = '';
-      if (this.isArticle)
-        this.active[0] = '';
+      }
+      else {
+        this.active = [];
+      }
       this.dialog = false;
     },
     async confirmChangeDirectory() {
@@ -80,8 +80,12 @@ export default {
           parentId: this.active[0]
         });
         this.reset();
-      } else if (this.active[0] == null) this.errorEmpty = true;
-      else this.error = true;
+      } else if (this.active[0] == null) {
+          this.errorEmpty = true;
+        }
+      else {
+        this.error = true;
+      }
     }
   }
 };
