@@ -24,11 +24,10 @@
       <template v-slot:append="{ item }">
         <div style="display: flex; align-items: center; flex-direction: row;">
           <update-folder :i="item" :fullItems="fullItems" @update-folder="getItems"/>
-          <delete-folder :i="item" @delete-folder="getItems"/>
+          <update-article :i="item" :items="items" @update-article="getItems"/>
+          <delete-item :item="item" @delete-item="getItems"/>
           <update-folder-status v-if="Number(roleType) === roleTypes.Admin" :i="item" @update-folder-status="getItems"/>
           <update-article-status v-if="Number(roleType) === roleTypes.Admin" :i="item" @update-article-status="getItems"/>
-          <update-article :i="item" :items="items" @update-article="getItems"/>
-          <delete-article :i="item" @delete-article="getItems"/>
         </div>
       </template>
     </v-treeview>
@@ -38,22 +37,20 @@
 <script>
 import Store from "Store/store.js";
 import UpdateFolder from "./UpdateFolder";
-import DeleteFolder from "./DeleteFolder";
+import DeleteItem from "./DeleteItem";
 import UpdateFolderStatus from "./UpdateFolderStatus";
 import UpdateArticleStatus from "./UpdateArticleStatus";
 import UpdateArticle from "./UpdateArticle";
-import DeleteArticle from "./DeleteArticle";
 import { roleTypes } from "Constants/ROLE_TYPES.js";
 
 export default {
   name: "UpdateList",
   components: {
     UpdateFolder,
-    DeleteFolder,
+    DeleteItem,
     UpdateFolderStatus,
     UpdateArticleStatus,
-    UpdateArticle,
-    DeleteArticle
+    UpdateArticle
   },
   props: {
     items: Array,
