@@ -66,12 +66,7 @@ export default {
       this.open.push(this.parentId);
     },
     reset() {
-      if (this.parentId != null){
-        this.active.push(this.parentId);      
-      }
-      else {
-        this.active = [];
-      }
+      this.active = [];
       this.dialog = false;
     },
     async confirmChangeDirectory() {
@@ -80,7 +75,7 @@ export default {
           parentId: this.active[0]
         });
         this.reset();
-      } else if (this.active[0] == null) {
+      } else if (!this.active[0]) {
           this.errorEmpty = true;
         }
       else {
