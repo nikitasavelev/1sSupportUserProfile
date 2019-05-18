@@ -16,7 +16,7 @@
               {{message.firstName}}
             </div>            
             <v-card
-                class="chat-message pa-2 mt-2"
+                class="chat-message pa-2 mt-2 d-block"
                 :align-end="message.isMe"
                 :align-start="!message.isMe">
                 <div class="">{{message.text}}</div>
@@ -129,8 +129,7 @@ export default {
 
 <style scoped>
 .chat-message {
-  max-width: 40vw;
-  min-height: 3rem;
+  max-width: 30vw;
 }
 
 .chat-message-time {
@@ -166,9 +165,7 @@ export default {
 
 .layout {
   flex: 0 1 auto !important;
-}
-
-.more-height{
-  min-height: 5.625rem !important;
+  display: -webkit-box;
+  display: -ms-flexbox;
 }
 </style>
