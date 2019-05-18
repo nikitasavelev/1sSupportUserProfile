@@ -26,8 +26,7 @@
           <update-folder :i="item" :fullItems="fullItems" @update-folder="getItems"/>
           <update-article :i="item" :items="items" @update-article="getItems"/>
           <delete-item :item="item" @delete-item="getItems"/>
-          <update-folder-status v-if="Number(roleType) === roleTypes.Admin" :i="item" @update-folder-status="getItems"/>
-          <update-article-status v-if="Number(roleType) === roleTypes.Admin" :i="item" @update-article-status="getItems"/>
+          <update-item-status v-if="Number(roleType) === roleTypes.Admin" :item="item" @update-item-status="getItems"/>
         </div>
       </template>
     </v-treeview>
@@ -37,20 +36,18 @@
 <script>
 import Store from "Store/store.js";
 import UpdateFolder from "./UpdateFolder";
-import DeleteItem from "./DeleteItem";
-import UpdateFolderStatus from "./UpdateFolderStatus";
-import UpdateArticleStatus from "./UpdateArticleStatus";
 import UpdateArticle from "./UpdateArticle";
+import DeleteItem from "./DeleteItem";
+import UpdateItemStatus from "./UpdateItemStatus";
 import { roleTypes } from "Constants/ROLE_TYPES.js";
 
 export default {
   name: "UpdateList",
   components: {
     UpdateFolder,
-    DeleteItem,
-    UpdateFolderStatus,
-    UpdateArticleStatus,
-    UpdateArticle
+    UpdateArticle,
+    UpdateItemStatus,
+    DeleteItem
   },
   props: {
     items: Array,
