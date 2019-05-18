@@ -12,10 +12,7 @@
           <div v-if="this.article !== ''" class="article" v-html="article[index].text"></div>
           <div v-else>
             <ul v-for="item in items" :key="item.id">
-              <tree-item
-                class="primary--text"
-                :item="item"
-              />
+              <tree-item class="primary--text" :item="item"/>
             </ul>
           </div>
         </v-flex>

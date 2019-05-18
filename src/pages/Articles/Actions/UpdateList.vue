@@ -15,8 +15,8 @@
       hoverable
     >
       <template v-slot:prepend="{ item }">
-        <v-icon v-if="item.icon != null" class="pa-2">{{ item.icon }}</v-icon>
-        <v-icon v-else> {{ item.isArticle ? 'description' : 'folder'}}</v-icon>
+        <v-icon v-if="item.icon" class="pa-2">{{ item.icon }}</v-icon>
+        <v-icon v-else>{{ item.isArticle ? 'description' : 'folder'}}</v-icon>
       </template>
       <template v-slot:label="{ item }">
         <span style="font-size: 1rem; padding: 1rem;">{{ item.name }}</span>
@@ -26,7 +26,11 @@
           <update-folder :i="item" :fullItems="fullItems" @update-folder="getItems"/>
           <update-article :i="item" :items="items" @update-article="getItems"/>
           <delete-item :item="item" @delete-item="getItems"/>
-          <update-item-status v-if="Number(roleType) === roleTypes.Admin" :item="item" @update-item-status="getItems"/>
+          <update-item-status
+            v-if="Number(roleType) === roleTypes.Admin"
+            :item="item"
+            @update-item-status="getItems"
+          />
         </div>
       </template>
     </v-treeview>
@@ -75,7 +79,7 @@ export default {
         : undefined;
     }
   },
-  mounted(){
+  mounted() {
     this.roleType = Store.getters.getRoleType;
   }
 };

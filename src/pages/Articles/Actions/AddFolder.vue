@@ -13,9 +13,9 @@
 
           <v-checkbox class="pa-0" v-model="checkboxAvailable" label="Доступна для клиентов"></v-checkbox>
 
-          <v-btn color="red" flat="flat" @click="reset">Отменить</v-btn>
+          <v-btn color="red" flat @click="reset">Отменить</v-btn>
 
-          <v-btn color="primary" flat="flat" @click="addFolder">Сохранить</v-btn>
+          <v-btn color="primary" flat @click="addFolder">Сохранить</v-btn>
         </v-form>
       </v-card>
     </v-dialog>
@@ -23,23 +23,23 @@
 </template>
 
 <script>
-import ArticlesService from 'Services/ArticlesService.js';
+import ArticlesService from "Services/ArticlesService.js";
 
 export default {
   name: "AddFolder",
   data: () => ({
-    name: '',
+    name: "",
     checkboxAvailable: false,
     checkboxBlock: false,
     valid: false,
-    nameRules: [v => v.length > 0 || 'Введите имя папки'],
-    folderId: '',
+    nameRules: [v => v.length > 0 || "Введите имя папки"],
+    folderId: "",
     addFolderDialog: false
   }),
   methods: {
     reset() {
       this.addFolderDialog = false;
-      this.name = '';
+      this.name = "";
       this.checkboxAvailable = false;
       this.checkboxBlock = false;
       this.valid = false;
@@ -53,7 +53,7 @@ export default {
           this.checkboxAvailable
         );
         this.reset();
-        this.$emit('add-folder')
+        this.$emit("add-folder");
       }
     }
   }

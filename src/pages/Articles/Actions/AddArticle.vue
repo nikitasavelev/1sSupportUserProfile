@@ -9,7 +9,11 @@
         <v-form ref="form" class="mx-3 pb-3" id="form" onsubmit="addArticle">
           <v-text-field v-model="name" :rules="nameRules" label="Заголовок" required></v-text-field>
 
-          <change-directory @change-directory="changeDirectory" :items="items" :parentId="folderId"/>
+          <change-directory
+            @change-directory="changeDirectory"
+            :items="items"
+            :parentId="folderId"
+          />
 
           <v-checkbox class="pa-0" v-model="checkboxBlock" label="Заблокирована"></v-checkbox>
 
@@ -33,16 +37,16 @@
           </v-btn>
           <p>{{ fileName }}</p>
 
-          <v-btn color="red" flat="flat" @click="reset">Отменить</v-btn>
+          <v-btn color="red" flat @click="reset">Отменить</v-btn>
 
-          <v-btn color="primary" flat="flat" @click="addArticle">Сохранить</v-btn>
+          <v-btn color="primary" flat @click="addArticle">Сохранить</v-btn>
         </v-form>
       </v-card>
     </v-dialog>
     <v-dialog v-model="errorEmpty" max-width="800">
       <v-card>
         <v-card-title class="headline" color="white">Выберите каталог</v-card-title>
-        <v-btn color="primary" flat="flat" @click="errorEmpty=false">Ок</v-btn>
+        <v-btn color="primary" flat @click="errorEmpty=false">Ок</v-btn>
       </v-card>
     </v-dialog>
   </div>
@@ -82,7 +86,7 @@ export default {
       this.checkboxAvailable = false;
       this.checkboxBlock = false;
       this.valid = false;
-      this.file="";
+      this.file = "";
       this.fileName = "";
       this.folderId = "";
     },
@@ -105,8 +109,7 @@ export default {
         await ArticlesService.addArticle(form);
         this.reset();
         this.$emit("add-article");
-      }
-      else {
+      } else {
         this.errorEmpty = true;
         return;
       }

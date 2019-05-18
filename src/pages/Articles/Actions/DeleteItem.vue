@@ -28,10 +28,9 @@ export default {
   methods: {
     async confirmDeleteItem() {
       this.deleteItemDialog = false;
-      if (this.item.isArticle){
+      if (this.item.isArticle) {
         await ArticlesService.deleteArticle(this.item.id);
-      }
-      else {
+      } else {
         await ArticlesService.deleteFolder(this.item.id);
       }
       this.$emit("delete-item");

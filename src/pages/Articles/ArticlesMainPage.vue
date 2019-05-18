@@ -2,7 +2,11 @@
   <div>
     <v-layout row wrap class="px-5">
       <v-flex xs9 class="left-side pr-2 pl-5 pt-3">
-        <div v-if="Number(roleType) === roleTypes.Admin || Number(roleType) === roleTypes.Operator" style="display: flex; align-items: center; flex-direction: row;" class="mb-3">
+        <div
+          v-if="Number(roleType) === roleTypes.Admin || Number(roleType) === roleTypes.Operator"
+          style="display: flex; align-items: center; flex-direction: row;"
+          class="mb-3"
+        >
           <add-article :items="items" @add-article="getItems"/>
           <add-folder @add-folder="getItems"/>
           <v-btn v-if="!update" color="white" dark class="primary--text" @click="update = !update">
@@ -99,18 +103,16 @@ export default {
     async getItems() {
       this.isLoaded = false;
       this.items = await ArticlesService.getItems(0);
-      for (let i = 0; i < this.items.length; i++) {
-        this.items[i].icon = this.icons[i];
-        if (!this.items[i].isDefault) {
-          this.items[i].icon = "folder";
-        }
-      }
+      this.items.forEach((element, index) => {
+        element.isDefault ?
+          element.icon = this.icons[index] : element.icon = "folder";
+      });
       this.fullItems = this.items.slice();
       this.fullItems.unshift({ id: 0, name: "[Корневой каталог]" });
       this.isLoaded = true;
     },
     openFolder(folder) {
-      if (folder.hasArticle){
+      if (folder.hasArticle) {
         this.$router.push({
           name: "ArticlesPage",
           params: { id: folder.parentId }

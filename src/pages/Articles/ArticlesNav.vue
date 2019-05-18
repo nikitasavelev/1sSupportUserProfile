@@ -13,12 +13,12 @@
     @click="getArticle"
   >
     <template v-slot:prepend="{ item }">
-      <v-icon v-if="item.icon != null" class="pa-2">{{ item.icon }}</v-icon>
-      <v-icon v-else> {{ item.isArticle ? 'description' : 'folder'}}</v-icon>
+      <v-icon v-if="item.icon" class="pa-2">{{ item.icon }}</v-icon>
+      <v-icon v-else>{{ item.isArticle ? 'description' : 'folder'}}</v-icon>
     </template>
     <template v-slot:label="{ item, active }">
       <div style="max-width: 430px !important;">
-      <p style="font-size: 1rem;" class="ma-0" @click="getArticle(item)" >{{ item.name }}</p>
+        <p style="font-size: 1rem;" class="ma-0" @click="getArticle(item)">{{ item.name }}</p>
       </div>
     </template>
   </v-treeview>

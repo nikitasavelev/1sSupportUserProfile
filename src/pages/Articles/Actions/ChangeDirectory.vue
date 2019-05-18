@@ -6,7 +6,7 @@
     <v-dialog v-model="dialog" max-width="800">
       <v-card>
         <v-card-title class="headline" color="white">Выберите размещение</v-card-title>
-        
+
         <v-treeview
           :items="items"
           :active.sync="active"
@@ -23,21 +23,21 @@
           </template>
           <template v-slot:label="{ item }">{{ item.name }}</template>
         </v-treeview>
-        <v-btn color="red" flat="flat" class="ma-3" @click="reset">Отменить</v-btn>
+        <v-btn color="red" flat class="ma-3" @click="reset">Отменить</v-btn>
 
-        <v-btn color="primary" flat="flat" @click="confirmChangeDirectory">Сохранить</v-btn>
+        <v-btn color="primary" flat @click="confirmChangeDirectory">Сохранить</v-btn>
       </v-card>
     </v-dialog>
     <v-dialog v-model="error" max-width="800">
       <v-card>
         <v-card-title class="headline" color="white">Нельзя переместить папку в саму себя</v-card-title>
-        <v-btn color="primary" flat="flat" @click="error=false">Ок</v-btn>
+        <v-btn color="primary" flat @click="error=false">Ок</v-btn>
       </v-card>
     </v-dialog>
     <v-dialog v-model="errorEmpty" max-width="800">
       <v-card>
         <v-card-title class="headline" color="white">Выберите каталог</v-card-title>
-        <v-btn color="primary" flat="flat" @click="errorEmpty=false">Ок</v-btn>
+        <v-btn color="primary" flat @click="errorEmpty=false">Ок</v-btn>
       </v-card>
     </v-dialog>
   </div>
@@ -76,9 +76,8 @@ export default {
         });
         this.reset();
       } else if (!this.active[0]) {
-          this.errorEmpty = true;
-        }
-      else {
+        this.errorEmpty = true;
+      } else {
         this.error = true;
       }
     }

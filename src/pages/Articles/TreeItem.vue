@@ -1,8 +1,6 @@
 <template>
   <li>
-    <div
-      :class="{bold: isFolder}"
-      @click="toggle">
+    <div :class="{bold: isFolder}" @click="toggle">
       {{ item.name }}
       <span v-if="isFolder">[{{ isOpen ? '-' : '+' }}]</span>
     </div>
@@ -24,25 +22,24 @@ export default {
   props: {
     item: Object
   },
-  data: function () {
+  data: function() {
     return {
-      isOpen: true,
-    }
+      isOpen: true
+    };
   },
   computed: {
-    isFolder: function () {
-      return this.item.children &&
-        this.item.children.length
+    isFolder: function() {
+      return this.item.children && this.item.children.length;
     }
   },
   methods: {
-    toggle(){
+    toggle() {
       if (this.isFolder) {
-        this.isOpen = !this.isOpen
+        this.isOpen = !this.isOpen;
       }
     }
   }
-}
+};
 </script>
 
 <style scoped>

@@ -30,9 +30,9 @@
           </v-btn>
           <p>{{ fileName }}</p>
 
-          <v-btn color="red" flat="flat" @click="reset">Отменить</v-btn>
+          <v-btn color="red" flat @click="reset">Отменить</v-btn>
 
-          <v-btn color="primary" flat="flat" @click="confirmUpdateArticle">Сохранить</v-btn>
+          <v-btn color="primary" flat @click="confirmUpdateArticle">Сохранить</v-btn>
         </v-form>
       </v-card>
     </v-dialog>
@@ -75,16 +75,16 @@ export default {
     },
     async confirmUpdateArticle() {
       if (this.$refs.form.validate()) {
-        var form = new FormData();
+        let form = new FormData();
         form.append("Title", this.name);
         form.append("IsAvailable", this.checkboxAvailable);
         form.append("FolderId", this.folderId);
-        if(this.file[0] != null) {
-            form.append("ArticleFile", this.file[0]);
+        if (this.file[0] != null) {
+          form.append("ArticleFile", this.file[0]);
         }
         await ArticlesService.updateArticle(form, this.articleId);
         if (this.checkboxBlock) {
-            await ArticlesService.updateArticleStatus(this.articleId, true)
+          await ArticlesService.updateArticleStatus(this.articleId, true);
         }
         this.reset();
         this.$emit("update-article");

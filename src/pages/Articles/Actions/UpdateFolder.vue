@@ -18,9 +18,9 @@
 
           <v-checkbox class="pa-0" v-model="checkboxAvailable" label="Доступна для клиентов"></v-checkbox>
 
-          <v-btn color="red" flat="flat" @click="reset">Отменить</v-btn>
+          <v-btn color="red" flat @click="reset">Отменить</v-btn>
 
-          <v-btn color="primary" flat="flat" @click="confirmUpdateFolder">Сохранить</v-btn>
+          <v-btn color="primary" flat @click="confirmUpdateFolder">Сохранить</v-btn>
         </v-form>
       </v-card>
     </v-dialog>
