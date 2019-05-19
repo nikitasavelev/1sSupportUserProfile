@@ -151,7 +151,7 @@ export default {
 }
 
 .chat {
-  overflow-y: scroll;
+  overflow-y: auto;
   height: 40vh;
 }
 
