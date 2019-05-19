@@ -1,6 +1,15 @@
 export default function formatDate(UTCDate) {
   const date = new Date(UTCDate);
-  return `${date.getDate()}.${date.getMonth()}.${date.getFullYear()}`;
+  function addZeroPadding(value) {
+    let clonedValue = value;
+    if (String(clonedValue).length === 1) {
+      clonedValue = `0${clonedValue}`;
+    }
+    return clonedValue
+  }
+  const day = addZeroPadding(date.getDate());
+  const month = addZeroPadding(date.getMonth()+1);
+  return `${day}.${month}.${date.getFullYear()}`;
 }
 
 export function assignVariables(
@@ -154,4 +163,18 @@ export function removeLocalStorageValues(namesArray) {
   namesArray.forEach(name => {
     localStorage.removeItem(name);
   });
+}
+
+export function fractionalHoursToIntegerHoursAndMinutes(fractionalHours){
+  const hours = Math.trunc(fractionalHours);
+  let minutes = ((fractionalHours - hours) * 60).toFixed();
+  if (minutes.length === 1) minutes = `0${minutes}`;
+  return `${hours}:${minutes}`;
+}
+
+
+export const toDateString = (fromDate, toDate) => {
+  fromDate = fromDate.split('.').reverse().join('-');
+  toDate = toDate.split('.').reverse().join('-');
+  return [fromDate, toDate]
 }
