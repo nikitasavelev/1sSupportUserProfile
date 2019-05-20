@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-flex xs5 color="lighten-4" ml-2>
-      <v-text-field v-model="search" clearable clear-icon="highlight_off" label="Поиск" required></v-text-field>
+      <v-text-field v-model="search" clearable clear-icon="highlight_off" label="Поиск" required/>
     </v-flex>
     <v-treeview
       :items="items"

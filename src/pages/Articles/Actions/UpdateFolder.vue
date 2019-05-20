@@ -5,7 +5,7 @@
       <v-card>
         <v-card-title class="headline">Редактирование папки</v-card-title>
         <v-form ref="form" class="mx-3 pb-3">
-          <v-text-field v-model="name" :rules="nameRules" label="Название" required></v-text-field>
+          <v-text-field v-model="name" :rules="nameRules" label="Название" required/>
 
           <change-directory
             @change-directory="changeDirectory"
@@ -14,9 +14,9 @@
             :parentId="parentId"
           />
 
-          <v-checkbox class="pa-0" v-model="checkboxBlock" label="Заблокирована"></v-checkbox>
+          <v-checkbox class="pa-0" v-model="checkboxBlock" label="Заблокирована"/>
 
-          <v-checkbox class="pa-0" v-model="checkboxAvailable" label="Доступна для клиентов"></v-checkbox>
+          <v-checkbox class="pa-0" v-model="checkboxAvailable" label="Доступна для клиентов"/>
 
           <v-btn color="red" flat @click="reset">Отменить</v-btn>
 

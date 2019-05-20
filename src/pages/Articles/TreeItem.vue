@@ -5,13 +5,15 @@
       <span v-if="isFolder">[{{ isOpen ? '-' : '+' }}]</span>
     </div>
     <ul v-show="isOpen" v-if="isFolder">
-      <tree-item
-        style="list-style-type: disc"
-        class="item"
-        v-for="(child, index) in item.children"
-        :key="index"
-        :item="child"
-      ></tree-item>
+      <router-link to="">
+        <tree-item
+          style="list-style-type: disc"
+          class="item"
+          v-for="(child, index) in item.children"
+          :key="index"
+          :item="child"
+        ></tree-item>
+      </router-link>
     </ul>
   </li>
 </template>

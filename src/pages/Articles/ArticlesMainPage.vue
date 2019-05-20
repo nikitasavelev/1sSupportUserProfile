@@ -8,7 +8,7 @@
           class="mb-3"
         >
           <add-article :items="items" @add-article="getItems"/>
-          <add-folder @add-folder="getItems"/>
+          <add-folder :items="fullItems" @add-folder="getItems"/>
           <v-btn v-if="!update" color="white" dark class="primary--text" @click="update = !update">
             <v-icon class="mr-3" color="primary">edit</v-icon>Редактировать
           </v-btn>
@@ -104,8 +104,9 @@ export default {
       this.isLoaded = false;
       this.items = await ArticlesService.getItems(0);
       this.items.forEach((element, index) => {
-        element.isDefault ?
-          element.icon = this.icons[index] : element.icon = "folder";
+        element.isDefault
+          ? (element.icon = this.icons[index])
+          : (element.icon = "folder");
       });
       this.fullItems = this.items.slice();
       this.fullItems.unshift({ id: 0, name: "[Корневой каталог]" });

@@ -23,9 +23,12 @@
           </template>
           <template v-slot:label="{ item }">{{ item.name }}</template>
         </v-treeview>
-        <v-btn color="red" flat class="ma-3" @click="reset">Отменить</v-btn>
 
-        <v-btn color="primary" flat @click="confirmChangeDirectory">Сохранить</v-btn>
+        <v-layout justify-end>
+          <v-btn color="red" flat class="mb-3" @click="reset">Отменить</v-btn>
+
+          <v-btn color="primary" flat @click="confirmChangeDirectory">Сохранить</v-btn>
+        </v-layout>
       </v-card>
     </v-dialog>
     <v-dialog v-model="error" max-width="800">
@@ -70,7 +73,7 @@ export default {
       this.dialog = false;
     },
     async confirmChangeDirectory() {
-      if (this.active[0] !== this.folderId) {
+      if (this.active[0] !== this.folderId) { //dont't add folder to itself
         this.$emit("change-directory", {
           parentId: this.active[0]
         });

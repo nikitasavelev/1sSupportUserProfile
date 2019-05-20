@@ -1,11 +1,11 @@
 <template>
   <div>
-    <v-btn v-if="!i.isBlocked && i.isArticle" flat small @click="updateArticle(i)">Редактировать</v-btn>
+    <v-btn v-if="!item.isBlocked && item.isArticle" flat small @click="updateArticle(item)">Редактировать</v-btn>
     <v-dialog v-model="updateArticleDialog" max-width="800">
       <v-card>
         <v-card-title class="headline">Редактирование статьи</v-card-title>
         <v-form ref="form" class="mx-3 pb-3">
-          <v-text-field v-model="name" :rules="nameRules" label="Заголовок" required></v-text-field>
+          <v-text-field v-model="name" :rules="nameRules" label="Заголовок" required/>
 
           <change-directory
             @change-directory="changeDirectory"
@@ -13,9 +13,9 @@
             :parentId="folderId"
           />
 
-          <v-checkbox class="pa-0" v-model="checkboxBlock" label="Заблокирована"></v-checkbox>
+          <v-checkbox class="pa-0" v-model="checkboxBlock" label="Заблокирована"/>
 
-          <v-checkbox class="pa-0" v-model="checkboxAvailable" label="Доступна для клиентов"></v-checkbox>
+          <v-checkbox class="pa-0" v-model="checkboxAvailable" label="Доступна для клиентов"/>
 
           <input
             name="file"
@@ -49,7 +49,7 @@ export default {
     ChangeDirectory
   },
   props: {
-    i: Object,
+    item: Object,
     items: Array
   },
   data: () => ({

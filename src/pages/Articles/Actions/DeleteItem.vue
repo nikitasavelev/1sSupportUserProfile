@@ -6,7 +6,7 @@
         <v-card-title v-if="item.isArticle" class="headline">Вы уверены, что хотите удалить статью?</v-card-title>
         <v-card-title v-else class="headline">Вы уверены, что хотите удалить папку?</v-card-title>
         <v-btn color="primary" flat @click="deleteItemDialog = false">Отменить</v-btn>
-        <v-btn color="red" flat @click="confirmDeleteItem(true)">Удалить</v-btn>
+        <v-btn color="red" flat @click="confirmDeleteItem">Удалить</v-btn>
       </v-card>
     </v-dialog>
   </div>

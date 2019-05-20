@@ -28,14 +28,14 @@
                 v-model="message"
                 @keydown.enter="formSubmit"
                 placeholder="Напишите сообщение"
-              ></v-textarea>
+              />
               <v-text-field
                   v-if="this.questionId === '0'"
                   v-model="title"
                   label="Напишите тему"
                   class="mt-2 choose-title"
                   required
-              ></v-text-field>
+              />
               <v-btn 
                 class="d-block right"
                 color="primary"
@@ -61,7 +61,7 @@
                 color="#003399"
                 v-if="isResolved || request.mark > 0"
                 large          
-            ></v-rating>
+            />
           </v-layout>
         </div>
         <v-layout v-else justify-center mt-5>
