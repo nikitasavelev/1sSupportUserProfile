@@ -25,7 +25,7 @@
             v-if="!request.isActive"
             v-model="request.mark"
             :hover="true"
-            readonly
+            :readonly="request.mark != 0"
             color="#003399"
             small         
           ></v-rating>
@@ -62,15 +62,10 @@ export default {
         required: true,
         type: String
       },
-      rating: {
-        required: false,
-        type: Number
-      }
     }
   },
   data() {
     return {
-      rating: 0,
       title: "",
       isLoaded: false,
       isDescriptionShown: false,
@@ -87,9 +82,14 @@ export default {
       this.isDescriptionShown = !this.isDescriptionShown;
     }
   },
-  mounted() {},
-
-  beforeDestroy() {}
+  watch: {
+    "request.mark": function(mark) {
+      if (mark !== 0 ) {
+        QuestionsService.closeQuestion(this.request.questionId, mark);
+        this.isClosed = true;
+      }
+    }
+  }
 };
 </script>
 
