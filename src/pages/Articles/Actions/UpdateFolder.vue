@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-btn v-if="!i.isBlocked && !i.isArticle" flat small @click="updateFolder(i)">Редактировать</v-btn>
+    <v-btn v-if="!item.isBlocked && !item.isArticle" flat small @click="updateFolder(item)">Редактировать</v-btn>
     <v-dialog v-model="updateFolderDialog" max-width="800">
       <v-card>
         <v-card-title class="headline">Редактирование папки</v-card-title>
@@ -18,7 +18,7 @@
 
           <v-checkbox class="pa-0" v-model="checkboxAvailable" label="Доступна для клиентов"/>
 
-          <v-btn color="red" flat @click="reset">Отменить</v-btn>
+          <v-btn color="red" flat @click="cancel">Отменить</v-btn>
 
           <v-btn color="primary" flat @click="confirmUpdateFolder">Сохранить</v-btn>
         </v-form>
@@ -30,6 +30,7 @@
 <script>
 import ArticlesService from "Services/ArticlesService.js";
 import ChangeDirectory from "./ChangeDirectory";
+import reset from "Mixins/reset.js";
 
 export default {
   name: "UpdateFolder",
@@ -37,9 +38,10 @@ export default {
     ChangeDirectory
   },
   props: {
-    i: Object,
+    item: Object,
     fullItems: Array
   },
+  mixins: [reset],
   data: () => ({
     folderId: "",
     name: "",
@@ -73,17 +75,19 @@ export default {
         }
         this.$emit("update-folder");
       }
-      this.reset();
+      this.cancel();
     },
     changeDirectory(data) {
       this.parentId = data.parentId;
     },
-    reset() {
-      this.updateFolderDialog = false;
-      this.name = "";
-      this.checkboxAvailable = false;
-      this.checkboxBlock = false;
-      this.valid = false;
+    cancel() {
+      this.reset(this, [
+        'updateFolderDialog',
+        'name',
+        'checkboxAvailable',
+        'checkboxBlock',
+        'valid'
+      ]);
     }
   }
 };

@@ -23,8 +23,8 @@
       </template>
       <template v-slot:append="{ item }">
         <div style="display: flex; align-items: center; flex-direction: row;">
-          <update-folder :i="item" :fullItems="fullItems" @update-folder="getItems"/>
-          <update-article :i="item" :items="items" @update-article="getItems"/>
+          <update-folder :item="item" :fullItems="fullItems" @update-folder="getItems"/>
+          <update-article :item="item" :items="items" @update-article="getItems"/>
           <delete-item :item="item" @delete-item="getItems"/>
           <update-item-status
             v-if="Number(roleType) === roleTypes.Admin"

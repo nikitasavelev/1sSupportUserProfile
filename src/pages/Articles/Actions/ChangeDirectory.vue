@@ -25,7 +25,7 @@
         </v-treeview>
 
         <v-layout justify-end>
-          <v-btn color="red" flat class="mb-3" @click="reset">Отменить</v-btn>
+          <v-btn color="red" flat class="mb-3" @click="cancel">Отменить</v-btn>
 
           <v-btn color="primary" flat @click="confirmChangeDirectory">Сохранить</v-btn>
         </v-layout>
@@ -68,7 +68,7 @@ export default {
       this.active.push(this.parentId);
       this.open.push(this.parentId);
     },
-    reset() {
+    cancel() {
       this.active = [];
       this.dialog = false;
     },
@@ -77,7 +77,7 @@ export default {
         this.$emit("change-directory", {
           parentId: this.active[0]
         });
-        this.reset();
+        this.cancel();
       } else if (!this.active[0]) {
         this.errorEmpty = true;
       } else {

@@ -1,6 +1,11 @@
 <template>
   <div>
-    <v-btn v-if="!item.isBlocked && item.isArticle" flat small @click="updateArticle(item)">Редактировать</v-btn>
+    <v-btn
+      v-if="!item.isBlocked && item.isArticle"
+      flat
+      small
+      @click="updateArticle(item)"
+    >Редактировать</v-btn>
     <v-dialog v-model="updateArticleDialog" max-width="800">
       <v-card>
         <v-card-title class="headline">Редактирование статьи</v-card-title>
@@ -30,7 +35,7 @@
           </v-btn>
           <p>{{ fileName }}</p>
 
-          <v-btn color="red" flat @click="reset">Отменить</v-btn>
+          <v-btn color="red" flat @click="cancel">Отменить</v-btn>
 
           <v-btn color="primary" flat @click="confirmUpdateArticle">Сохранить</v-btn>
         </v-form>
@@ -42,6 +47,7 @@
 <script>
 import ArticlesService from "Services/ArticlesService.js";
 import ChangeDirectory from "./ChangeDirectory";
+import reset from "Mixins/reset.js";
 
 export default {
   name: "UpdateArticle",
@@ -52,6 +58,7 @@ export default {
     item: Object,
     items: Array
   },
+  mixins: [reset],
   data: () => ({
     articleId: "",
     name: "",
@@ -86,12 +93,11 @@ export default {
         if (this.checkboxBlock) {
           await ArticlesService.updateArticleStatus(this.articleId, true);
         }
-        this.reset();
+        this.cancel();
         this.$emit("update-article");
       }
       this.errorEmpty = true;
-      this.reset();
-      return;
+      this.cancel();
     },
     pickFile() {
       this.$refs.inputFile.click();
@@ -103,12 +109,14 @@ export default {
     changeDirectory(data) {
       this.folderId = data.parentId;
     },
-    reset() {
-      this.updateArticleDialog = false;
-      this.name = "";
-      this.checkboxAvailable = false;
-      this.checkboxBlock = false;
-      this.valid = false;
+    cancel() {
+      this.reset(this, [
+        "updateArticleDialog",
+        "name",
+        "checkboxAvailable",
+        "checkboxBlock",
+        "valid"
+      ]);
     }
   }
 };
