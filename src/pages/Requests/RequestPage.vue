@@ -110,12 +110,16 @@ export default {
         await QuestionsService.askQuestion(this.message, this.title);
         this.$router.push("/requests");
       } else {
+        // TO DO: refactor this
+        // textToSend is only simple fix: not wait while message is really sent
+        // user can't send same message twice
+        const textToSend = this.message;
+        this.message = "";
         const justSentMessage = await QuestionsService.sendMessage(
           this.questionId,
-          this.message
+          textToSend
         );
         this.$refs.chatMessages.sendOwnMessage(justSentMessage);
-        this.message = "";
       }
     },
     resolveQuestion() {
