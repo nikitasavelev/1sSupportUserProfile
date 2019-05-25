@@ -38,7 +38,7 @@ export default {
       this.$router.push({ name: "SpecificNewsPage", params: { id: newsId } });
     },
     async getMoreNews() {
-      const recievedNews = await NewsService.getNewsPreviews(this.news.length, 2);
+      const recievedNews = await NewsService.getNewsPreviews(this.news.length, 10);
       this.news = this.news.concat(recievedNews);
     }
   },
