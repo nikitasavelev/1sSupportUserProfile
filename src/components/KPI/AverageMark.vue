@@ -44,8 +44,8 @@ export default {
 
         const options = {
           title: "Полученные оценки",
-          width: '700',
-          height: '500',
+          height: '400',
+          width: (100 + (window.innerWidth / 2.6)).toString(),
           pieHole: 0.5,
           pieSliceText: "value",
           fontSize: 22,
