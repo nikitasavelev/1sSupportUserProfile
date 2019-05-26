@@ -24,6 +24,9 @@ export default {
     }
     window.addEventListener('resize', this.drawChart)
   },
+  beforeDestroy(){
+    window.removeEventListener('resize', this.drawChart);
+  },
   methods: {
     hasDataToShow(){
       // includes NaN check

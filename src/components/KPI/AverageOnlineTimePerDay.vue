@@ -24,6 +24,9 @@ export default {
     }
     window.addEventListener('resize', this.drawChart)
   },
+  beforeDestroy(){
+    window.removeEventListener('resize', this.drawChart);
+  },
   methods: {
     drawChart() {
       console.log('invoked');
