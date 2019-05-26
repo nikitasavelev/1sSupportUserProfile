@@ -79,12 +79,15 @@
 
 <script>
 import { fractionalHoursToIntegerHoursAndMinutes } from "Constants/COMMON_METHODS.js";
-import {toDateString} from "Constants/COMMON_METHODS.js";
+import { toDateString } from "Constants/COMMON_METHODS.js";
 export default {
   name: "TableForOperatorAnalytics",
   props: {
     info: Object,
-    minMaxValues: Object,
+    minMaxValues: {
+      type: Object,
+      required: false
+    },
     fromDate: {
       type: String,
       default: new Date().toISOString().substr(0, 10),
@@ -126,8 +129,7 @@ export default {
     hasDataToShow() {
       if (
         this.analytics.calls &&
-        this.analytics.questions &&
-        this.minMaxValues
+        this.analytics.questions
       ) {
         if (Array.isArray(this.analytics)) {
           return this.analytics.length > 0;
@@ -138,24 +140,28 @@ export default {
       return false;
     },
     moreBetter(value, minMaxValue) {
-      return {
-        best:
-          this.minMaxValues != null &&
-          Number(value.toFixed(2)) === Number(minMaxValue.max.toFixed(2)),
-        worst:
-          this.minMaxValues != null &&
-          Number(value.toFixed(2)) === Number(minMaxValue.min.toFixed(2))
-      };
+      if (minMaxValue) {
+        return {
+          best:
+            this.minMaxValues != null &&
+            Number(value.toFixed(2)) === Number(minMaxValue.max.toFixed(2)),
+          worst:
+            this.minMaxValues != null &&
+            Number(value.toFixed(2)) === Number(minMaxValue.min.toFixed(2))
+        };
+      }
     },
     lessBetter(value, minMaxValue) {
-      return {
-        best:
-          this.minMaxValues != null &&
-          Number(value.toFixed(2)) === Number(minMaxValue.min.toFixed(2)),
-        worst:
-          this.minMaxValues != null &&
-          Number(value.toFixed(2)) === Number(minMaxValue.max.toFixed(2))
-      };
+      if (minMaxValue) {
+        return {
+          best:
+            this.minMaxValues != null &&
+            Number(value.toFixed(2)) === Number(minMaxValue.min.toFixed(2)),
+          worst:
+            this.minMaxValues != null &&
+            Number(value.toFixed(2)) === Number(minMaxValue.max.toFixed(2))
+        };
+      }
     }
   }
 };

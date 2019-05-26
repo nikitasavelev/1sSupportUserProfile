@@ -29,8 +29,8 @@
               />
 
               <table-for-operator-analytics
-              :info="averageKpi"
-              :min-max-values="minMaxValues"
+                :info="averageAnalytics"
+                :min-max-values="minMaxValues"
               />
             </tbody>
           </table>
@@ -75,9 +75,9 @@ export default {
         "10"
       ],
       operatorsAnalytics: [],
-      averageKpi: {},
       isLoaded: false,
-      minMaxValues: {}
+      minMaxValues: {},
+      averageAnalytics: {},
     };
   },
   async mounted() {
@@ -91,10 +91,11 @@ export default {
         toDate
       );
       this.operatorsAnalytics = response.operators;
-      this.averageKpi = response.averageKpi;
       this.isLoaded = true;
       calculateAnalytics(this.operatorsAnalytics);
       this.calculateMinMaxAverageStats(this.operatorsAnalytics);
+      this.averageAnalytics = this.calculateAverageAnalytics();
+      this.averageAnalytics.caption = "Средний показатель";
     },
     calculateMinMaxAverageStats(analytics) {
       this.initMinMaxValues(this.minMaxValues);
@@ -164,6 +165,48 @@ export default {
         "averageMark"
       ];
       return [valuesAndPaths, propertyNames];
+    },
+    calculateAverageAnalytics() {
+      let averageValues = [0,0,0,0,0,0,0,0,0,0]
+      this.operatorsAnalytics.forEach(operator => {
+        const [valuesAndPaths, propertyNames] = this.initValuesAndPropertyNames(
+          operator
+        );
+        valuesAndPaths.forEach((value, index) => {
+          averageValues[index] += value;
+        });
+      });
+      averageValues = averageValues.map(averageValue => {
+        return averageValue / this.operatorsAnalytics.length;
+      });
+      return {
+        calculatedKPI: {
+          questions: {
+            createdCounts: {
+              fromMango: averageValues[0],
+              fromSystem: averageValues[1]
+            },
+            resolvedCounts: {
+              total: averageValues[5]
+            },
+            marks: {
+              average: averageValues[9]
+            }
+          },
+          calls: {
+            durations: {
+              averageInSeconds: averageValues[2],
+              maxInSeconds: averageValues[3],
+              onLineAverageInSeconds: averageValues[4]
+            },
+            counts: {
+              total: averageValues[6],
+              incomes: averageValues[8],
+              outcomes: averageValues[7]
+            }
+          }
+        }
+      };
     }
   },
   watch: {
