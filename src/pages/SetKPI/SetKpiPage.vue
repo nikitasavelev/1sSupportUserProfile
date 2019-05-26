@@ -175,6 +175,7 @@ export default {
               operator = this.setKPIForType(input.kpiType, operator, inputValue)
             }
           });
+          this.$refs[input.ref][0].lazyValue = "";
         }
       }
     },

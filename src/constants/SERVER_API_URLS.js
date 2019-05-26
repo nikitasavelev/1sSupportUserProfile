@@ -22,7 +22,7 @@ export const serverAPIUrls = Object.freeze({
   GET_SEARCH: serverAPIDomain + "/searching/search/",
   GET_POPULAR_SEARCH: serverAPIDomain + "/searching/popular/",
 
-  GET_ARTICLE: serverAPIDomain + "/articles",
+  ARTICLE: serverAPIDomain + "/articles",
   SET_ARTICLES_MARKS: serverAPIDomain + "/articles/marks",
 
   FOLDERS: serverAPIDomain + "/articles/folders",

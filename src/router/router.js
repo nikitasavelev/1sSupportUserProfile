@@ -18,7 +18,8 @@ import SpecificNewsPage from "Pages/News/SpecificNewsPage";
 import KpiPage from "Pages/KPI/KpiPage";
 import SetKpiPage from "Pages/SetKPI/SetKpiPage";
 
-import ArticlesMainPage from "Pages/Articles/ArticlesMainPage"
+import ArticlesMainPage from "Pages/Articles/ArticlesMainPage";
+import ArticlesPage from "Pages/Articles/ArticlesPage";
 
 Vue.use(Router);
 
@@ -94,10 +95,17 @@ const router = new Router({
       component: SpecificNewsPage,
       name: "SpecificNewsPage"
     },
+
+    /* Articles*/
     {
       path: "/articles",
       component: ArticlesMainPage,
       name: "ArticlesMainPage"
+    },
+    {
+      path: "/articles/theme/:id",
+      component: ArticlesPage,
+      name: "ArticlesPage"
     }
   ]
 });
