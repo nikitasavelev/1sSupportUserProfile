@@ -27,7 +27,7 @@ class LoginService {
   async signUp(firstName, secondName, lastName, email, password, confirmPassword, phone, secretKey, crmLogin) {
     let urlForRequest = serverAPIUrls.SIGN_UP_CLIENT;
     if (crmLogin.length > 0) {
-      urlForRequest = serverAPIUrls.SIGN_UP_EMPLOYEE;
+      urlForRequest = serverAPIUrls.SIGN_UP_OPERATOR;
     }
     try {
       const response = await requestToAPI({

@@ -48,13 +48,12 @@ class UsersService {
         analytics.operators.forEach(operator => {
           operator.caption = `${operator.firstName} ${operator.lastName} ${operator.secondName}`;
         });
-        analytics.averageKpi.caption = "Средний показатель";
         return analytics;
       }
     });
   }
 
-  async setKpi(kpiType, kpiValue, employeeIds, fromDate = todayInISOFormat, toDate = weekAfter) {
+  async setKpi(kpiType, kpiValue, operatorIds, fromDate = todayInISOFormat, toDate = weekAfter) {
     return requestToAPI({
       url: serverAPIUrls.SET_KPI,
       method: "POST",
@@ -64,7 +63,7 @@ class UsersService {
       body: {
         kpiType,
         kpiValue,
-        employeeIds,
+        operatorIds,
         fromDate,
         toDate
       }

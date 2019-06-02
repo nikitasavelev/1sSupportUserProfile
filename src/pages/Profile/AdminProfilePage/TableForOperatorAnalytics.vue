@@ -6,7 +6,7 @@
                 :to="{
                   name: 'KpiPage',
                   params: {
-                    id: String(employeeId), 
+                    id: String(operatorId), 
                     fromDate: toDateString(fromDate, toDate)[0],
                     toDate: toDateString(fromDate, toDate)[1]
                   }
@@ -101,7 +101,7 @@ export default {
   },
   data() {
     return {
-      employeeId: ""
+      operatorId: ""
     };
   },
   created() {
@@ -109,7 +109,7 @@ export default {
     this.analytics = this.info.calculatedKPI
       ? this.info.calculatedKPI
       : this.info;
-    this.employeeId = this.info.employeeId;
+    this.operatorId = this.info.operatorId;
     // analytics for operator and it's not empty
     if (Array.isArray(this.analytics) && this.analytics.length > 0) {
       // calculate here
@@ -122,7 +122,7 @@ export default {
       this.analytics = this.info.calculatedKPI
         ? this.info.calculatedKPI
         : this.info;
-      this.employeeId = this.info.employeeId;
+      this.operatorId = this.info.operatorId;
     }
   },
   methods: {

@@ -47,7 +47,7 @@
                     <td align="center" class="right-border pa-2">Новый KPI</td>
                 </template>    
             </tr>
-            <tr v-for="operator in operators" :key="operator.employeeId">
+            <tr v-for="operator in operators" :key="operator.operatorId">
                 <td class="pa-2">
                     <v-checkbox
                         v-model="operator.isChecked"                        
@@ -56,7 +56,7 @@
                 <td align="center">
                     <router-link :to="{
                         name: 'KpiPage',
-                        params: {id: String(operator.employeeId)}
+                        params: {id: String(operator.operatorId)}
                         }">
                         {{operator.caption}}
                     </router-link>
@@ -158,7 +158,7 @@ export default {
   methods: {
     async saveKpi() {
       const operatorsIds = this.operators.reduce((ids, operator) => {
-        return operator.isChecked ? ids.concat(operator.employeeId) : ids;
+        return operator.isChecked ? ids.concat(operator.operatorId) : ids;
       }, []);
       for (const input of this.headers) {
         if (this.hasText(input.ref)) {

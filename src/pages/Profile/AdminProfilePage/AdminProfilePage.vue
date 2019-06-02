@@ -22,7 +22,7 @@
               <table-for-operator-analytics
                 v-for="operator in operatorsAnalytics"
                 :info="operator"
-                :key="operator.employeeId"
+                :key="operator.operatorId"
                 :min-max-values="minMaxValues"
                 :fromDate="fromDate"
                 :toDate="toDate"
@@ -77,7 +77,7 @@ export default {
       operatorsAnalytics: [],
       isLoaded: false,
       minMaxValues: {},
-      averageAnalytics: {},
+      averageAnalytics: {}
     };
   },
   async mounted() {
@@ -167,7 +167,7 @@ export default {
       return [valuesAndPaths, propertyNames];
     },
     calculateAverageAnalytics() {
-      let averageValues = [0,0,0,0,0,0,0,0,0,0]
+      let averageValues = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
       this.operatorsAnalytics.forEach(operator => {
         const [valuesAndPaths, propertyNames] = this.initValuesAndPropertyNames(
           operator
