@@ -6,7 +6,7 @@ export const serverAPIUrls = Object.freeze({
   SURPRISE: serverAPIDomain + "/server_infos/surprise",
 
   LOGIN: serverAPIDomain + "/identity/sign-in",
-  SIGN_UP_EMPLOYEE: serverAPIDomain + "/identity/sign-up/employee",
+  SIGN_UP_OPERATOR: serverAPIDomain + "/identity/sign-up/operator",
   SIGN_UP_CLIENT: serverAPIDomain + "/identity/sign-up/client",
   LOGOUT: serverAPIDomain + "/tokens/logout",
   ACCESS_TOKENS: serverAPIDomain + "/identity/access-tokens",
@@ -16,7 +16,7 @@ export const serverAPIUrls = Object.freeze({
 
   GET_SUPPORT_MESSAGES_TITLES: serverAPIDomain + "/questions/titles",
   QUESTIONS: serverAPIDomain + "/questions/",
-  SOLUTION_NOT_FOUND:  serverAPIDomain + "/questions/not-found",
+  SOLUTION_NOT_FOUND: serverAPIDomain + "/questions/not-found",
   RESOLVE_QUESTION: "/resolve",
   MARKS: "/marks",
   GET_SEARCH: serverAPIDomain + "/searching/search/",
@@ -26,7 +26,6 @@ export const serverAPIUrls = Object.freeze({
   SET_ARTICLES_MARKS: serverAPIDomain + "/articles/marks",
 
   FOLDERS: serverAPIDomain + "/articles/folders",
-
 
   GET_USER_INFO: serverAPIDomain + "/companies/clients/me",
 

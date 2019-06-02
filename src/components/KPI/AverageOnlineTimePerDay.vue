@@ -22,9 +22,14 @@ export default {
       this.calculatePeriods();
       this.calculateTargetKPI();
     }
+    window.addEventListener('resize', this.drawChart)
+  },
+  beforeDestroy(){
+    window.removeEventListener('resize', this.drawChart);
   },
   methods: {
     drawChart() {
+      console.log('invoked');
       GoogleCharts.load(drawVisualization);
       const self = this;
       function drawVisualization() {
@@ -78,6 +83,7 @@ export default {
               legend: { position: "none" },
             },
             height: 500,
+            width: (window.innerWidth - 100).toString(),
             seriesType: "bars",
             series: { 1: { type: "line" }, 2: { type: "line" } }
           };

@@ -6,7 +6,7 @@
                 :to="{
                   name: 'KpiPage',
                   params: {
-                    id: String(employeeId), 
+                    id: String(operatorId), 
                     fromDate: toDateString(fromDate, toDate)[0],
                     toDate: toDateString(fromDate, toDate)[1]
                   }
@@ -79,12 +79,15 @@
 
 <script>
 import { fractionalHoursToIntegerHoursAndMinutes } from "Constants/COMMON_METHODS.js";
-import {toDateString} from "Constants/COMMON_METHODS.js";
+import { toDateString } from "Constants/COMMON_METHODS.js";
 export default {
   name: "TableForOperatorAnalytics",
   props: {
     info: Object,
-    minMaxValues: Object,
+    minMaxValues: {
+      type: Object,
+      required: false
+    },
     fromDate: {
       type: String,
       default: new Date().toISOString().substr(0, 10),
@@ -98,7 +101,7 @@ export default {
   },
   data() {
     return {
-      employeeId: ""
+      operatorId: ""
     };
   },
   created() {
@@ -106,7 +109,7 @@ export default {
     this.analytics = this.info.calculatedKPI
       ? this.info.calculatedKPI
       : this.info;
-    this.employeeId = this.info.employeeId;
+    this.operatorId = this.info.operatorId;
     // analytics for operator and it's not empty
     if (Array.isArray(this.analytics) && this.analytics.length > 0) {
       // calculate here
@@ -119,15 +122,14 @@ export default {
       this.analytics = this.info.calculatedKPI
         ? this.info.calculatedKPI
         : this.info;
-      this.employeeId = this.info.employeeId;
+      this.operatorId = this.info.operatorId;
     }
   },
   methods: {
     hasDataToShow() {
       if (
         this.analytics.calls &&
-        this.analytics.questions &&
-        this.minMaxValues
+        this.analytics.questions
       ) {
         if (Array.isArray(this.analytics)) {
           return this.analytics.length > 0;
@@ -138,24 +140,28 @@ export default {
       return false;
     },
     moreBetter(value, minMaxValue) {
-      return {
-        best:
-          this.minMaxValues != null &&
-          Number(value.toFixed(2)) === Number(minMaxValue.max.toFixed(2)),
-        worst:
-          this.minMaxValues != null &&
-          Number(value.toFixed(2)) === Number(minMaxValue.min.toFixed(2))
-      };
+      if (minMaxValue) {
+        return {
+          best:
+            this.minMaxValues != null &&
+            Number(value.toFixed(2)) === Number(minMaxValue.max.toFixed(2)),
+          worst:
+            this.minMaxValues != null &&
+            Number(value.toFixed(2)) === Number(minMaxValue.min.toFixed(2))
+        };
+      }
     },
     lessBetter(value, minMaxValue) {
-      return {
-        best:
-          this.minMaxValues != null &&
-          Number(value.toFixed(2)) === Number(minMaxValue.min.toFixed(2)),
-        worst:
-          this.minMaxValues != null &&
-          Number(value.toFixed(2)) === Number(minMaxValue.max.toFixed(2))
-      };
+      if (minMaxValue) {
+        return {
+          best:
+            this.minMaxValues != null &&
+            Number(value.toFixed(2)) === Number(minMaxValue.min.toFixed(2)),
+          worst:
+            this.minMaxValues != null &&
+            Number(value.toFixed(2)) === Number(minMaxValue.max.toFixed(2))
+        };
+      }
     }
   }
 };

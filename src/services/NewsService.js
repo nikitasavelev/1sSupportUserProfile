@@ -27,7 +27,7 @@ class NewsService {
     });
   }
 
-  async getNewsPreviews(offset = 0, count = 2) {
+  async getNewsPreviews(offset = 0, count = 10) {
     return requestToAPI({
       url: `${serverAPIUrls.GET_NEWS_PREVIEWS}?offset=${offset}&count=${count}`,
       modifyDataCallback: data => {
