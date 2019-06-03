@@ -120,6 +120,7 @@ export default {
           textToSend
         );
         this.$refs.chatMessages.sendOwnMessage(justSentMessage);
+        this.$refs.chatMessages.$el.scrollTop = this.$refs.chatMessages.$el.scrollHeight
       }
     },
     resolveQuestion() {

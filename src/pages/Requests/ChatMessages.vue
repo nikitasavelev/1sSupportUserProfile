@@ -72,6 +72,7 @@ export default {
       data.isMe = false;
       data.createdAt = formatDate(data.createdAt);
       this.messages.push(data);
+      this.$refs.chat.scrollTop = this.$refs.chat.scrollHeight;
     });
 
     this.$nextTick(() => {
