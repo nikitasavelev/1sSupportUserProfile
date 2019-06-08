@@ -1,4 +1,4 @@
-export const serverAPIDomain = "https://api.4buttons.ru/1c/v0.1";
+export const serverAPIDomain = "https://api.1ssupport.ru/v0.1";
 //export const serverAPIDomain = "http://localhost:10000";
 // export const serverAPIDomain = "http://localhost:10012";
 

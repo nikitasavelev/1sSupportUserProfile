@@ -83,7 +83,7 @@ export default {
               legend: { position: "none" },
             },
             height: 500,
-            width: (window.innerWidth - 100).toString(),
+            width: (window.innerWidth - 200).toString(),
             seriesType: "bars",
             series: { 1: { type: "line" }, 2: { type: "line" } }
           };
