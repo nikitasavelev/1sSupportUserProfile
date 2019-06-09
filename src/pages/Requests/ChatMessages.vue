@@ -6,7 +6,6 @@
             v-for="(message, index) in messages"
             :key="message.id"
             class="clearfix chat-message-and-time"
-            :class="{'more-height': index === 0 || messages[index].firstName !== messages[index-1].firstName}"
             :align-end="message.isMe"
             :align-start="!message.isMe">
             <div                 
