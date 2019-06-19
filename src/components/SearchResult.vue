@@ -22,18 +22,42 @@
                 >
                   <v-list-tile-title>{{hit._source.title}}</v-list-tile-title>
                 </router-link>
-                <v-list-tile-sub-title class="article-preview" v-html="hit.highlight.text[0]"></v-list-tile-sub-title>
-                <v-list-tile-sub-title class="article-preview" v-html="hit.highlight.text[1]"></v-list-tile-sub-title>
+                <br>
+                <v-list-tile-title
+                  v-if="hit.highlight.text"
+                  class="article-preview"
+                  v-html="hit.highlight.text[0]"
+                ></v-list-tile-title>
+                <v-list-tile-title
+                  v-if="hit.highlight.text"
+                  class="article-preview"
+                  v-html="hit.highlight.text[1]"
+                ></v-list-tile-title>
+                <br>
               </v-list-tile-content>
+              <br>
             </v-layout>
           </v-list>
         </v-card>
 
         <v-layout v-if="searchResponse != false">
-          <div class="mui-panel pagination-panel">
-            <button class="mui-btn mui-btn--flat" v-on:click="prevResultsPage()">Предыдущая страница</button>
-            <button class="mui-btn mui-btn--flat" v-on:click="nextResultsPage()">Следующая страница</button>
-          </div>
+          <v-layout row>
+            <v-flex xs12>
+              <div class="pagination-panel">
+                <v-btn
+                  style="height: 47px"
+                  class="mui-btn mui-btn--flat"
+                  v-on:click="prevResultsPage()"
+                  v-if="searchOffset > 9"
+                >Предыдущая страница</v-btn>
+                <v-btn
+                  style="height: 47px"
+                  class="mui-btn mui-btn--flat"
+                  v-on:click="nextResultsPage()"
+                >Следующая страница</v-btn>
+              </div>
+            </v-flex>
+          </v-layout>
         </v-layout>
       </v-flex>
     </v-layout>
@@ -53,6 +77,10 @@ export default {
     allCount: {
       required: false,
       type: 0
+    },
+    searchTerm: {
+      required: false,
+      type: String
     }
   },
   data() {
@@ -60,8 +88,8 @@ export default {
       totalItems: "",
       items: [],
 
-      baseUrl: "http://localhost:3000", // API url
-      searchTerm: "2005", // Default search term
+      baseUrl: serverAPIUrls.GET_SEARCH,
+
       searchDebounce: null, // Timeout for search bar debounce
       searchResults: [], // Displayed search results
       numHits: 0, // Total search results found
@@ -115,5 +143,13 @@ export default {
 .text-xs-left {
   margin-bottom: 2%;
   font-size: 16px;
+}
+.pagination-panel {
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  background: white;
 }
 </style>

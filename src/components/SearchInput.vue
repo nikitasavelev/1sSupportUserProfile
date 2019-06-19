@@ -10,22 +10,24 @@
           <v-card-actions>
             <v-layout row wrap>
               <v-flex xs12 sm8>
-                <v-combobox
-                  v-model="searchTerm"
-                  type="text"
-                  autocomplete="off"
-                  v-on:click="search()"
-                  :allHit="numHits"
-                  :items="searchResults"
-                >
-                  <!-- <template slot="item">
-                    <v-list-tile-content>{{ items }}</v-list-tile-content>
-                  </template>-->
-                </v-combobox>
+                <div class="inputString">
+                  <v-combobox
+                    v-model="searchTerm"
+                    v-on:keyup.enter="search()"
+                    placeholder="Поиск"
+                    hide-no-data
+                    hide-details
+                    solo
+                    append-icon="null"
+                    :menu-props="{ overflowY: false}"
+                    :allHit="numHits"
+                    :items="searchResults"
+                  ></v-combobox>
+                </div>
               </v-flex>
               <v-flex xs12 sm2>
-                <v-btn color="#3f66b2" style="height: 47px">
-                  <v-icon medium color="white" v-on:click="search()">search</v-icon>
+                <v-btn color="#3f66b2" style="height: 47px" @click="search()">
+                  <v-icon medium color="white">search</v-icon>
                 </v-btn>
               </v-flex>
             </v-layout>
@@ -38,6 +40,7 @@
 
 <script>
 import axios from "axios";
+import { serverAPIUrls } from "Constants/SERVER_API_URLS.js";
 export default {
   name: "SearchInput",
   props: {
@@ -51,8 +54,8 @@ export default {
       searchString: "",
       shownHint: [],
 
-      baseUrl: "http://localhost:3000", // API url
-      searchTerm: "2005", // Default search term
+      baseUrl: serverAPIUrls.GET_SEARCH,
+      searchTerm: "", // Default search term
       searchDebounce: null, // Timeout for search bar debounce
       searchResults: [], // Displayed search results
       numHits: 0, // Total search results found
@@ -80,10 +83,9 @@ export default {
       const response = await axios.get(`${this.baseUrl}/search`, {
         params: { term: this.searchTerm, offset: this.searchOffset }
       });
-
       this.numHits = response.data.hits.total;
-
       this.$emit("onSearchData", {
+        term: this.searchTerm,
         totalArticles: this.numHits.value,
         articlesWholeData: response.data.hits.hits,
         articlesOffset: this.searchOffset
@@ -95,4 +97,22 @@ export default {
 </script>
 
 <style>
+input {
+  box-sizing: border-box;
+  width: 100%;
+  border: 0;
+  background-color: transparent;
+  height: 47px;
+}
+.inputString {
+  border-bottom-width: 2px;
+  border-bottom-style: solid;
+  border-bottom-color: black;
+}
+.inputFilter {
+  width: 30%;
+  border-bottom-width: 2px;
+  border-bottom-style: solid;
+  border-bottom-color: black;
+}
 </style>

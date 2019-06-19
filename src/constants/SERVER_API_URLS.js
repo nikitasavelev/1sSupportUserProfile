@@ -19,7 +19,7 @@ export const serverAPIUrls = Object.freeze({
   SOLUTION_NOT_FOUND:  serverAPIDomain + "/questions/not-found",
   RESOLVE_QUESTION: "/resolve",
   MARKS: "/marks",
-  GET_SEARCH: serverAPIDomain + "/searching/search/",
+  GET_SEARCH: serverAPIDomain + "/searching",
   GET_POPULAR_SEARCH: serverAPIDomain + "/searching/popular/",
 
   GET_ARTICLE: serverAPIDomain + "/articles",

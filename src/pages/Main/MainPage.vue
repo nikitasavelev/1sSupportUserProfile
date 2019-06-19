@@ -6,7 +6,7 @@
       :articlesOffset="articlesOffset"
       :searchResponse="articlesWholeData"
       :allCount="totalHits"
-      :lastQuery="lastQuery"
+      :searchTerm="searchTerm"
     />
     <modal-component/>
   </div>
@@ -38,7 +38,8 @@ export default {
 
       totalHits: 0,
       articlesWholeData: [],
-      articlesOffset: 0
+      articlesOffset: 0,
+      searchTerm: ""
     };
   },
   methods: {
@@ -63,6 +64,7 @@ export default {
       this.totalHits = data.totalArticles;
       this.articlesWholeData = data.articlesWholeData;
       this.articlesOffset = data.articlesOffset;
+      this.searchTerm = data.term;
     },
     getMarks: async function(token) {
       let axiosConfig = {
