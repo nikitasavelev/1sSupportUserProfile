@@ -13,7 +13,7 @@
                 <div class="inputString">
                   <v-combobox
                     v-model="searchTerm"
-                    v-on:keyup.enter="search()"
+                    @keyup.enter="search()"
                     placeholder="Поиск"
                     hide-no-data
                     hide-details
