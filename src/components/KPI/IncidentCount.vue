@@ -1,8 +1,8 @@
 <template>
     <div 
       v-if="hasDataToShow()"
-      style="width: 700px; height: 300px;"
       id="incident_count"
+      style="height: 300px;"
     >        
     </div>
     <v-container
@@ -22,6 +22,10 @@ export default {
     if (this.hasDataToShow()) {
       this.drawChart();
     }
+    window.addEventListener('resize', this.drawChart)
+  },
+  beforeDestroy(){
+    window.removeEventListener('resize', this.drawChart);
   },
   methods: {
     hasDataToShow(){
@@ -47,7 +51,9 @@ export default {
           pieSliceText:"value",
           legend: {
             alignment: 'center'
-          }
+          },
+          width: ((window.innerWidth - 50)/2).toString()
+
         };
 
         const chart = new google.visualization.PieChart(

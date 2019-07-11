@@ -1,11 +1,11 @@
 <template>
   <div 
-    class="average-mark-wrapper" style="width: 700px; height: 500px;"
+    class="average-mark-wrapper"
     v-if="marks.average !== 0"
   >
-    <div id="average_mark" style="width: 700px; height: 500px;">
+    <div id="average_mark">
     </div>
-    <div class="average-mark">{{this.marks.average}}</div>
+    <div class="average-mark-inside">{{this.marks.average}}</div>
   </div>
   <v-container
     v-else
@@ -44,6 +44,8 @@ export default {
 
         const options = {
           title: "Полученные оценки",
+          height: '400',
+          width: (100 + (window.innerWidth / 2.6)).toString(),
           pieHole: 0.5,
           pieSliceText: "value",
           fontSize: 22,
@@ -75,10 +77,10 @@ export default {
 </script>
 
 <style scoped>
-.average-mark-wrapper {
+.average-mark-wrapper, #average-mark {
   position: relative;
 }
-.average-mark {
+.average-mark-inside {
   position: absolute;
   top: 45%;
   left: 33.5%;

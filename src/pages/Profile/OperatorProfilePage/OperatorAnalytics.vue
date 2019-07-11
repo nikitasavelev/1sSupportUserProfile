@@ -16,6 +16,7 @@
 </template>
 <script>
 import UsersService from "Services/UsersService.js";
+import { fractionalHoursToIntegerHoursAndMinutes } from "Constants/COMMON_METHODS.js";
 
 export default {
   name: "OperatorAnalytics",
@@ -34,6 +35,9 @@ export default {
     },
   },
   methods:{
+    fractionalHoursToIntegerHoursAndMinutes(fractionalHours){
+      return fractionalHoursToIntegerHoursAndMinutes(fractionalHours)
+    },
     setParameters(analytics){
       if (analytics) {
         this.parameters = [
@@ -51,15 +55,18 @@ export default {
           },
           {
             name: "Среднее время телефонного разговора",
-            analytics: (analytics.calls.durations.averageInSeconds / 60).toFixed(2)
+            analytics: this.fractionalHoursToIntegerHoursAndMinutes
+            ((analytics.calls.durations.averageInSeconds / 60).toFixed(2))
           },
           {
             name: "Максимальное время телефонного разговора",
-            analytics: analytics.calls.durations.maxInSeconds
+            analytics: this.fractionalHoursToIntegerHoursAndMinutes
+            (analytics.calls.durations.maxInSeconds / 60)
           },
           {
             name: 'Длительность в статусе "на линии" в среднем за рабочий день',
-            analytics: (analytics.calls.durations.onLineAverageInSeconds / 60).toFixed(2)
+            analytics: this.fractionalHoursToIntegerHoursAndMinutes
+            ((analytics.calls.durations.onLineAverageInSeconds / 60).toFixed(2))
           },
           {
             name: 'Количество созданных вопросов через Манго',

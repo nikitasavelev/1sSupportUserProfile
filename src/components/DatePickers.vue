@@ -4,20 +4,22 @@
         <div class="datepicker-wrapper">
           <label>
             <input
-              v-model="fromDate"
+              v-model="localizedFromDateData"
               class="datepicker-input ml-2 pa-1"
               @click="toggleDatePickerFrom"
               name="date from"
               aria-label="start date"
               autocomplete="off"
+              readonly
               > 
           </label> 
           <v-date-picker 
-            v-model="fromDate"
+            v-model="fromDateData"
             v-if="showDatePickerFrom"
             @input="showDatePickerFrom = false"
             class="datepicker"
-            :max="maxAllowedDate()"            
+            :min="minDate"
+            :max="maxDate"            
             >
           </v-date-picker>
         </div>
@@ -25,20 +27,22 @@
         <div class="datepicker-wrapper">
           <label>
             <input
-              v-model="toDate"
+              v-model="localizedToDateData"
               class="datepicker-input pa-1"
               @click="toggleDatePickerTo"
               name="date to"
               aria-label="end date"
               autocomplete="off"
+              readonly
               > 
           </label> 
           <v-date-picker 
-            v-model="toDate"
+            v-model="toDateData"
             v-if="showDatePickerTo"
             @input="showDatePickerTo = false"
             class="datepicker"
-            :max="maxAllowedDate()"
+            :min="minDate"
+            :max="maxDate"
             >
           </v-date-picker>
         </div>
@@ -46,19 +50,42 @@
 </template>
 
 <script>
+import formatDate from 'Constants/COMMON_METHODS.js'
 export default {
   name: "DatePickers",
   props: {
-    arePickersShown: Boolean
+    arePickersShown: Boolean,
+    fromDate: {
+      type: String,
+      default: new Date().toISOString().substr(0, 10),
+      required: false,
+    },
+    toDate: {
+      type: String,
+      default: new Date().toISOString().substr(0, 10),
+      required: false,
+    },
+    minimumDate: {
+      type: String,
+      default: '0000-01-01',
+      required: false,
+    },
+    maximumDate: {
+      type: String,
+      default: '2099-01-01',
+      required: false
+    }
   },
   data() {
     return {
       showDatePickerFrom: false,
       showDatePickerTo: false,
-      fromDate: new Date(Date.now() - 1000 * 60 * 60 * 24 * 7)
-        .toISOString()
-        .substr(0, 10),
-      toDate: new Date().toISOString().substr(0, 10)
+      minDate: this.minimumDate,
+      maxDate: this.maximumDate,
+      fromDateData: this.fromDate,
+      toDateData: this.toDate,
+      localizedFromDateData: this.localizeDate(this.fromDate) || this.localizeDate(this.minimumDate),
+      localizedToDateData: this.localizeDate(this.toDate) || this.localizeDate(this.maximumDate),
     };
   },
   methods: {
@@ -72,10 +99,8 @@ export default {
       this.showDatePickerTo = !this.showDatePickerTo;
       this.showDatePickerFrom = false;
     },
-    maxAllowedDate() {
-      return this.$router.history.current.path === "/set-kpi"
-        ? "2099-01-01"
-        : new Date().toISOString().substr(0, 10);
+    localizeDate(date){
+      return formatDate(new Date(date));
     }
   },
   watch: {
@@ -83,12 +108,13 @@ export default {
       this.showDatePickerFrom = false;
       this.showDatePickerTo = false;
     },
-    fromDate() {
-      this.$emit("update:fromDate", this.fromDate);
-      console.log(this.$router.history.current.path);
+    fromDateData() {
+      this.$emit("update:fromDate", this.fromDateData);
+      this.localizedFromDateData = this.localizeDate(this.fromDateData);
     },
-    toDate() {
-      this.$emit("update:toDate", this.toDate);
+    toDateData() {
+      this.$emit("update:toDate", this.toDateData);
+      this.localizedToDateData = this.localizeDate(this.toDateData);
     }
   }
 };

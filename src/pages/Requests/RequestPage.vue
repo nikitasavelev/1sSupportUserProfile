@@ -28,14 +28,14 @@
                 v-model="message"
                 @keydown.enter="formSubmit"
                 placeholder="Напишите сообщение"
-              ></v-textarea>
+              />
               <v-text-field
                   v-if="this.questionId === '0'"
                   v-model="title"
                   label="Напишите тему"
                   class="mt-2 choose-title"
                   required
-              ></v-text-field>
+              />
               <v-btn 
                 class="d-block right"
                 color="primary"
@@ -61,7 +61,7 @@
                 color="#003399"
                 v-if="isResolved || request.mark > 0"
                 large          
-            ></v-rating>
+            />
           </v-layout>
         </div>
         <v-layout v-else justify-center mt-5>
@@ -110,12 +110,17 @@ export default {
         await QuestionsService.askQuestion(this.message, this.title);
         this.$router.push("/requests");
       } else {
+        // TO DO: refactor this
+        // textToSend is only simple fix: not wait while message is really sent
+        // user can't send same message twice
+        const textToSend = this.message;
+        this.message = "";
         const justSentMessage = await QuestionsService.sendMessage(
           this.questionId,
-          this.message
+          textToSend
         );
         this.$refs.chatMessages.sendOwnMessage(justSentMessage);
-        this.message = "";
+        this.$refs.chatMessages.$el.scrollTop = this.$refs.chatMessages.$el.scrollHeight
       }
     },
     resolveQuestion() {

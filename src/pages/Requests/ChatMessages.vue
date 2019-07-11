@@ -6,7 +6,6 @@
             v-for="(message, index) in messages"
             :key="message.id"
             class="clearfix chat-message-and-time"
-            :class="{'more-height': index === 0 || messages[index].firstName !== messages[index-1].firstName}"
             :align-end="message.isMe"
             :align-start="!message.isMe">
             <div                 
@@ -16,7 +15,7 @@
               {{message.firstName}}
             </div>            
             <v-card
-                class="chat-message pa-2 mt-2"
+                class="chat-message pa-2 mt-2 d-block"
                 :align-end="message.isMe"
                 :align-start="!message.isMe">
                 <div class="">{{message.text}}</div>
@@ -72,6 +71,7 @@ export default {
       data.isMe = false;
       data.createdAt = formatDate(data.createdAt);
       this.messages.push(data);
+      this.$refs.chat.scrollTop = this.$refs.chat.scrollHeight;
     });
 
     this.$nextTick(() => {
@@ -129,8 +129,7 @@ export default {
 
 <style scoped>
 .chat-message {
-  max-width: 40vw;
-  min-height: 3rem;
+  max-width: 30vw;
 }
 
 .chat-message-time {
@@ -152,7 +151,7 @@ export default {
 }
 
 .chat {
-  overflow-y: scroll;
+  overflow-y: auto;
   height: 40vh;
 }
 
@@ -166,9 +165,7 @@ export default {
 
 .layout {
   flex: 0 1 auto !important;
-}
-
-.more-height{
-  min-height: 5.625rem !important;
+  display: -webkit-box;
+  display: -ms-flexbox;
 }
 </style>

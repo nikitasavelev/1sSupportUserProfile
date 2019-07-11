@@ -4,6 +4,7 @@
 </template>
 <script>
 import { GoogleCharts } from "google-charts";
+import formatDate from "Constants/COMMON_METHODS.js";
 export default {
   name: "AverageOnlineTimePerDay",
   props: { averageOnlineTimePerDay: Object },
@@ -21,9 +22,14 @@ export default {
       this.calculatePeriods();
       this.calculateTargetKPI();
     }
+    window.addEventListener('resize', this.drawChart)
+  },
+  beforeDestroy(){
+    window.removeEventListener('resize', this.drawChart);
   },
   methods: {
     drawChart() {
+      console.log('invoked');
       GoogleCharts.load(drawVisualization);
       const self = this;
       function drawVisualization() {
@@ -32,40 +38,70 @@ export default {
         for (let i = 0; i < self.barsAmount; i++) {
           const [startDateForPeriod, endDateForPeriod] = self.getNextDate(i);
           daysStats.push([
-            `с ${startDateForPeriod.toLocaleDateString()}\nпо
-            ${endDateForPeriod.toLocaleDateString()}`,
+            `с ${formatDate(startDateForPeriod)}\nпо
+            ${formatDate(endDateForPeriod)}`,
             self.days[i],
             self.targetKPI,
             self.averageOnlineTimePerDay.onlineAverage
           ]);
         }
-        const data = google.visualization.arrayToDataTable([
-          ["Month", "Иванов И.И.", "Целевой показатель", "Средний показатель"],
-          ...daysStats
-        ]);
+        if (daysStats.length !== 0) {
+          const data = google.visualization.arrayToDataTable([
+            [
+              "Month",
+              "Иванов И.И.",
+              "Целевой показатель",
+              "Средний показатель"
+            ],
+            ...daysStats
+          ]);
 
-        const options = {
-          title: 'Длительность в статусе "на линии" в среднем за рабочий день',
-          vAxis: { title: 'Время "на линии" в среднем за день' },
-          hAxis: { title: "День" },
-          seriesType: "bars",
-          series: { 1: { type: "line" }, 2: { type: "line" } }
-        };
+          const options = {
+            title:
+              'Длительность в статусе "на линии" в среднем за рабочий день',
+            vAxis: { title: 'Время "на линии" в среднем за день' },
+            hAxis: {
+              title: "День",
+              slantedText: true,
+              slantedTextAngle: 75,
+              textPosition: "in",
+              annotations: {
+                textStyle: {
+                  stroke: "#000",
+                  fontSize: "12"
+                }
+              },
+              textStyle: {
+                color: "black",
+                backgroundColor: "black",
+                fontName: "Open-Sans",
+                fontSize: "12",
+                auraColor: '#000',
+                auraWidth: 0,
+              },
+              bar: {groupWidth: "95%"},
+              legend: { position: "none" },
+            },
+            height: 500,
+            width: (window.innerWidth - 200).toString(),
+            seriesType: "bars",
+            series: { 1: { type: "line" }, 2: { type: "line" } }
+          };
 
-        const chart = new google.visualization.ComboChart(
-          document.getElementById("chart")
-        );
-        chart.draw(data, options);
+          const chart = new google.visualization.ComboChart(
+            document.getElementById("chart")
+          );
+          chart.draw(data, options);
+        }
       }
     },
     getNextDate(index) {
       const maxDays = 9 * this.daysAmountInPeriod;
       let dayIndex = index * this.daysAmountInPeriod + 1;
       //dayIndex += dayIndex === maxDays ? 0 : 1;
-      const startDateForPeriod =
-        new Date(
-          this.averageOnlineTimePerDay.kpiForPeriod[dayIndex].date
-        ).getTime();
+      const startDateForPeriod = new Date(
+        this.averageOnlineTimePerDay.kpiForPeriod[dayIndex].date
+      ).getTime();
       const endDateForPeriod =
         startDateForPeriod +
         1000 * 60 * 60 * 24 * (this.daysAmountInPeriod - 1);
@@ -96,6 +132,10 @@ export default {
       this.days = this.days.map(period => {
         return Number((period / this.daysAmountInPeriod / 60).toFixed(2));
       });
+      this.days =
+        this.days[0] !== this.days[0]
+          ? [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+          : this.days;
     },
     calculateTargetKPI() {
       let totalDays = 0;
@@ -131,3 +171,10 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+text {
+  stroke: #000 !important;
+}
+</style>
+

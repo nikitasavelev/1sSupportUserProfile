@@ -1,8 +1,8 @@
 <template>
   <div 
     id="all_calls_count"
-    style="width: 700px; height: 300px;"
-    v-if="allCallsCount.total > 0">
+    v-if="allCallsCount.total > 0"
+    style="height: 300px;">
   </div>
   <v-container
     v-else
@@ -21,6 +21,10 @@ export default {
     if (this.allCallsCount.total > 0){
       this.drawChart();
     }
+    window.addEventListener('resize', this.drawChart)
+  },
+  beforeDestroy(){
+    window.removeEventListener('resize', this.drawChart);
   },
   methods: {
     drawChart(){
@@ -41,7 +45,8 @@ export default {
           pieSliceText:"value",
           legend: {
             alignment: 'center'
-          }
+          },
+          width: ((window.innerWidth - 50)/2).toString()
         };
 
         const chart = new google.visualization.PieChart(

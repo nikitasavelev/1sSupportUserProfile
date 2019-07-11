@@ -38,6 +38,10 @@ export const pagesConfig = {
     {
       link: "/articles",
       caption: "Справочник"
+    },
+    {
+      link: "/news",
+      caption: "Новости"
     }
   ],
   [roleTypes.Admin]: [
@@ -64,6 +68,10 @@ export const pagesConfig = {
     {
       link: "/articles",
       caption: "Справочник"
+    },
+    {
+      link: "/news",
+      caption: "Новости"
     }
   ]
 };

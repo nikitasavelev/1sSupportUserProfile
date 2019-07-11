@@ -1,6 +1,7 @@
 import { serverAPIUrls } from "Constants/SERVER_API_URLS.js";
 import { requestToAPI } from "Constants/DEFAULT_REQUEST.js";
 import formatDate from "Constants/COMMON_METHODS.js";
+import {toDateString} from "Constants/COMMON_METHODS.js";
 
 const weekBefore = new Date(Date.now() - 1000 * 60 * 60 * 24 * 7).toISOString().substr(0, 10);
 const todayInISOFormat = new Date().toISOString().substr(0, 10);
@@ -30,27 +31,29 @@ class UsersService {
   }
 
   async getOperatorAnalytics(operatorId, fromDate = weekBefore, toDate = todayInISOFormat) {
-    return requestToAPI({ url: `${serverAPIUrls.GET_OPERATOR_ANALYTICS}/${operatorId}?from=${fromDate}&to=${toDate}` });
+    const [from, to ] = toDateString(fromDate, toDate);
+    return requestToAPI({ url: `${serverAPIUrls.GET_OPERATOR_ANALYTICS}/${operatorId}?from=${from}&to=${to}` });
   }
 
   async getMyAnalytics(fromDate = weekBefore, toDate = todayInISOFormat) {
-    return requestToAPI({ url: `${serverAPIUrls.ANALYTICS}/me?from=${fromDate}&to=${toDate}` });
+    const [from, to ] = toDateString(fromDate, toDate);
+    return requestToAPI({ url: `${serverAPIUrls.ANALYTICS}/me?from=${from}&to=${to}` });
   }
 
   async getOperatorsAnalytics(fromDate = weekBefore, toDate = todayInISOFormat) {
+    const [from, to ] = toDateString(fromDate, toDate);
     return requestToAPI({
-      url: `${serverAPIUrls.GET_OPERATORS_ANALYTICS}?from=${fromDate}&to=${toDate}`,
+      url: `${serverAPIUrls.GET_OPERATORS_ANALYTICS}?from=${from}&to=${to}`,
       modifyDataCallback: analytics => {
         analytics.operators.forEach(operator => {
           operator.caption = `${operator.firstName} ${operator.lastName} ${operator.secondName}`;
         });
-        analytics.averageKpi.caption = "Средний показатель";
         return analytics;
       }
     });
   }
 
-  async setKpi(kpiType, kpiValue, employeeIds, fromDate = todayInISOFormat, toDate = weekAfter) {
+  async setKpi(kpiType, kpiValue, operatorIds, fromDate = todayInISOFormat, toDate = weekAfter) {
     return requestToAPI({
       url: serverAPIUrls.SET_KPI,
       method: "POST",
@@ -60,7 +63,7 @@ class UsersService {
       body: {
         kpiType,
         kpiValue,
-        employeeIds,
+        operatorIds,
         fromDate,
         toDate
       }

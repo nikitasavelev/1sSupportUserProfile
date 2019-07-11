@@ -14,7 +14,7 @@
                 label="Логин"
                 @input="isAlertShown = false"
                 required
-              ></v-text-field>
+              />
               <v-text-field
                 v-model="password"
                 :rules="passwordRules"
@@ -22,7 +22,7 @@
                 label="Пароль"
                 @input="isAlertShown = false"
                 required
-              ></v-text-field>
+              />
               <v-alert
                 :value="isAlertShown"
                 type="error"

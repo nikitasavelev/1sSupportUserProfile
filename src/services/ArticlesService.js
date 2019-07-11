@@ -1,10 +1,51 @@
 import { serverAPIUrls } from "Constants/SERVER_API_URLS.js";
 import { requestToAPI } from "Constants/DEFAULT_REQUEST.js";
+import Store from "Store/store.js"
 
 class ArticlesService {
   async getArticle(articleId) {
     return requestToAPI({
-      url: `${serverAPIUrls.GET_ARTICLE}/${articleId}`
+      url: `${serverAPIUrls.ARTICLE}/${articleId}`
+    });
+  }
+
+  async addArticle(form) {
+    return fetch(serverAPIUrls.ARTICLE, {
+      method: "POST",
+      body: form,
+      headers: {
+        Authorization: "Bearer " + Store.getters.getAuthorizationToken
+      }
+    });
+  }
+
+  async updateArticle(form, articleId) {
+    return fetch(`${serverAPIUrls.ARTICLE}/${articleId}`, {
+      method: "PATCH",
+      body: form,
+      headers: {
+        Authorization: "Bearer " + Store.getters.getAuthorizationToken
+      }
+    });
+  }
+
+  async updateArticleStatus(articleId, status) {
+    return requestToAPI({
+      url: `${serverAPIUrls.ARTICLE}/${articleId}/status=${status}`,
+      method: "PATCH"
+    });
+  }
+
+  async deleteArticle(articleId) {
+    return requestToAPI({
+      url: `${serverAPIUrls.ARTICLE}/${articleId}`,
+      method: "DELETE"
+    });
+  }
+
+  async getItems(folderId) {
+    return requestToAPI({
+      url: `${serverAPIUrls.FOLDERS}/items/${folderId}`
     });
   }
 
