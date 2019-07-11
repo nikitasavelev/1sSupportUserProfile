@@ -4,9 +4,7 @@
       <v-flex xs12>
         <v-card v-if="searchResponse" flat class="text-xs-left">
           Результатов найдено: {{ allCount }}
-          <div
-            class="mui--text-subhead"
-          >Отображено результатов: {{ searchOffset+1 }} - {{ searchOffset + 10 }}</div>
+          <div>Отображено результатов: {{ searchOffset+1 }} - {{ searchOffset + 10 }}</div>
         </v-card>
 
         <v-card flat max-width="90%">
@@ -46,15 +44,10 @@
               <div class="pagination-panel">
                 <v-btn
                   style="height: 2.5rem"
-                  class="mui-btn mui-btn--flat"
                   @click="prevResultsPage()"
                   v-if="searchOffset > 9"
                 >Предыдущая страница</v-btn>
-                <v-btn
-                  style="height: 2.5rem"
-                  class="mui-btn mui-btn--flat"
-                  @click="nextResultsPage()"
-                >Следующая страница</v-btn>
+                <v-btn style="height: 2.5rem" @click="nextResultsPage()">Следующая страница</v-btn>
               </div>
             </v-flex>
           </v-layout>
@@ -67,6 +60,7 @@
 
 <script>
 import axios from "axios";
+import { serverAPIUrls } from "Constants/SERVER_API_URLS.js";
 export default {
   name: "SearchResult",
   props: {
