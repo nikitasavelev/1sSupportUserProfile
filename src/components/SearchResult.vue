@@ -22,7 +22,7 @@
                 >
                   <v-list-tile-title>{{hit._source.title}}</v-list-tile-title>
                 </router-link>
-                <br>
+                <br />
                 <v-list-tile-title
                   v-if="hit.highlight.text"
                   class="article-preview"
@@ -33,9 +33,9 @@
                   class="article-preview"
                   v-html="hit.highlight.text[1]"
                 ></v-list-tile-title>
-                <br>
+                <br />
               </v-list-tile-content>
-              <br>
+              <br />
             </v-layout>
           </v-list>
         </v-card>
@@ -45,15 +45,15 @@
             <v-flex xs12>
               <div class="pagination-panel">
                 <v-btn
-                  style="height: 47px"
+                  style="height: 2.5rem"
                   class="mui-btn mui-btn--flat"
-                  v-on:click="prevResultsPage()"
+                  @click="prevResultsPage()"
                   v-if="searchOffset > 9"
                 >Предыдущая страница</v-btn>
                 <v-btn
-                  style="height: 47px"
+                  style="height: 2.5rem"
                   class="mui-btn mui-btn--flat"
-                  v-on:click="nextResultsPage()"
+                  @click="nextResultsPage()"
                 >Следующая страница</v-btn>
               </div>
             </v-flex>

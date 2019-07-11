@@ -68,16 +68,8 @@ export default {
     };
   },
   computed: {},
-  mounted() {},
   methods: {
-    //this function for suggestions
-    onSearchInput() {
-      clearTimeout(this.searchDebounce);
-      this.searchDebounce = setTimeout(async () => {
-        this.searchOffset = 0;
-        this.searchResults = await this.search();
-      }, 100);
-    },
+    async mounted() {},
     /** Call API to search for inputted term */
     async search() {
       const response = await axios.get(`${this.baseUrl}/search`, {
