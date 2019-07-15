@@ -35,6 +35,9 @@
         </v-card>
       </v-flex>
     </v-layout>
+    <v-layout v-if="!isLoaded" justify-center mt-5>
+      <v-progress-circular :size="70" :width="7" color="primary" indeterminate />
+    </v-layout>
   </v-container>
 </template>
 
@@ -60,11 +63,8 @@ export default {
       searchResults: [], // Displayed search results
       numHits: 0, // Total search results found
       searchOffset: 0, // Search result pagination offset
-
       totalArticles: 0,
-
-      selectedArticle: null,
-      info: null
+      isLoaded: true
     };
   },
   computed: {},
@@ -72,6 +72,7 @@ export default {
     async mounted() {},
     /** Call API to search for inputted term */
     async search() {
+      this.isLoaded = false;
       const response = await axios.get(`${this.baseUrl}/search`, {
         params: { term: this.searchTerm, offset: this.searchOffset }
       });
@@ -82,6 +83,7 @@ export default {
         articlesWholeData: response.data.hits.hits,
         articlesOffset: this.searchOffset
       });
+      this.isLoaded = true;
       return response.data.hits.hits;
     }
   }
